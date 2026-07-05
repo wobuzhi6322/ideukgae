@@ -5,22 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="계이득 채널 후원 페이지 — 시그니처 메뉴를 고르고 계좌이체로 후원 메시지를 방송에 전달하세요." />
     <title>채널 후원 - 계이득</title>
-    <script>
-      (() => {
-        const savedTheme = localStorage.getItem("bbbb-site-theme");
-        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
-      })();
-    </script>
-    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="stylesheet" href="/assets/v2.css" />
     <link rel="stylesheet" href="/assets/web-channel.css" />
   </head>
   <body class="channel-body">
-    <header class="site-header channel-topbar">
-      <a class="brand" href="/" aria-label="계이득 홈">
-        <img class="brand-logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
-      </a>
-      <div class="header-actions channel-topbar-actions">
-        <a class="header-download" href="/channels">채널 탐색</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="/" aria-label="계이득 홈">
+          <img src="/assets/gyeideuk-logo.png" alt="계이득" />
+        </a>
+        <nav class="site-nav">
+          <a href="/channels">채널 탐색</a>
+        </nav>
       </div>
     </header>
 

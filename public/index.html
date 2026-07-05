@@ -1,31 +1,69 @@
 <!doctype html>
-<html lang="ko" data-theme="dark">
+<html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ideukgae — 스트리머 후원 플랫폼</title>
+  <title>계이득 — 스트리머 후원 플랫폼</title>
   <meta name="robots" content="noindex" />
-  <!-- 임시 랜딩: 본 홈은 DESIGN v2(신규 디자인)와 함께 교체 예정 -->
-  <link rel="stylesheet" href="/assets/site.css" />
+  <link rel="stylesheet" href="/assets/v2.css" />
   <style>
-    .tmp-hero { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px; text-align: center; padding: 24px; }
-    .tmp-hero h1 { font-size: clamp(2rem, 6vw, 3.5rem); }
-    .tmp-hero p { color: var(--muted, #7d8aa0); max-width: 460px; line-height: 1.6; }
-    .tmp-actions { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
-    .tmp-actions a { padding: 12px 22px; border-radius: 8px; text-decoration: none; font-weight: 700; }
-    .tmp-primary { background: var(--blue, #0f6bff); color: #fff; }
-    .tmp-secondary { border: 1px solid var(--border, #2b3548); color: inherit; }
+    .hero { padding: 96px 20px 72px; text-align: center; }
+    .hero img.logo { height: 40px; margin: 0 auto 36px; }
+    .hero h1 { font-size: clamp(1.9rem, 5vw, 3.1rem); }
+    .hero h1 .accent { color: var(--blue); }
+    .hero p { margin: 18px auto 0; max-width: 440px; color: var(--secondary); font-size: 17px; }
+    .hero .actions { margin-top: 36px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .points { max-width: 880px; margin: 0 auto; padding: 0 20px 96px; display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
+    .point { padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); text-align: left; }
+    .point strong { display: block; font-size: 16px; margin-bottom: 6px; }
+    .point span { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+    .site-footer { border-top: 1px solid var(--line); padding: 28px 20px 48px; text-align: center; color: var(--muted); font-size: 13.5px; }
+    .site-footer a { color: var(--secondary); margin: 0 8px; }
+    @media (max-width: 720px) { .points { grid-template-columns: 1fr; } .hero { padding-top: 72px; } }
   </style>
 </head>
 <body>
-  <main class="tmp-hero">
-    <h1>스트리머 후원 플랫폼</h1>
-    <p>계좌이체 수수료 0%로 시작하는 후원 페이지.<br />지금 준비 중입니다 — 채널을 먼저 둘러보세요.</p>
-    <div class="tmp-actions">
-      <a class="tmp-primary" href="/channels">채널 탐색</a>
-      <a class="tmp-secondary" href="/signup?role=streamer">스트리머로 시작</a>
-      <a class="tmp-secondary" href="/login">로그인</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="/"><img src="/assets/gyeideuk-logo.png" alt="계이득" /></a>
+      <nav class="site-nav">
+        <a href="/channels">채널 탐색</a>
+        <a href="/login">로그인</a>
+        <a class="btn btn-primary btn-sm" href="/signup?role=streamer">스트리머로 시작</a>
+      </nav>
     </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <img class="logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
+      <h1>수수료 <span class="accent">0%</span>로 받는<br />방송 후원</h1>
+      <p>시청자는 계좌이체로 바로 후원하고, 방송에는 시그니처가 뜹니다.<br />정산 대기 없이 내 계좌로 즉시.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/signup?role=streamer">후원 페이지 만들기</a>
+        <a class="btn btn-outline" href="/channels">채널 둘러보기</a>
+      </div>
+    </section>
+
+    <section class="points">
+      <div class="point">
+        <strong>수수료 0% · 즉시 정산</strong>
+        <span>플랫폼이 돈을 거치지 않습니다. 후원은 스트리머 계좌로 직행합니다.</span>
+      </div>
+      <div class="point">
+        <strong>시그니처 메뉴판</strong>
+        <span>금액별 리액션을 미리 보여주고, 시청자가 골라서 후원합니다.</span>
+      </div>
+      <div class="point">
+        <strong>방송에 바로</strong>
+        <span>입금이 감지되면 메시지와 함께 오버레이가 재생됩니다.</span>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <nav><a href="/terms.html">이용약관</a><a href="/privacy.html">개인정보처리방침</a></nav>
+    <p style="margin-top:10px">© 계이득</p>
+  </footer>
 </body>
 </html>

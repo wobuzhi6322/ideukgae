@@ -582,12 +582,8 @@
     const button = notifyOn
       ? '<button class="button secondary" type="button" id="wallet-notify">오픈 알림 신청됨 · 해제하기</button>'
       : '<button class="button primary" type="button" id="wallet-notify">오픈 알림 신청</button>';
-    const lockIcon =
-      '<span class="me-lock-icon" aria-hidden="true"><svg viewBox="0 0 24 24">' +
-      '<rect x="4" y="11" width="16" height="9" rx="2"></rect>' +
-      '<path d="M8 11V7a4 4 0 0 1 8 0v4"></path></svg></span>';
     const inner =
-      lockIcon +
+      '<span class="badge badge-blue">오픈 예정</span>' +
       "<h2>지갑은 준비 중이에요</h2>" +
       "<p>캐시 충전 오픈 준비 중 — 지금은 계좌이체로 후원할 수 있어요.</p>" +
       button +

@@ -1,0 +1,374 @@
+/* =============================================================================
+   ideukgae DESIGN v2 — 클린 라이트 베이스
+   원칙: 흰 배경, 그레이스케일 위계, 액센트는 브랜드 블루 하나. 그라데이션·블롭 금지.
+   토큰 변수명은 구 site.css와 호환(페이지 CSS 무수정 재테마를 위해 이름 유지).
+   ========================================================================== */
+
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+:root {
+  --primary: #191f28;
+  --secondary: #4e5968;
+  --muted: #8b95a1;
+  --page: #ffffff;
+  --surface: #f9fafb;
+  --surface-2: #f2f4f6;
+  --surface-3: #e5e8eb;
+  --border: #e5e8eb;
+  --line: #f2f4f6;
+  --blue: #0f6bff;
+  --blue-2: #ebf2ff;
+  --magenta: #7c5cff;
+  --green: #12b76a;
+  --green-2: #e7f8f0;
+  --yellow: #f79009;
+  --yellow-2: #fff4e5;
+  --danger: #f04452;
+  --danger-2: #fef1f2;
+  --on-blue: #ffffff;
+  --on-primary: #ffffff;
+  --header: rgba(255, 255, 255, 0.88);
+  --focus: rgba(15, 107, 255, 0.35);
+  --shadow: 0 1px 2px rgba(25, 31, 40, 0.04), 0 8px 24px rgba(25, 31, 40, 0.06);
+  --content: 1080px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+}
+
+/* 단일 테마: data-theme 속성이 남아 있어도 라이트 토큰으로 고정 */
+:root[data-theme="dark"],
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+/* ---------------------------------------------------------------- 베이스 */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--primary);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: var(--blue-2);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus);
+  border-radius: 8px;
+}
+
+.container {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- 헤더 */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--header);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.site-header .header-inner,
+.site-header .inner {
+  max-width: var(--content);
+  margin: 0 auto;
+  padding: 0 20px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.site-header .logo,
+.site-header .brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.site-header .logo img,
+.site-header .brand img {
+  height: 24px;
+  width: auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+}
+
+.site-nav a:not(.btn) {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--secondary);
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.site-nav a:not(.btn):hover {
+  background: var(--surface-2);
+  color: var(--primary);
+}
+
+.site-nav a.active,
+.site-nav a[aria-current="page"] {
+  color: var(--blue);
+  font-weight: 600;
+}
+
+/* 단일 테마 전환: 토글은 전 페이지에서 숨김 */
+.theme-toggle {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------------- 버튼 */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 44px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--primary);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.06s ease, opacity 0.15s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  background: var(--surface-3);
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-primary,
+.btn.primary {
+  background: var(--blue);
+  color: var(--on-blue);
+}
+
+.btn-primary:hover,
+.btn.primary:hover {
+  background: #0c58d4;
+}
+
+.btn-outline,
+.btn.outline {
+  background: transparent;
+  border: 1px solid var(--border);
+}
+
+.btn-outline:hover,
+.btn.outline:hover {
+  background: var(--surface);
+  border-color: var(--surface-3);
+}
+
+.btn-danger,
+.btn.danger {
+  background: #fef1f2;
+  color: var(--danger);
+}
+
+.btn-danger:hover,
+.btn.danger:hover {
+  background: #fde3e5;
+}
+
+.btn-sm,
+.btn.sm {
+  height: 36px;
+  padding: 0 12px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+/* ---------------------------------------------------------------- 폼 */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="url"],
+input[type="search"],
+textarea,
+select {
+  width: 100%;
+  border: 1.5px solid transparent;
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 15px;
+  padding: 12px 14px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: var(--muted);
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  background: var(--page);
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--secondary);
+}
+
+/* ---------------------------------------------------------------- 카드·뱃지 */
+
+.card {
+  background: var(--page);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: var(--surface-2);
+  color: var(--secondary);
+}
+
+.badge-blue {
+  background: var(--blue-2);
+  color: var(--blue);
+}
+
+.badge-green {
+  background: var(--green-2);
+  color: var(--green);
+}
+
+.badge-danger {
+  background: var(--danger-2);
+  color: var(--danger);
+}
+
+/* ---------------------------------------------------------------- 기타 공통 */
+
+.skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface) 50%, var(--surface-2) 75%);
+  background-size: 200% 100%;
+  animation: v2-shimmer 1.4s ease infinite;
+  border-radius: 8px;
+  color: transparent;
+}
+
+@keyframes v2-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+hr,
+.divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--surface-3);
+  border-radius: 999px;
+  border: 2px solid var(--page);
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}

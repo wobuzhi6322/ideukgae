@@ -5,25 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="계이득 계정을 만들고 스트리머 또는 시청자로 시작하세요." />
     <title>가입하기 - 계이득</title>
-    <script>
-      (() => {
-        const savedTheme = localStorage.getItem("bbbb-site-theme");
-        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
-      })();
-    </script>
-    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="stylesheet" href="/assets/v2.css" />
     <link rel="stylesheet" href="/assets/web-auth.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script defer src="/assets/web-common.js"></script>
     <script defer src="/assets/web-auth.js"></script>
   </head>
   <body class="auth-page" data-auth-page="signup">
-    <header class="site-header auth-header">
-      <a class="brand" href="/" aria-label="계이득 홈">
-        <img class="brand-logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
-      </a>
-      <div class="header-actions">
-        <a class="header-account" href="/login">로그인</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="logo" href="/" aria-label="계이득 홈"><img src="/assets/gyeideuk-logo.png" alt="계이득" /></a>
+        <nav class="site-nav">
+          <a href="/channels">채널 탐색</a>
+          <a href="/login">로그인</a>
+        </nav>
       </div>
     </header>
 

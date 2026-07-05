@@ -1,7 +1,7 @@
 /* =============================================================================
-   계이득 스튜디오 /studio (WSC)
-   토큰은 site.css :root 그대로 사용 — 새 색·폰트 발명 금지 (DESIGN.md)
-   데스크톱: 좌측 사이드바 / 모바일(<900px): 하단 탭 4개
+   계이득 스튜디오 /studio (WSC) — DESIGN v2 클린 라이트
+   토큰은 v2.css :root 그대로 사용 — 새 색·폰트 발명 금지 (DESIGN.md)
+   데스크톱: 상단 site-header + 좌측 사이드바 / 모바일(<900px): 하단 탭 4개
    ========================================================================== */
 
 .studio-body {
@@ -26,7 +26,7 @@
 /* --- 게이트 (로딩/온보딩/에러) ------------------------------------------- */
 
 .studio-gate {
-  min-height: 100vh;
+  min-height: calc(100vh - 61px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,9 +40,10 @@
 .gate-box {
   width: min(460px, 100%);
   padding: 32px 28px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--page);
+  box-shadow: var(--shadow);
   text-align: center;
 }
 
@@ -68,7 +69,7 @@
 .studio-shell {
   display: grid;
   grid-template-columns: 236px minmax(0, 1fr);
-  min-height: 100vh;
+  min-height: calc(100vh - 61px);
 }
 
 .studio-shell[hidden] {
@@ -77,22 +78,15 @@
 
 .studio-side {
   position: sticky;
-  top: 0;
+  top: 61px;
   align-self: start;
-  height: 100vh;
+  height: calc(100vh - 61px);
   display: flex;
   flex-direction: column;
   gap: 18px;
   padding: 20px 14px;
-  border-right: 1px solid var(--border);
-  background: var(--surface);
-}
-
-.side-brand img {
-  width: 132px;
-  height: 44px;
-  object-fit: contain;
-  object-position: left center;
+  border-right: 1px solid var(--line);
+  background: var(--page);
 }
 
 .side-nav {
@@ -123,19 +117,18 @@
 }
 
 .side-nav button.active {
-  color: var(--primary);
-  background: var(--surface-2);
-  border-color: var(--border);
-  box-shadow: inset 3px 0 0 var(--blue);
+  color: var(--blue);
+  background: var(--blue-2);
+  border-color: transparent;
 }
 
 .nav-lock {
   font-size: 0.72rem;
   font-weight: 700;
   color: var(--muted);
-  border: 1px solid var(--border);
+  background: var(--surface-2);
   border-radius: 999px;
-  padding: 1px 8px;
+  padding: 2px 8px;
   white-space: nowrap;
 }
 
@@ -186,8 +179,8 @@
 
 .mock-badge {
   padding: 3px 10px;
-  border: 1px solid var(--yellow);
   border-radius: 999px;
+  background: color-mix(in srgb, var(--yellow) 14%, var(--page));
   color: var(--yellow);
   font-size: 0.78rem;
   font-weight: 700;
@@ -197,8 +190,8 @@
 .conn-chip {
   padding: 3px 10px;
   border-radius: 999px;
-  border: 1px solid var(--border);
   background: var(--surface-2);
+  color: var(--secondary);
   font-size: 0.82rem;
   font-weight: 700;
   white-space: nowrap;
@@ -206,7 +199,7 @@
 
 .conn-chip.conn-on {
   color: var(--green);
-  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 12%, var(--page));
 }
 
 .conn-chip.conn-off {
@@ -219,11 +212,13 @@
 
 /* --- 패널·카드 --------------------------------------------------------------- */
 
+/* 패널 = v2 .card 규칙(흰 배경 + 1px line + 은은한 그림자) */
 .panel {
   padding: 20px 22px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--page);
+  box-shadow: var(--shadow);
   margin: 0 0 16px;
   min-width: 0;
 }
@@ -256,9 +251,10 @@
 
 .stat-card {
   padding: 18px 20px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--page);
+  box-shadow: var(--shadow);
   min-width: 0;
 }
 
@@ -344,7 +340,8 @@
 
 .feed-amount {
   flex-shrink: 0;
-  font-weight: 800;
+  font-weight: 700;
+  color: var(--primary);
 }
 
 .feed-badge {
@@ -352,24 +349,25 @@
   font-size: 0.75rem;
   font-weight: 700;
   border-radius: 999px;
-  padding: 1px 8px;
-  border: 1px solid var(--border);
+  padding: 2px 8px;
+  background: var(--surface-2);
+  color: var(--secondary);
   white-space: nowrap;
 }
 
 .feed-badge.b-auto {
   color: var(--green);
-  border-color: var(--green);
+  background: color-mix(in srgb, var(--green) 12%, var(--page));
 }
 
 .feed-badge.b-manual {
-  color: var(--blue-2);
-  border-color: var(--blue-2);
+  color: var(--blue);
+  background: var(--blue-2);
 }
 
 .feed-badge.b-unmatched {
   color: var(--yellow);
-  border-color: var(--yellow);
+  background: color-mix(in srgb, var(--yellow) 14%, var(--page));
 }
 
 /* --- QR -------------------------------------------------------------------- */
@@ -388,7 +386,7 @@
 }
 
 .page-link-row a {
-  color: var(--blue-2);
+  color: var(--blue);
   text-decoration: none;
   font-weight: 700;
   overflow: hidden;
@@ -400,8 +398,9 @@
 .qr-box {
   display: inline-block;
   padding: 12px;
+  border: 1px solid var(--line);
   border-radius: var(--radius);
-  background: #ffffff;
+  background: var(--page);
   margin-bottom: 12px;
 }
 
@@ -417,79 +416,30 @@
   margin: 0 0 14px;
 }
 
-/* --- 버튼·입력 ---------------------------------------------------------------- */
-
-.studio-body .btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  padding: 10px 18px;
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
-  color: var(--primary);
-  font-weight: 700;
-  font-size: 0.95rem;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.studio-body .btn-primary {
-  background: var(--blue);
-  border-color: var(--blue);
-  color: var(--on-blue);
-}
-
-.studio-body .btn-primary:hover {
-  filter: brightness(1.08);
-}
-
-.studio-body .btn-ghost:hover {
-  background: var(--surface-3);
-}
-
-.studio-body .btn-sm {
-  padding: 5px 12px;
-  font-size: 0.85rem;
-}
-
-.studio-body .btn[disabled] {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
+/* --- 버튼·입력 ----------------------------------------------------------------
+   버튼·인풋 기본 스타일은 v2.css(.btn/.btn-primary/filled input)를 그대로 사용.
+   .btn-ghost는 v2 기본 버튼(회색 필)으로 렌더된다. */
 
 .linklike {
   padding: 0;
   border: none;
   background: none;
-  color: var(--blue-2);
+  color: var(--blue);
   font: inherit;
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
 }
 
-.studio-body input[type="text"],
-.studio-body input[type="url"],
-.studio-body input[type="number"],
+.studio-body input,
 .studio-body select,
 .studio-body textarea {
-  width: 100%;
-  padding: 10px 12px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface-2);
-  color: var(--primary);
   min-width: 0;
 }
 
-.studio-body input:focus-visible,
-.studio-body select:focus-visible,
-.studio-body textarea:focus-visible,
-.studio-body button:focus-visible {
-  outline: 3px solid var(--focus);
-  outline-offset: 1px;
+.studio-body input[type="checkbox"],
+.studio-body input[type="radio"] {
+  accent-color: var(--blue);
 }
 
 .studio-body input[disabled] {
@@ -500,7 +450,7 @@
 /* --- 설정 폼 ------------------------------------------------------------------ */
 
 .settings-form fieldset.panel {
-  border: 1px solid var(--border);
+  border: 1px solid var(--line);
 }
 
 .settings-form legend {
@@ -541,16 +491,16 @@
 
 .handle-row {
   display: flex;
-  align-items: center;
+  align-items: stretch;
   gap: 0;
 }
 
 .handle-prefix {
+  display: flex;
+  align-items: center;
   flex-shrink: 0;
-  padding: 10px 8px 10px 12px;
-  border: 1px solid var(--border);
-  border-right: none;
-  border-radius: var(--radius) 0 0 var(--radius);
+  padding: 0 8px 0 14px;
+  border-radius: 10px 0 0 10px;
   background: var(--surface-3);
   color: var(--muted);
   font-size: 0.92rem;
@@ -558,7 +508,7 @@
 }
 
 .handle-row input {
-  border-radius: 0 var(--radius) var(--radius) 0;
+  border-radius: 0 10px 10px 0;
 }
 
 .preset-row {
@@ -613,7 +563,7 @@
   padding: 7px 14px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--page);
   color: var(--secondary);
   font-size: 0.88rem;
   font-weight: 700;
@@ -707,9 +657,9 @@
 .sig-media-badge {
   display: inline-block;
   margin-left: 6px;
-  padding: 1px 7px;
-  border: 1px solid var(--border);
+  padding: 2px 8px;
   border-radius: 999px;
+  background: var(--surface-2);
   color: var(--muted);
   font-size: 0.72rem;
   font-weight: 700;
@@ -717,10 +667,10 @@
 }
 
 .pin-btn {
-  border: 1px solid var(--border);
+  border: none;
   background: var(--surface-2);
   border-radius: 999px;
-  padding: 4px 12px;
+  padding: 5px 12px;
   color: var(--muted);
   font-size: 0.85rem;
   font-weight: 700;
@@ -729,8 +679,8 @@
 }
 
 .pin-btn.on {
-  color: var(--yellow);
-  border-color: var(--yellow);
+  color: var(--blue);
+  background: var(--blue-2);
 }
 
 .sort-btns {
@@ -767,7 +717,7 @@
   padding: 7px 16px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: var(--surface);
+  background: var(--page);
   color: var(--secondary);
   font-size: 0.9rem;
   font-weight: 700;
@@ -845,10 +795,9 @@
 
 .connect-code-box {
   margin: 16px 0;
-  padding: 18px;
-  border: 1px dashed var(--border);
+  padding: 22px 18px;
   border-radius: var(--radius);
-  background: var(--surface-2);
+  background: var(--blue-2);
   text-align: center;
 }
 
@@ -859,7 +808,7 @@
   font-weight: 800;
   letter-spacing: 0.3em;
   text-indent: 0.3em;
-  color: var(--blue-2);
+  color: var(--blue);
   overflow-wrap: anywhere;
 }
 
@@ -878,6 +827,8 @@
 .locked-card {
   text-align: center;
   padding: 40px 24px;
+  background: var(--surface);
+  box-shadow: none;
 }
 
 .locked-card h2 {
@@ -886,16 +837,16 @@
 
 .locked-card p {
   margin: 0;
-  color: var(--secondary);
+  color: var(--muted);
 }
 
-.locked-badge {
+.locked-card .locked-badge {
   display: inline-block;
   margin: 0 0 14px;
   padding: 3px 12px;
-  border: 1px solid var(--yellow);
   border-radius: 999px;
-  color: var(--yellow);
+  background: var(--blue-2);
+  color: var(--blue);
   font-size: 0.8rem;
   font-weight: 800;
 }
@@ -985,8 +936,8 @@
 .toast {
   padding: 12px 16px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--surface-2);
+  border: 1px solid var(--line);
+  background: var(--page);
   color: var(--primary);
   box-shadow: var(--shadow);
   font-size: 0.92rem;
@@ -1005,12 +956,12 @@
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 55%);
+  background: color-mix(in srgb, var(--primary) 40%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
-  z-index: 50;
+  z-index: 55;
 }
 
 .modal-backdrop[hidden] {
@@ -1020,9 +971,9 @@
 .modal {
   width: min(440px, 100%);
   padding: 24px 22px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--page);
   box-shadow: var(--shadow);
 }
 
@@ -1058,9 +1009,10 @@
     z-index: 40;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    border-top: 1px solid var(--border);
+    border-top: 1px solid var(--line);
     background: var(--header);
     backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
     padding: 6px 6px calc(6px + env(safe-area-inset-bottom, 0px));
   }
 
@@ -1081,8 +1033,8 @@
   }
 
   .studio-tabbar button.active {
-    color: var(--primary);
-    background: var(--surface-2);
+    color: var(--blue);
+    background: var(--blue-2);
   }
 
   .stat-grid {
