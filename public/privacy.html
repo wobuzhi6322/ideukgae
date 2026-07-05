@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>개인정보처리방침 | 계이득</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("bbbb-site-theme");
+        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script type="module" src="/assets/site.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="계이득">
+        <img class="brand-logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
+      </a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="/#download">다운로드</a>
+        <a href="/#login">로그인</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true" aria-label="화이트 모드로 전환" title="화이트 모드로 전환">
+        <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M20.99 14.31A8.5 8.5 0 0 1 9.69 3.01 9 9 0 1 0 20.99 14.31Z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <main class="legal-main">
+      <section class="legal-hero">
+        <p class="eyebrow">Privacy</p>
+        <h1>개인정보처리방침</h1>
+        <p>최종 업데이트: 2026년 5월 18일</p>
+      </section>
+
+      <section class="legal-section">
+        <article class="legal-card">
+          <h2>처리하는 정보</h2>
+          <ul>
+            <li>회원가입 또는 로그인 시 이메일 주소와 계정 식별자를 처리할 수 있습니다.</li>
+            <li>프로그램 다운로드 시 버전, 파일명, 접속 브라우저 정보, 다운로드 시각을 기록할 수 있습니다.</li>
+            <li>사이트 테마 선택은 브라우저의 로컬 저장소에 저장됩니다.</li>
+            <li>웹사이트는 은행 입금 알림 내용, 계좌 정보, OBS 설정을 직접 수집하지 않습니다.</li>
+          </ul>
+        </article>
+
+        <article class="legal-card">
+          <h2>이용 목적</h2>
+          <ul>
+            <li>계정 로그인, 다운로드 제공, 공유 코드 관리 기능 제공</li>
+            <li>서비스 장애 대응, 보안 확인, 부정 사용 방지</li>
+            <li>프로그램 버전 안내와 사용자 지원</li>
+          </ul>
+        </article>
+
+        <article class="legal-card">
+          <h2>광고와 쿠키</h2>
+          <p>
+            광고가 게재되는 경우 Google을 포함한 제3자 광고 사업자가 쿠키 또는 유사 기술을 사용할 수 있습니다.
+            Google의 광고 쿠키는 사용자의 이 사이트 또는 다른 사이트 방문 정보를 바탕으로 광고를 제공하는 데
+            사용될 수 있습니다.
+          </p>
+          <p>
+            사용자는 <a href="https://www.google.com/settings/ads" target="_blank" rel="noreferrer">Google 광고 설정</a>
+            또는 <a href="https://www.aboutads.info/" target="_blank" rel="noreferrer">aboutads.info</a>에서 맞춤 광고
+            관련 선택을 관리할 수 있습니다.
+          </p>
+        </article>
+
+        <article class="legal-card">
+          <h2>보관과 권리</h2>
+          <p>
+            계정 정보와 다운로드 기록은 서비스 운영에 필요한 기간 동안 보관합니다. 사용자는 계정 정보 확인,
+            수정, 삭제 요청을 할 수 있으며, 법령상 보관이 필요한 정보는 해당 기간 동안 보관될 수 있습니다.
+          </p>
+        </article>
+
+        <article class="legal-card">
+          <h2>문의</h2>
+          <p>개인정보 관련 요청은 사이트 운영자에게 문의해 주세요. 정식 문의 채널은 서비스 운영 단계에서 별도 고지합니다.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>계이득</span>
+      <nav class="footer-links" aria-label="법적 고지">
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/ads.html">광고 및 쿠키 안내</a>
+      </nav>
+    </footer>
+  </body>
+</html>

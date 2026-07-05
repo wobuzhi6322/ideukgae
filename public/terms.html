@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>이용약관 | 계이득</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("bbbb-site-theme");
+        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <script type="module" src="/assets/site.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="계이득">
+        <img class="brand-logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
+      </a>
+      <nav class="site-nav" aria-label="주요 메뉴">
+        <a href="/#download">다운로드</a>
+        <a href="/#login">로그인</a>
+      </nav>
+      <button id="theme-toggle" class="theme-toggle" type="button" aria-pressed="true" aria-label="화이트 모드로 전환" title="화이트 모드로 전환">
+        <svg class="icon-sun" aria-hidden="true" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4"></circle>
+          <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+        </svg>
+        <svg class="icon-moon" aria-hidden="true" viewBox="0 0 24 24">
+          <path d="M20.99 14.31A8.5 8.5 0 0 1 9.69 3.01 9 9 0 1 0 20.99 14.31Z"></path>
+        </svg>
+      </button>
+    </header>
+
+    <main class="legal-main">
+      <section class="legal-hero">
+        <p class="eyebrow">Terms</p>
+        <h1>이용약관</h1>
+        <p>최종 업데이트: 2026년 5월 18일</p>
+      </section>
+
+      <section class="legal-section">
+        <article class="legal-card">
+          <h2>서비스 목적</h2>
+          <p>
+            계이득은 방송자가 은행 앱 입금 알림을 OBS 시그니처와 미디어 출력으로 연결할 수 있게
+            돕는 Windows용 방송 보조 프로그램입니다.
+          </p>
+        </article>
+
+        <article class="legal-card">
+          <h2>사용자 책임</h2>
+          <ul>
+            <li>사용자는 Windows, Phone Link, 은행 앱 알림, OBS 설정을 직접 준비해야 합니다.</li>
+            <li>프로그램을 사용하기 전에 다운로드한 ZIP의 압축을 풀고 폴더 전체를 유지해야 합니다.</li>
+            <li>은행 계좌, 후원 문구, 미디어 파일 사용에 필요한 권한과 책임은 사용자에게 있습니다.</li>
+          </ul>
+        </article>
+
+        <article class="legal-card">
+          <h2>금지 사항</h2>
+          <ul>
+            <li>타인의 계정 또는 공유 코드를 무단으로 사용하는 행위</li>
+            <li>악성 파일, 불법 콘텐츠, 권리를 침해하는 미디어를 업로드하거나 공유하는 행위</li>
+            <li>서비스 또는 다운로드 파일을 기만적 방식으로 배포하는 행위</li>
+          </ul>
+        </article>
+
+        <article class="legal-card">
+          <h2>서비스 변경</h2>
+          <p>
+            다운로드 파일, 계정 기능, 공유 코드 기능, 광고 노출 방식은 안정성, 보안, 운영 사정에 따라 변경될 수 있습니다.
+          </p>
+        </article>
+
+        <article class="legal-card">
+          <h2>면책</h2>
+          <p>
+            이 프로그램은 방송 운영을 돕는 도구입니다. 사용자의 PC 환경, 은행 앱 알림 상태, OBS 설정, 네트워크 상태에 따라
+            동작이 달라질 수 있으며, 방송 송출 전 테스트가 필요합니다.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span>계이득</span>
+      <nav class="footer-links" aria-label="법적 고지">
+        <a href="/privacy.html">개인정보처리방침</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/ads.html">광고 및 쿠키 안내</a>
+      </nav>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,959 @@
+/* =============================================================================
+   계이득 웹 후원 플랫폼 — 채널 후원 페이지 (/@handle) 스타일 (WSB)
+   토큰은 site.css :root 변수만 사용한다(DESIGN.md — 새 토큰 발명 금지).
+   모바일 우선(360px 기준) → @media (min-width: 860px) 데스크톱 확장.
+   ============================================================================= */
+
+.is-hidden {
+  display: none !important;
+}
+
+.channel-body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 상단바: site-header 관례 승계, 채널 페이지는 모바일에서도 한 줄 유지 */
+.channel-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.channel-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.channel-main {
+  width: min(1080px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 18px 0 56px;
+  flex: 1;
+}
+
+/* ---------------------------------------------------------------------------
+   로딩 스켈레톤
+   --------------------------------------------------------------------------- */
+
+.ch-skel {
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  animation: ch-skel-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes ch-skel-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-skel,
+  .status-dot,
+  .transfer-status.is-matched .transfer-status-inner {
+    animation: none !important;
+  }
+}
+
+.ch-skel-banner {
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.ch-skel-line {
+  height: 18px;
+  margin-bottom: 10px;
+}
+
+.ch-w-60 {
+  width: 60%;
+}
+
+.ch-w-40 {
+  width: 40%;
+}
+
+.ch-skel-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 18px 0;
+}
+
+.ch-skel-card {
+  aspect-ratio: 4 / 3;
+}
+
+.ch-skel-form {
+  height: 220px;
+}
+
+/* ---------------------------------------------------------------------------
+   에러·빈 상태
+   --------------------------------------------------------------------------- */
+
+.ch-error {
+  padding: 64px 0;
+  text-align: center;
+}
+
+.ch-error h1 {
+  margin: 0 0 10px;
+  font-size: 24px;
+  font-weight: 930;
+}
+
+.ch-error p {
+  margin: 0 0 20px;
+  color: var(--secondary);
+}
+
+.ch-empty {
+  margin: 8px 0 0;
+  padding: 22px 16px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--secondary);
+  text-align: center;
+  font-size: 14px;
+}
+
+/* ---------------------------------------------------------------------------
+   ① 채널 헤더
+   --------------------------------------------------------------------------- */
+
+.ch-banner {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 260px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  object-fit: cover;
+  background: var(--surface);
+}
+
+.ch-banner--plain {
+  aspect-ratio: auto;
+  height: 84px;
+  background: var(--surface);
+}
+
+.ch-id-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: -26px;
+  padding: 0 12px;
+}
+
+.ch-avatar {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border: 3px solid var(--page);
+  border-radius: 50%;
+  background: var(--surface-2);
+  object-fit: cover;
+}
+
+.ch-avatar--fallback {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary);
+  font-size: 26px;
+  font-weight: 950;
+}
+
+.ch-title-block {
+  min-width: 0;
+  padding-top: 30px;
+}
+
+.ch-name-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.ch-name {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 950;
+  line-height: 1.2;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.ch-handle {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--danger);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 950;
+  letter-spacing: 0.4px;
+}
+
+.live-badge i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.ch-bio {
+  margin: 8px 0 0;
+  color: var(--secondary);
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.bcast-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.bcast-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 32px;
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--secondary);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.bcast-link:hover {
+  background: var(--surface-2);
+  color: var(--primary);
+}
+
+.bcast-link svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* ---------------------------------------------------------------------------
+   섹션 공통
+   --------------------------------------------------------------------------- */
+
+.ch-section {
+  margin-top: 34px;
+}
+
+.ch-section-title {
+  margin: 0;
+  font-size: 19px;
+  font-weight: 930;
+}
+
+.ch-section-sub {
+  margin: 4px 0 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* ---------------------------------------------------------------------------
+   ② 시그니처 메뉴판
+   --------------------------------------------------------------------------- */
+
+.sig-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.sig-card {
+  position: relative;
+  min-width: 0;
+  padding: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--primary);
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.sig-card:hover {
+  border-color: var(--muted);
+}
+
+.sig-card:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.sig-card.is-selected {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 2px var(--focus);
+}
+
+.sig-thumb {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.sig-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sig-thumb-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+}
+
+.sig-thumb-fallback svg {
+  width: 30px;
+  height: 30px;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  fill: none;
+}
+
+.sig-pin {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--blue);
+  color: var(--on-blue);
+  font-size: 10px;
+  font-weight: 950;
+}
+
+.sig-type {
+  position: absolute;
+  right: 6px;
+  bottom: 6px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: rgb(7 10 16 / 72%);
+  color: #f8fbff;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.sig-body {
+  display: block;
+  padding: 10px 12px 12px;
+}
+
+.sig-amount {
+  display: block;
+  font-size: 15px;
+  font-weight: 950;
+}
+
+.sig-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  margin-top: 3px;
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.4;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  overflow: hidden;
+}
+
+.sig-more {
+  width: 100%;
+  margin-top: 12px;
+}
+
+/* ---------------------------------------------------------------------------
+   ③ 후원 폼
+   --------------------------------------------------------------------------- */
+
+.offline-banner {
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--yellow);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+.donation-form {
+  margin-top: 14px;
+  padding: 18px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  display: grid;
+  gap: 16px;
+}
+
+.ch-field {
+  display: block;
+  min-width: 0;
+}
+
+.ch-field-label {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 850;
+}
+
+.ch-field input,
+.ch-field textarea {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--primary);
+  font-size: 15px;
+}
+
+.ch-field textarea {
+  resize: vertical;
+  min-height: 74px;
+}
+
+.ch-field input:focus-visible,
+.ch-field textarea:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 1px;
+}
+
+.ch-field-hint {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.preset-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.preset-chip {
+  min-height: 36px;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--primary);
+  font-size: 13px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.preset-chip:hover {
+  border-color: var(--muted);
+}
+
+.preset-chip:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.preset-chip.is-active {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--on-blue);
+}
+
+.amount-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.amount-wrap input {
+  flex: 1;
+  min-width: 0;
+  text-align: right;
+  font-weight: 900;
+}
+
+.amount-suffix {
+  flex: 0 0 auto;
+  color: var(--secondary);
+  font-weight: 850;
+}
+
+.message-counter {
+  display: block;
+  margin-top: 5px;
+  color: var(--muted);
+  text-align: right;
+  font-size: 12px;
+}
+
+.message-counter.is-full {
+  color: var(--danger);
+}
+
+.ch-form-error {
+  margin: 0;
+  min-height: 1em;
+  color: var(--danger);
+  font-size: 13px;
+}
+
+.donate-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.donate-actions .button {
+  width: 100%;
+}
+
+.soon-badge {
+  margin-left: 4px;
+  padding: 2px 8px;
+  border: 1px solid var(--yellow);
+  border-radius: 999px;
+  color: var(--yellow);
+  font-size: 11px;
+  font-weight: 900;
+}
+
+/* ---------------------------------------------------------------------------
+   ⑥ 푸터
+   --------------------------------------------------------------------------- */
+
+.channel-footer {
+  width: min(1080px, calc(100% - 28px));
+  margin: 0 auto;
+  padding: 20px 0 30px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.report-button {
+  min-height: 34px;
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: none;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.report-button:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.channel-footer-links {
+  display: flex;
+  gap: 14px;
+}
+
+.channel-footer-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.channel-footer-links a:hover {
+  color: var(--primary);
+  text-decoration: underline;
+}
+
+/* ---------------------------------------------------------------------------
+   ④ 모달 공통 + 이체 안내
+   --------------------------------------------------------------------------- */
+
+body.gw-modal-open {
+  overflow: hidden;
+}
+
+.gw-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.gw-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgb(7 10 16 / 72%);
+  cursor: default;
+}
+
+.gw-modal-window {
+  position: relative;
+  width: min(420px, 100%);
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+  padding: 22px 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.gw-modal-window--small {
+  width: min(380px, 100%);
+}
+
+.gw-modal-window h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  font-weight: 930;
+}
+
+.gw-modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--secondary);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.gw-modal-close:hover {
+  color: var(--primary);
+}
+
+.gw-modal-close:focus-visible,
+.copy-code:focus-visible,
+.text-copy:focus-visible,
+.report-button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.transfer-guide {
+  margin: 0 0 14px;
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+.deposit-code-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border: 1px dashed var(--blue-2);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.deposit-code {
+  min-width: 0;
+  font-size: clamp(26px, 8vw, 36px);
+  font-weight: 950;
+  letter-spacing: 1px;
+  overflow-wrap: anywhere;
+}
+
+.copy-code {
+  flex: 0 0 auto;
+}
+
+.transfer-restore-note {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+.transfer-meta {
+  margin: 14px 0 0;
+  display: grid;
+  gap: 8px;
+}
+
+.transfer-meta div {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.transfer-meta dt {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.transfer-meta dd {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.text-copy {
+  margin-left: 8px;
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-2);
+  color: var(--secondary);
+  font-size: 11px;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.text-copy:hover {
+  color: var(--primary);
+}
+
+.transfer-links {
+  display: grid;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.transfer-links:empty {
+  display: none;
+}
+
+.transfer-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.transfer-link.toss {
+  border-color: var(--blue);
+  background: var(--blue);
+  color: var(--on-blue);
+}
+
+.transfer-link.kakao {
+  border-color: var(--yellow);
+  background: var(--surface-2);
+  color: var(--yellow);
+}
+
+.transfer-link:hover {
+  transform: translateY(-1px);
+}
+
+.transfer-timer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+}
+
+.transfer-timer p {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 13px;
+}
+
+.transfer-timer-count {
+  flex: 0 0 auto;
+  font-family: "Cascadia Mono", Consolas, monospace;
+  font-size: 24px;
+  font-weight: 900;
+  font-variant-numeric: tabular-nums;
+}
+
+.transfer-timer.is-over .transfer-timer-count {
+  color: var(--danger);
+}
+
+.transfer-status {
+  margin-top: 14px;
+  min-height: 24px;
+  font-size: 15px;
+  font-weight: 850;
+}
+
+.transfer-status-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--blue-2);
+  animation: ch-dot-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes ch-dot-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+.transfer-status.is-matched {
+  color: var(--green);
+}
+
+.transfer-status.is-matched .transfer-status-inner {
+  animation: ch-pop 0.45s cubic-bezier(0.2, 1.4, 0.5, 1);
+}
+
+@keyframes ch-pop {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.transfer-status.is-expired {
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.transfer-status.is-blocked {
+  color: var(--danger);
+}
+
+/* ---------------------------------------------------------------------------
+   데스크톱 확장
+   --------------------------------------------------------------------------- */
+
+@media (min-width: 860px) {
+  .channel-main {
+    padding-top: 26px;
+  }
+
+  .sig-grid,
+  .ch-skel-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .ch-banner {
+    max-height: 320px;
+  }
+
+  .ch-banner--plain {
+    height: 110px;
+  }
+
+  .ch-id-row {
+    margin-top: -34px;
+    padding: 0 20px;
+    gap: 16px;
+  }
+
+  .ch-avatar {
+    width: 84px;
+    height: 84px;
+  }
+
+  .ch-title-block {
+    padding-top: 40px;
+  }
+
+  .ch-name {
+    font-size: 26px;
+  }
+
+  .donation-form {
+    padding: 24px 22px;
+  }
+
+  .donate-actions {
+    flex-direction: row;
+  }
+
+  .donate-actions .button {
+    width: auto;
+    flex: 1;
+  }
+}

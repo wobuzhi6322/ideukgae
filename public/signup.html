@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="계이득 계정을 만들고 스트리머 또는 시청자로 시작하세요." />
+    <title>가입하기 - 계이득</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("bbbb-site-theme");
+        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="stylesheet" href="/assets/web-auth.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="/assets/web-common.js"></script>
+    <script defer src="/assets/web-auth.js"></script>
+  </head>
+  <body class="auth-page" data-auth-page="signup">
+    <header class="site-header auth-header">
+      <a class="brand" href="/" aria-label="계이득 홈">
+        <img class="brand-logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
+      </a>
+      <div class="header-actions">
+        <a class="header-account" href="/login">로그인</a>
+      </div>
+    </header>
+
+    <main class="auth-main">
+      <section class="auth-card" aria-labelledby="signup-title">
+        <div class="auth-heading">
+          <p class="eyebrow">Sign up</p>
+          <h1 id="signup-title">계이득 시작하기</h1>
+        </div>
+
+        <ol id="signup-steps" class="auth-steps" aria-label="가입 단계">
+          <li id="step-dot-1" class="is-active"><span>1</span>역할 선택</li>
+          <li id="step-dot-2"><span>2</span>계정 정보</li>
+          <li id="step-dot-3" class="is-hidden"><span>3</span>핸들 설정</li>
+        </ol>
+
+        <!-- 1단계: 역할 카드 -->
+        <section id="signup-step-role" class="auth-step" aria-label="1단계 역할 선택">
+          <div class="role-cards">
+            <button id="role-streamer" class="role-card" type="button" data-role="streamer">
+              <strong>스트리머로 시작</strong>
+              <span>방송에 후원 알림을 띄웁니다.</span>
+            </button>
+            <button id="role-viewer" class="role-card" type="button" data-role="viewer">
+              <strong>시청자로 시작</strong>
+              <span>좋아하는 채널을 후원합니다.</span>
+            </button>
+          </div>
+          <p class="role-note">선택은 시작 화면만 결정해요. 나중에 언제든 전환할 수 있습니다.</p>
+        </section>
+
+        <!-- 2단계: 계정 정보 -->
+        <section id="signup-step-account" class="auth-step is-hidden" aria-label="2단계 계정 정보">
+          <p id="signup-role-summary" class="auth-substep-note"></p>
+          <form id="signup-form" class="auth-form" novalidate>
+            <label>
+              이메일
+              <input id="signup-email" type="email" autocomplete="email" required />
+            </label>
+            <label>
+              비밀번호
+              <input id="signup-password" type="password" autocomplete="new-password" required minlength="6" placeholder="6자 이상" />
+            </label>
+            <label>
+              닉네임
+              <input id="signup-nickname" type="text" autocomplete="nickname" required maxlength="20" placeholder="후원할 때 표시되는 이름" />
+            </label>
+            <div class="auth-actions">
+              <button id="signup-back" class="button secondary" type="button">이전</button>
+              <button id="signup-submit" class="button primary" type="submit">가입하기</button>
+            </div>
+            <p id="signup-message" class="form-message" aria-live="polite"></p>
+          </form>
+          <div class="social-block" aria-label="간편 가입">
+            <p class="social-title">간편 가입</p>
+            <div class="social-row">
+              <button class="social-button" type="button" disabled aria-disabled="true">구글로 시작 <span class="soon-badge">준비 중</span></button>
+              <button class="social-button" type="button" disabled aria-disabled="true">카카오로 시작 <span class="soon-badge">준비 중</span></button>
+              <button class="social-button" type="button" disabled aria-disabled="true">네이버로 시작 <span class="soon-badge">준비 중</span></button>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3단계: 스트리머 핸들 -->
+        <section id="signup-step-handle" class="auth-step is-hidden" aria-label="3단계 핸들 설정">
+          <p class="auth-substep-note">후원 페이지 주소로 쓰이는 핸들을 정해 주세요.</p>
+          <form id="handle-form" class="auth-form" novalidate>
+            <label for="handle-input">핸들</label>
+            <div class="handle-field">
+              <span class="handle-prefix" aria-hidden="true">@</span>
+              <input
+                id="handle-input"
+                type="text"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+                required
+                minlength="3"
+                maxlength="20"
+                placeholder="my-channel"
+              />
+            </div>
+            <p class="handle-hint">소문자 영문·숫자·하이픈, 3~20자. 예: gyeideuk-tv</p>
+            <p id="handle-status" class="handle-status" aria-live="polite"></p>
+            <div class="auth-actions">
+              <button id="handle-submit" class="button primary" type="submit" disabled>핸들 만들고 스튜디오로</button>
+            </div>
+            <p id="handle-message" class="form-message" aria-live="polite"></p>
+          </form>
+        </section>
+
+        <p class="auth-alt">이미 계정이 있으신가요? <a href="/login">로그인</a></p>
+      </section>
+    </main>
+
+    <footer class="auth-footer">
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+    </footer>
+  </body>
+</html>

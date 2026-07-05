@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="계이득 계정으로 로그인하고 후원 페이지와 스튜디오를 이용하세요." />
+    <title>로그인 - 계이득</title>
+    <script>
+      (() => {
+        const savedTheme = localStorage.getItem("bbbb-site-theme");
+        document.documentElement.dataset.theme = savedTheme === "light" ? "light" : "dark";
+      })();
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="stylesheet" href="/assets/web-auth.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="/assets/web-common.js"></script>
+    <script defer src="/assets/web-auth.js"></script>
+  </head>
+  <body class="auth-page" data-auth-page="login">
+    <header class="site-header auth-header">
+      <a class="brand" href="/" aria-label="계이득 홈">
+        <img class="brand-logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
+      </a>
+      <div class="header-actions">
+        <a class="header-account" href="/signup">가입하기</a>
+      </div>
+    </header>
+
+    <main class="auth-main">
+      <section class="auth-card" aria-labelledby="login-title">
+        <div class="auth-heading">
+          <p class="eyebrow">Login</p>
+          <h1 id="login-title">로그인</h1>
+          <p class="auth-lead">스트리머는 스튜디오로, 시청자는 내 페이지로 이동합니다.</p>
+        </div>
+
+        <form id="login-form" class="auth-form" novalidate>
+          <label>
+            이메일
+            <input id="login-email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            비밀번호
+            <input id="login-password" type="password" autocomplete="current-password" required minlength="6" />
+          </label>
+          <div class="auth-actions">
+            <button id="login-submit" class="button primary" type="submit">로그인</button>
+          </div>
+          <p id="login-message" class="form-message" aria-live="polite"></p>
+        </form>
+
+        <p class="auth-alt">
+          <a href="/#login">비밀번호 재설정</a>
+          <span aria-hidden="true">·</span>
+          <a href="/signup">회원가입</a>
+        </p>
+
+        <div class="social-block" aria-label="간편 로그인">
+          <p class="social-title">간편 로그인</p>
+          <div class="social-row">
+            <button class="social-button" type="button" disabled aria-disabled="true">구글로 로그인 <span class="soon-badge">준비 중</span></button>
+            <button class="social-button" type="button" disabled aria-disabled="true">카카오로 로그인 <span class="soon-badge">준비 중</span></button>
+            <button class="social-button" type="button" disabled aria-disabled="true">네이버로 로그인 <span class="soon-badge">준비 중</span></button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="auth-footer">
+      <a href="/privacy.html">개인정보처리방침</a>
+      <a href="/terms.html">이용약관</a>
+    </footer>
+  </body>
+</html>

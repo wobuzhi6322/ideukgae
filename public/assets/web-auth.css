@@ -1,0 +1,368 @@
+/* =============================================================================
+   계이득 웹 — 가입·로그인 페이지 (WSA)
+   site.css 토큰만 사용. 새 토큰 발명 금지 (DESIGN.md).
+   ============================================================================= */
+
+.auth-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 헤더: 홈과 같은 골격, 중앙 메뉴 없이 로고/액션만 */
+.auth-header {
+  grid-template-columns: auto 1fr;
+}
+
+.auth-header .header-actions {
+  justify-self: end;
+}
+
+.auth-main {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 40px 16px 56px;
+}
+
+.auth-card {
+  width: min(480px, 100%);
+  display: grid;
+  gap: 20px;
+  padding: 28px 24px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.auth-heading {
+  display: grid;
+  gap: 6px;
+}
+
+.auth-heading h1 {
+  margin: 0;
+  font-size: 30px;
+  font-weight: 930;
+  line-height: 1.12;
+}
+
+.auth-heading .eyebrow {
+  margin: 0;
+  color: var(--blue-2);
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.auth-lead {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+/* 단계 표시 */
+.auth-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.auth-steps li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.auth-steps li span {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--surface-3);
+  color: var(--secondary);
+  font-size: 11px;
+}
+
+.auth-steps li.is-active {
+  border-color: var(--blue);
+  color: var(--primary);
+}
+
+.auth-steps li.is-active span {
+  background: var(--blue);
+  color: var(--on-blue);
+}
+
+.auth-steps li.is-done {
+  color: var(--secondary);
+}
+
+.auth-steps li.is-done span {
+  background: var(--green);
+  color: var(--on-blue);
+}
+
+.auth-step {
+  display: grid;
+  gap: 16px;
+}
+
+.auth-substep-note {
+  margin: 0;
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+/* 역할 카드 */
+.role-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.role-card {
+  min-width: 0;
+  display: grid;
+  gap: 6px;
+  padding: 18px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--primary);
+  text-align: left;
+  cursor: pointer;
+}
+
+.role-card:hover,
+.role-card:focus-visible {
+  border-color: var(--blue);
+}
+
+.role-card:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.role-card strong {
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.role-card span {
+  color: var(--secondary);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.role-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* 폼 (auth-card 안이므로 카드 테두리 없이 — 카드 안 카드 금지) */
+.auth-form {
+  display: grid;
+  gap: 14px;
+}
+
+.auth-form label {
+  display: grid;
+  gap: 7px;
+  color: var(--secondary);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.auth-form input {
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--primary);
+}
+
+.auth-form input:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.auth-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.auth-actions .button {
+  flex: 1;
+  min-width: 120px;
+}
+
+/* 핸들 입력 */
+.handle-field {
+  display: flex;
+  align-items: stretch;
+}
+
+.handle-prefix {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-right: 0;
+  border-radius: var(--radius) 0 0 var(--radius);
+  background: var(--surface-3);
+  color: var(--secondary);
+  font-weight: 900;
+}
+
+.handle-field input {
+  flex: 1;
+  min-width: 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.handle-hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.handle-status {
+  min-height: 20px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 850;
+  overflow-wrap: anywhere;
+}
+
+.handle-status.is-ok {
+  color: var(--green);
+}
+
+.handle-status.is-bad {
+  color: var(--danger);
+}
+
+/* 소셜 로그인 [예약] */
+.social-block {
+  display: grid;
+  gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.social-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.social-row {
+  display: grid;
+  gap: 8px;
+}
+
+.social-button {
+  min-height: 42px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: 850;
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.soon-badge {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface-3);
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  white-space: nowrap;
+}
+
+.auth-alt {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  color: var(--secondary);
+  font-size: 14px;
+}
+
+.auth-alt a {
+  color: var(--blue-2);
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.auth-alt a:hover {
+  text-decoration: underline;
+}
+
+.auth-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  padding: 20px 16px 32px;
+  border-top: 1px solid var(--line);
+}
+
+.auth-footer a {
+  color: var(--muted);
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  color: var(--primary);
+}
+
+/* 모바일 360px */
+@media (max-width: 480px) {
+  .auth-main {
+    padding: 24px 12px 40px;
+    align-items: start;
+  }
+
+  .auth-card {
+    padding: 22px 16px;
+  }
+
+  .role-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-actions .button {
+    min-width: 100%;
+  }
+}

@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>스튜디오 - 계이득</title>
+    <script>
+      // 스튜디오는 다크 기본 (WEB_PAGE_SPECS §6)
+      document.documentElement.dataset.theme = "dark";
+    </script>
+    <link rel="stylesheet" href="/assets/site.css" />
+    <link rel="stylesheet" href="/assets/web-studio.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1/build/qrcode.min.js"></script>
+    <script src="/assets/web-common.js"></script>
+    <script src="/assets/web-studio.js" defer></script>
+  </head>
+  <body class="studio-body">
+    <!-- 게이트: 로딩 / 페이지 없음(온보딩) / 에러 -->
+    <div id="studio-gate" class="studio-gate">
+      <div class="gate-box" id="gate-loading">
+        <div class="skeleton-bar w60"></div>
+        <div class="skeleton-bar w90"></div>
+        <div class="skeleton-bar w75"></div>
+        <p class="gate-note">스튜디오를 불러오는 중입니다…</p>
+      </div>
+      <div class="gate-box" id="gate-nopage" hidden>
+        <h1>채널 페이지가 아직 없어요</h1>
+        <p>스트리머로 가입하고 핸들을 만들면 후원 페이지와 스튜디오가 열립니다.</p>
+        <a class="btn btn-primary" href="/signup?role=streamer">스트리머로 시작하기</a>
+        <a class="btn btn-ghost" href="/">홈으로</a>
+      </div>
+      <div class="gate-box" id="gate-error" hidden>
+        <h1>불러오지 못했어요</h1>
+        <p id="gate-error-message">잠시 후 다시 시도해 주세요.</p>
+        <button class="btn btn-primary" id="gate-retry" type="button">다시 시도</button>
+      </div>
+    </div>
+
+    <div id="studio-shell" class="studio-shell" hidden>
+      <aside class="studio-side">
+        <a class="side-brand" href="/" aria-label="계이득 홈">
+          <img src="/assets/gyeideuk-logo.png" alt="계이득" />
+        </a>
+        <nav class="side-nav" aria-label="스튜디오 메뉴">
+          <button type="button" data-nav="dashboard">대시보드</button>
+          <button type="button" data-nav="page">채널 페이지</button>
+          <button type="button" data-nav="signatures">시그니처</button>
+          <button type="button" data-nav="donations">후원 내역</button>
+          <button type="button" data-nav="relay">프로그램 연동</button>
+          <button type="button" data-nav="earnings">수익·정산 <span class="nav-lock" aria-hidden="true">잠금</span></button>
+          <button type="button" data-nav="account">계정</button>
+        </nav>
+        <div class="side-foot">
+          <a id="side-page-link" href="/" target="_blank" rel="noopener">내 페이지 열기 ↗</a>
+        </div>
+      </aside>
+
+      <main class="studio-main">
+        <header class="studio-mainhead">
+          <h1 id="view-title">대시보드</h1>
+          <div class="mainhead-side">
+            <span id="mock-badge" class="mock-badge" hidden>목 데이터</span>
+            <span id="head-conn" class="conn-chip conn-off">○ 오프라인</span>
+          </div>
+        </header>
+
+        <!-- ① 대시보드 -->
+        <section class="studio-view" id="view-dashboard" hidden>
+          <div class="stat-grid">
+            <article class="stat-card">
+              <p class="stat-label">오늘 후원 합계</p>
+              <p class="stat-value" id="stat-total">—</p>
+              <p class="stat-sub">계좌 매칭 기준 · KST</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">오늘 후원 건수</p>
+              <p class="stat-value" id="stat-count">—</p>
+              <p class="stat-sub">매칭 보고 기준</p>
+            </article>
+            <article class="stat-card">
+              <p class="stat-label">프로그램 연결</p>
+              <p class="stat-value" id="stat-conn">○ 확인 중</p>
+              <p class="stat-sub" id="stat-conn-sub">마지막 통신 —</p>
+              <button type="button" class="linklike" data-nav="relay">연동 관리 →</button>
+            </article>
+          </div>
+
+          <div class="dash-cols">
+            <article class="panel">
+              <div class="panel-head">
+                <h2>실시간 후원 피드</h2>
+                <span class="panel-sub" id="feed-updated"></span>
+              </div>
+              <div id="feed-skeleton" class="skeleton-rows">
+                <div class="skeleton-bar"></div>
+                <div class="skeleton-bar w90"></div>
+                <div class="skeleton-bar w75"></div>
+                <div class="skeleton-bar w60"></div>
+              </div>
+              <div id="feed-empty" class="empty-box" hidden>
+                <p><strong>아직 후원이 없어요</strong></p>
+                <p>페이지 링크와 QR을 방송에 띄우면 첫 후원이 이곳에 실시간으로 표시됩니다.</p>
+              </div>
+              <div id="feed-error" class="empty-box" hidden>
+                <p>피드를 불러오지 못했어요.</p>
+                <button type="button" class="btn btn-ghost" id="feed-retry">다시 시도</button>
+              </div>
+              <ul id="feed-list" class="feed-list" hidden></ul>
+            </article>
+
+            <article class="panel qr-panel">
+              <div class="panel-head"><h2>내 후원 페이지</h2></div>
+              <div class="page-link-row">
+                <a id="page-link" href="/" target="_blank" rel="noopener"></a>
+                <button type="button" class="btn btn-ghost btn-sm" id="copy-link">복사</button>
+              </div>
+              <div class="qr-box"><canvas id="qr-canvas" width="220" height="220" aria-label="후원 페이지 QR 코드"></canvas></div>
+              <p class="qr-hint">방송 화면에 띄우면 시청자가 폰으로 바로 후원 페이지에 들어옵니다.</p>
+              <button type="button" class="btn btn-primary" id="qr-download">QR PNG 다운로드</button>
+            </article>
+          </div>
+        </section>
+
+        <!-- ② 채널 페이지 설정 -->
+        <section class="studio-view" id="view-page" hidden>
+          <div class="mobile-quicklinks">
+            <button type="button" data-nav="relay">프로그램 연동</button>
+            <button type="button" data-nav="earnings">수익·정산</button>
+            <button type="button" data-nav="account">계정</button>
+          </div>
+          <form id="page-form" class="settings-form" novalidate>
+            <fieldset class="panel">
+              <legend>기본 정보</legend>
+              <label class="field">
+                <span class="field-label">핸들</span>
+                <span class="handle-row"><span class="handle-prefix">gyeideuk.com/@</span><input id="ps-handle" name="handle" type="text" autocomplete="off" spellcheck="false" /></span>
+                <span class="field-hint" id="ps-handle-note">핸들은 30일에 1번만 변경할 수 있어요. 변경하면 이전 주소로 들어온 시청자에게 새 주소를 안내해야 합니다.</span>
+              </label>
+              <label class="field">
+                <span class="field-label">배너 이미지 URL</span>
+                <input id="ps-banner" type="url" placeholder="https:// (16:9 권장)" />
+                <span class="field-hint">파일 업로드는 준비 중이에요. 지금은 이미지 주소를 붙여넣어 주세요.</span>
+              </label>
+              <label class="field">
+                <span class="field-label">아바타 이미지 URL</span>
+                <input id="ps-avatar" type="url" placeholder="https://" />
+              </label>
+              <label class="field">
+                <span class="field-label">소개</span>
+                <textarea id="ps-bio" rows="3" maxlength="500" placeholder="채널을 한두 문장으로 소개해 주세요."></textarea>
+                <span class="field-hint"><span id="ps-bio-count">0</span>/500자</span>
+              </label>
+            </fieldset>
+
+            <fieldset class="panel">
+              <legend>방송 링크</legend>
+              <label class="field"><span class="field-label">치지직</span><input id="ps-link-chzzk" type="url" placeholder="https://chzzk.naver.com/…" /></label>
+              <label class="field"><span class="field-label">숲(SOOP)</span><input id="ps-link-soop" type="url" placeholder="https://www.sooplive.co.kr/…" /></label>
+              <label class="field"><span class="field-label">유튜브</span><input id="ps-link-youtube" type="url" placeholder="https://www.youtube.com/@…" /></label>
+            </fieldset>
+
+            <fieldset class="panel">
+              <legend>후원 금액</legend>
+              <div class="field">
+                <span class="field-label">프리셋 금액 4개 (원)</span>
+                <div class="preset-row">
+                  <input id="ps-preset-1" type="number" min="100" step="100" inputmode="numeric" />
+                  <input id="ps-preset-2" type="number" min="100" step="100" inputmode="numeric" />
+                  <input id="ps-preset-3" type="number" min="100" step="100" inputmode="numeric" />
+                  <input id="ps-preset-4" type="number" min="100" step="100" inputmode="numeric" />
+                </div>
+              </div>
+              <label class="field">
+                <span class="field-label">최소 후원액 (원)</span>
+                <input id="ps-min" type="number" min="100" step="100" inputmode="numeric" />
+              </label>
+            </fieldset>
+
+            <fieldset class="panel">
+              <legend>계좌 노출</legend>
+              <div class="field radio-field" role="radiogroup" aria-label="계좌 노출 방식">
+                <label class="radio-row"><input type="radio" name="account-display" value="link_only" /> <span>송금 링크만 보여주기 <em class="field-hint-inline">계좌번호는 숨기고 토스·카카오페이 링크만 노출</em></span></label>
+                <label class="radio-row"><input type="radio" name="account-display" value="full" /> <span>계좌번호 직접 노출 <em class="field-hint-inline">이체 안내에 은행·계좌번호·예금주 표시</em></span></label>
+              </div>
+              <div id="ps-account-box" class="subfields" hidden>
+                <label class="field"><span class="field-label">은행</span><input id="ps-acc-bank" type="text" maxlength="30" placeholder="예: 국민" /></label>
+                <label class="field"><span class="field-label">계좌번호</span><input id="ps-acc-number" type="text" maxlength="40" placeholder="숫자와 하이픈만" /></label>
+                <label class="field"><span class="field-label">예금주</span><input id="ps-acc-holder" type="text" maxlength="30" /></label>
+              </div>
+              <label class="field"><span class="field-label">토스 송금 링크</span><input id="ps-toss" type="url" placeholder="https://toss.me/…" /></label>
+              <label class="field"><span class="field-label">카카오페이 송금 링크</span><input id="ps-kakao" type="url" placeholder="https://qr.kakaopay.com/…" /></label>
+            </fieldset>
+
+            <fieldset class="panel">
+              <legend>공개 설정</legend>
+              <label class="toggle-row"><input id="ps-ticker" type="checkbox" /> <span>최근 후원 티커 공개 <em class="field-hint-inline">후원 페이지에 "○○님이 5,000원 후원" 최근 10건 표시</em></span></label>
+              <label class="toggle-row"><input id="ps-directory" type="checkbox" /> <span>채널 탐색에 노출 <em class="field-hint-inline">공개 시그니처가 1개 이상이면 /channels 목록에 표시</em></span></label>
+            </fieldset>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="ps-save">저장</button>
+              <span class="field-hint" id="ps-save-note"></span>
+            </div>
+          </form>
+        </section>
+
+        <!-- ③ 시그니처 메뉴판 -->
+        <section class="studio-view" id="view-signatures" hidden>
+          <div class="panel sync-banner">
+            <div>
+              <p><strong>동기화는 계이득 프로그램이 수행해요.</strong></p>
+              <p class="panel-sub" id="sig-synced-at">마지막 동기화 —</p>
+            </div>
+            <p class="panel-sub">프로그램 관리 화면(/admin)에서 [웹 메뉴판 동기화]를 누르면 목록이 갱신됩니다.</p>
+          </div>
+          <div id="sig-skeleton" class="skeleton-rows panel">
+            <div class="skeleton-bar"></div>
+            <div class="skeleton-bar w90"></div>
+            <div class="skeleton-bar w75"></div>
+          </div>
+          <div id="sig-empty" class="empty-box panel" hidden>
+            <p><strong>동기화된 시그니처가 없어요</strong></p>
+            <ol class="guide-steps">
+              <li>방송 PC에서 계이득 프로그램을 실행해 주세요.</li>
+              <li><button type="button" class="linklike" data-nav="relay">프로그램 연동</button> 탭에서 연결 코드를 발급해 프로그램에 입력해 주세요.</li>
+              <li>프로그램 관리 화면에서 [웹 메뉴판 동기화]를 누르면 시그니처가 이곳에 나타납니다.</li>
+            </ol>
+          </div>
+          <div id="sig-error" class="empty-box panel" hidden>
+            <p>시그니처 목록을 불러오지 못했어요.</p>
+            <button type="button" class="btn btn-ghost" id="sig-retry">다시 시도</button>
+          </div>
+          <div id="sig-editor" hidden>
+            <p class="field-hint">공개를 켠 시그니처만 후원 페이지 메뉴판에 나타나요. 추천 고정은 최대 3개, 웹 제목을 비우면 프로그램 제목을 그대로 씁니다.</p>
+            <div class="table-scroll panel">
+              <table class="sig-table">
+                <thead>
+                  <tr>
+                    <th scope="col">미리보기</th>
+                    <th scope="col">제목 / 웹 제목</th>
+                    <th scope="col">금액</th>
+                    <th scope="col">공개</th>
+                    <th scope="col">추천</th>
+                    <th scope="col">순서</th>
+                  </tr>
+                </thead>
+                <tbody id="sig-rows"></tbody>
+              </table>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="btn btn-primary" id="sig-save">변경사항 저장</button>
+              <span class="field-hint" id="sig-save-note"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- ④ 후원 내역 -->
+        <section class="studio-view" id="view-donations" hidden>
+          <div class="filter-row" role="tablist" aria-label="후원 내역 필터">
+            <button type="button" class="chip" data-filter="all">전체</button>
+            <button type="button" class="chip" data-filter="unmatched">미매칭</button>
+            <button type="button" class="chip" data-filter="auto">자동 매칭</button>
+            <button type="button" class="chip" data-filter="manual">수동 매칭</button>
+          </div>
+          <div id="don-skeleton" class="skeleton-rows panel">
+            <div class="skeleton-bar"></div>
+            <div class="skeleton-bar w90"></div>
+            <div class="skeleton-bar w75"></div>
+          </div>
+          <div id="don-empty" class="empty-box panel" hidden>
+            <p><strong>표시할 내역이 없어요</strong></p>
+            <p>입금이 매칭되면 이곳에 기록됩니다.</p>
+          </div>
+          <div id="don-error" class="empty-box panel" hidden>
+            <p>후원 내역을 불러오지 못했어요.</p>
+            <button type="button" class="btn btn-ghost" id="don-retry">다시 시도</button>
+          </div>
+          <div class="table-scroll panel" id="don-table-wrap" hidden>
+            <table class="don-table">
+              <thead>
+                <tr>
+                  <th scope="col">시각</th>
+                  <th scope="col">입금자명</th>
+                  <th scope="col">금액</th>
+                  <th scope="col">상태</th>
+                  <th scope="col">메시지</th>
+                  <th scope="col"><span class="sr-only">동작</span></th>
+                </tr>
+              </thead>
+              <tbody id="don-rows"></tbody>
+            </table>
+          </div>
+
+          <article class="panel block-panel">
+            <div class="panel-head"><h2>후원자 차단</h2><span class="panel-sub">닉네임 또는 입금코드 기준</span></div>
+            <form id="block-form" class="block-form">
+              <input id="block-value" type="text" maxlength="40" placeholder="닉네임 또는 입금코드" />
+              <input id="block-reason" type="text" maxlength="200" placeholder="사유 (선택)" />
+              <button type="submit" class="btn btn-ghost">차단 추가</button>
+            </form>
+            <ul id="block-list" class="block-list"></ul>
+            <p id="block-empty" class="field-hint">차단한 후원자가 없어요.</p>
+          </article>
+        </section>
+
+        <!-- ⑤ 프로그램 연동 -->
+        <section class="studio-view" id="view-relay" hidden>
+          <article class="panel">
+            <div class="panel-head"><h2>연결 상태</h2></div>
+            <p class="relay-status"><span id="relay-conn" class="conn-chip conn-off">○ 오프라인</span> <span class="panel-sub" id="relay-conn-sub">마지막 통신 —</span></p>
+            <p class="field-hint">계이득 프로그램이 켜져 있고 이 페이지와 연결되어 있으면 ● 연결됨으로 표시돼요. (60초마다 통신)</p>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head"><h2>연결 코드</h2></div>
+            <p>방송 PC의 계이득 프로그램과 이 페이지를 연결하는 1회용 코드예요.</p>
+            <button type="button" class="btn btn-primary" id="relay-issue">연결 코드 발급</button>
+            <div id="relay-code-box" class="connect-code-box" hidden>
+              <p class="connect-code" id="relay-code" aria-live="polite"></p>
+              <p class="field-hint" id="relay-code-timer"></p>
+            </div>
+            <ol class="guide-steps">
+              <li>방송 PC에서 계이득 프로그램을 실행해 주세요.</li>
+              <li>프로그램 관리 화면(/admin) → <strong>고급 탭 → 웹 연동</strong>으로 이동해 주세요.</li>
+              <li>위 연결 코드를 입력하면 연결이 완료됩니다. 코드는 10분간 유효하고, 재발급하면 이전 코드는 무효가 돼요.</li>
+            </ol>
+            <p class="field-hint">방송 재생·큐 관리 같은 실시간 제어는 프로그램에서만 해요. 웹 스튜디오는 설정과 조회 전용입니다.</p>
+          </article>
+        </section>
+
+        <!-- ⑥ 수익·정산 [예약] -->
+        <section class="studio-view" id="view-earnings" hidden>
+          <article class="panel locked-card">
+            <p class="locked-badge">준비 중</p>
+            <h2>수익·정산</h2>
+            <p>카드 결제 오픈 후 제공 — 계좌이체 후원은 내 계좌로 즉시 입금되므로 정산이 없습니다.</p>
+          </article>
+        </section>
+
+        <!-- ⑦ 계정 -->
+        <section class="studio-view" id="view-account" hidden>
+          <article class="panel">
+            <div class="panel-head"><h2>내 계정</h2></div>
+            <dl class="account-list">
+              <div><dt>이메일</dt><dd id="acct-email">—</dd></div>
+              <div><dt>역할</dt><dd id="acct-roles">스트리머</dd></div>
+            </dl>
+            <p class="field-hint">비밀번호 변경은 홈 화면의 계정 메뉴에서 할 수 있어요.</p>
+          </article>
+          <article class="panel locked-card">
+            <p class="locked-badge">준비 중</p>
+            <h2>본인 인증(KYC)</h2>
+            <p>결제 오픈 준비 중이에요. 카드 결제와 정산이 열리면 본인 인증을 진행할 수 있습니다.</p>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <!-- 모바일 하단 탭 (대시보드·후원·시그니처·설정) -->
+    <nav class="studio-tabbar" id="studio-tabbar" hidden aria-label="스튜디오 모바일 메뉴">
+      <button type="button" data-nav="dashboard">대시보드</button>
+      <button type="button" data-nav="donations">후원</button>
+      <button type="button" data-nav="signatures">시그니처</button>
+      <button type="button" data-nav="page">설정</button>
+    </nav>
+
+    <!-- 수동 매칭 모달 -->
+    <div class="modal-backdrop" id="mm-modal" hidden>
+      <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mm-title">
+        <h2 id="mm-title">수동 매칭</h2>
+        <p id="mm-summary" class="field-hint"></p>
+        <label class="field">
+          <span class="field-label">짝지을 후원 메시지</span>
+          <select id="mm-select"></select>
+        </label>
+        <p class="field-hint">만료 직후의 메시지도 선택할 수 있어요. 매칭해도 방송 재생은 다시 하지 않고 기록만 남습니다.</p>
+        <p id="mm-empty" class="field-hint" hidden>짝지을 수 있는 대기·만료 메시지가 없어요.</p>
+        <div class="form-actions">
+          <button type="button" class="btn btn-primary" id="mm-confirm">매칭 저장</button>
+          <button type="button" class="btn btn-ghost" id="mm-cancel">취소</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-root" class="toast-root" aria-live="polite"></div>
+  </body>
+</html>
