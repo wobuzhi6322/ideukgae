@@ -9,11 +9,13 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 6px 14px;
+  padding: 6px 12px;
   border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: 13.5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
   font-weight: 600;
+  letter-spacing: 0.08em;
   color: var(--secondary);
   margin-bottom: 22px;
 }
@@ -66,9 +68,11 @@
 }
 
 .demo-panel .panel-label {
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--muted);
   margin-bottom: 14px;
 }
@@ -117,7 +121,8 @@
 .demo-sig .s-amount {
   display: block;
   margin-top: 2px;
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
   font-weight: 700;
   color: var(--blue);
 }
@@ -149,7 +154,21 @@
     var(--surface-2);
   min-height: 380px;
   overflow: hidden;
-  box-shadow: 0 0 70px color-mix(in srgb, var(--blue) 12%, transparent);
+  box-shadow: 0 0 70px color-mix(in srgb, var(--blue) 14%, transparent);
+}
+
+/* 스캔라인 — 모니터 질감 (DESIGN.md v3 stream-frame) */
+.demo-stream::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent 0 3px,
+    color-mix(in srgb, var(--page) 22%, transparent) 3px 4px
+  );
+  z-index: 1;
 }
 
 .demo-stream .stream-top {
@@ -169,11 +188,13 @@
   gap: 6px;
   background: var(--danger);
   color: #fff;
-  font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  padding: 4px 10px;
-  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  padding: 4px 9px;
+  border-radius: 4px;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--danger) 45%, transparent);
 }
 
 .badge-live i {
@@ -185,9 +206,21 @@
 }
 
 .stream-viewers {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
   color: var(--secondary);
   font-weight: 600;
+}
+
+.stream-timecode {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .stream-hintline {
@@ -261,8 +294,9 @@
 
 .demo-alert-amount {
   color: var(--blue);
-  font-weight: 800;
-  font-size: 16px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 15.5px;
 }
 
 .demo-alert-title {
@@ -337,12 +371,13 @@
 
 .demo-ticker-item {
   flex-shrink: 0;
-  font-size: 12.5px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
   color: var(--secondary);
   background: color-mix(in srgb, var(--page) 75%, transparent);
   border: 1px solid var(--line);
-  padding: 4px 10px;
-  border-radius: 999px;
+  padding: 4px 9px;
+  border-radius: 4px;
   animation: alert-in 0.3s ease;
 }
 
@@ -397,11 +432,12 @@
 .step::before {
   content: counter(step, decimal-leading-zero);
   display: block;
-  font-size: 13px;
-  font-weight: 800;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  font-weight: 700;
   color: var(--blue);
   margin-bottom: 12px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
 }
 
 .step strong {
@@ -446,10 +482,16 @@
   font-weight: 700;
 }
 
+.fee-card .fee-name {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+}
+
 .fee-card .fee-value {
+  font-family: var(--font-mono);
   font-size: clamp(2rem, 5vw, 2.8rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   margin: 8px 0 4px;
 }
 

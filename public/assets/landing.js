@@ -100,6 +100,26 @@
     }, 7000);
   }
 
+  // 타임코드 틱 (방송 경과 시간 느낌)
+  var tcEl = document.getElementById("demo-timecode");
+  if (tcEl) {
+    var tcSec = 3600 + Math.floor(Math.random() * 5400);
+    var pad = function (n) {
+      return (n < 10 ? "0" : "") + n;
+    };
+    var renderTc = function () {
+      tcEl.textContent = pad(Math.floor(tcSec / 3600)) + ":" + pad(Math.floor((tcSec % 3600) / 60)) + ":" + pad(tcSec % 60);
+    };
+    renderTc();
+    if (!reduced) {
+      setInterval(function () {
+        if (document.hidden) return;
+        tcSec += 1;
+        renderTc();
+      }, 1000);
+    }
+  }
+
   // 시청자 수 잔잔하게 흔들기
   if (viewerEl && !reduced) {
     var viewers = 1284;
