@@ -6,7 +6,41 @@
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
+/* 기본 = 다크. 라이트는 [data-theme="light"] 오버라이드 (토글: assets/theme.js) */
 :root {
+  --primary: #e9edf3;
+  --secondary: #a9b4c0;
+  --muted: #6e7a89;
+  --page: #0e1116;
+  --surface: #141922;
+  --surface-2: #1b222d;
+  --surface-3: #273140;
+  --border: #273140;
+  --line: #1c2430;
+  --blue: #4a94ff;
+  --blue-hover: #3b82f0;
+  --blue-2: #14263f;
+  --magenta: #8f79ff;
+  --green: #2ed591;
+  --green-2: #10281d;
+  --yellow: #ffb331;
+  --yellow-2: #2c2312;
+  --danger: #ff5a67;
+  --danger-2: #321b1f;
+  --on-blue: #ffffff;
+  --on-primary: #ffffff;
+  --header: rgba(14, 17, 22, 0.85);
+  --focus: rgba(74, 148, 255, 0.4);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.45);
+  --content: 1080px;
+  --radius: 12px;
+  --radius-lg: 16px;
+  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
   --primary: #191f28;
   --secondary: #4e5968;
   --muted: #8b95a1;
@@ -17,6 +51,7 @@
   --border: #e5e8eb;
   --line: #f2f4f6;
   --blue: #0f6bff;
+  --blue-hover: #0c58d4;
   --blue-2: #ebf2ff;
   --magenta: #7c5cff;
   --green: #12b76a;
@@ -30,17 +65,12 @@
   --header: rgba(255, 255, 255, 0.88);
   --focus: rgba(15, 107, 255, 0.35);
   --shadow: 0 1px 2px rgba(25, 31, 40, 0.04), 0 8px 24px rgba(25, 31, 40, 0.06);
-  --content: 1080px;
-  --radius: 12px;
-  --radius-lg: 16px;
-  --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
+  color-scheme: light;
 }
 
-/* 단일 테마: data-theme 속성이 남아 있어도 라이트 토큰으로 고정 */
-:root[data-theme="dark"],
-:root[data-theme="light"] {
-  color-scheme: light;
+/* 로고(네이비 원본)는 다크 배경에서 반전 — 라이트에선 원본 그대로 */
+:root:not([data-theme="light"]) img[src*="gyeideuk-logo"] {
+  filter: invert(1) hue-rotate(180deg) saturate(1.2);
 }
 
 /* ---------------------------------------------------------------- 베이스 */
@@ -175,9 +205,37 @@ button {
   font-weight: 600;
 }
 
-/* 단일 테마 전환: 토글은 전 페이지에서 숨김 */
+/* 테마 토글 (다크 ⇄ 라이트) — 마크업: button.theme-toggle > svg.icon-sun + svg.icon-moon */
 .theme-toggle {
-  display: none !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--secondary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.theme-toggle:hover {
+  background: var(--surface-2);
+  color: var(--primary);
+}
+
+.theme-toggle .icon-moon {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon-sun {
+  display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon-moon {
+  display: block;
 }
 
 /* ---------------------------------------------------------------- 버튼 */
@@ -225,7 +283,7 @@ button {
 
 .btn-primary:hover,
 .btn.primary:hover {
-  background: #0c58d4;
+  background: var(--blue-hover);
 }
 
 .btn-outline,
@@ -242,13 +300,13 @@ button {
 
 .btn-danger,
 .btn.danger {
-  background: #fef1f2;
+  background: var(--danger-2);
   color: var(--danger);
 }
 
 .btn-danger:hover,
 .btn.danger:hover {
-  background: #fde3e5;
+  background: color-mix(in srgb, var(--danger) 18%, var(--page));
 }
 
 .btn-sm,
