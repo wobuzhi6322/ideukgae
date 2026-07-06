@@ -1,128 +1,990 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>계이득 — 수수료 0% 스트리머 후원 플랫폼</title>
-  <meta name="robots" content="noindex" />
-  <link rel="stylesheet" href="/assets/v2.css" />
-  <script src="/assets/theme.js"></script>
-  <link rel="stylesheet" href="/assets/landing.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="계이득 — 수수료 0% 스트리머 후원. 시청자는 이체 한 번, 후원금은 스트리머 계좌 직행, 연출은 3초 만에 방송 화면에.">
+<meta name="theme-color" content="#f3efe6">
+<title>계이득 — 이체 한 번, 3초 뒤, 방송이 터진다</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+:root{
+  --paper:#f3efe6;
+  --ink:#171512;
+  --accent:#2b3ff2;
+  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Segoe UI','Malgun Gothic',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+::selection{background:var(--accent);color:var(--paper)}
+:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+.sec-dark :focus-visible,.sec-accent :focus-visible{outline-color:var(--paper)}
+
+.wrap{max-width:1320px;margin-inline:auto;padding-inline:clamp(20px,5vw,72px)}
+.serif{font-family:var(--serif)}
+
+/* ---------- skip link ---------- */
+.skip{
+  position:absolute;left:-999px;top:0;z-index:100;
+  background:var(--ink);color:var(--paper);padding:.7rem 1.2rem;font-weight:700;
+}
+.skip:focus{left:0}
+
+/* ---------- masthead ---------- */
+.masthead{
+  display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  padding:1rem clamp(20px,5vw,72px);
+  border-bottom:2px solid var(--ink);
+}
+.masthead-logo img{height:26px;width:auto}
+.masthead nav{display:flex;align-items:center;gap:clamp(.8rem,2.4vw,1.8rem);font-weight:700;font-size:.94rem;white-space:nowrap}
+.masthead nav a:not(.nav-cta):hover{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
+.nav-cta{background:var(--ink);color:var(--paper);padding:.55rem 1.05rem;transition:background .18s ease}
+.nav-cta:hover{background:var(--accent)}
+@media (max-width:540px){.nav-hide{display:none}}
+
+/* ---------- hero ---------- */
+.hero{position:relative;padding-block:clamp(3rem,7vw,6.5rem) clamp(3rem,6vw,5rem)}
+.hero-meta{
+  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
+  border-bottom:1px solid var(--ink);padding-bottom:.7rem;
+  margin-bottom:clamp(2rem,5vw,4rem);
+  font-size:clamp(.72rem,1.4vw,.85rem);letter-spacing:.14em;font-weight:700;
+}
+.h1{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(2.55rem,10.5vw,9rem);
+  line-height:1.04;letter-spacing:-.03em;word-break:keep-all;
+}
+.h1 .ln{display:block}
+.h1 .ln--2{margin-left:clamp(1.5rem,11vw,10rem)}
+.h1 .acc{font-style:normal;color:var(--accent)}
+.hero-foot{
+  display:flex;flex-wrap:wrap;gap:2.2rem 3rem;justify-content:space-between;align-items:flex-end;
+  margin-top:clamp(2.5rem,6vw,4.5rem);
+}
+.hero-sub{max-width:430px;font-size:clamp(.98rem,1.3vw,1.1rem);line-height:1.85;opacity:.82;word-break:keep-all}
+.hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap}
+.vert{
+  position:absolute;top:38%;right:clamp(2px,1vw,18px);
+  writing-mode:vertical-rl;font-size:.7rem;letter-spacing:.42em;font-weight:700;opacity:.4;
+  display:none;
+}
+@media (min-width:1100px){.vert{display:block}}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  padding:1rem 1.8rem;font-weight:800;font-size:1rem;
+  border:2px solid var(--ink);background:transparent;color:var(--ink);
+  transition:transform .18s ease,background .18s ease,color .18s ease,border-color .18s ease;
+}
+.btn:hover{transform:translateY(-3px)}
+.btn--primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn--primary:hover{background:var(--ink);border-color:var(--ink)}
+.btn--big{padding:1.2rem 2.4rem;font-size:clamp(1.02rem,1.6vw,1.2rem)}
+
+/* ---------- ticker ---------- */
+.ticker{border-block:2px solid var(--ink);overflow:hidden;padding:.85rem 0}
+.ticker-track{display:flex;width:max-content;animation:tick 34s linear infinite}
+.ticker-group{display:flex;align-items:center;gap:2.2rem;padding-right:2.2rem;white-space:nowrap}
+.tk{font-size:.94rem;font-weight:600}
+.tk em{font-style:normal;color:var(--accent);font-weight:800;margin-right:.45rem}
+.tk-star{color:var(--accent);font-size:.8rem}
+@keyframes tick{to{transform:translateX(-50%)}}
+
+/* ---------- chapters common ---------- */
+.chapter{position:relative;overflow:hidden;padding-block:clamp(4.5rem,10vw,8.5rem)}
+.sec-dark{background:var(--ink);color:var(--paper)}
+.sec-accent{background:var(--accent);color:var(--paper)}
+.kicker{
+  display:flex;align-items:center;gap:1rem;
+  font-size:.82rem;font-weight:800;letter-spacing:.2em;
+  margin-bottom:clamp(1.8rem,4vw,3.2rem);
+}
+.kicker::before{content:"";width:3rem;height:3px;background:currentColor;flex:none}
+.h2{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(2.1rem,6vw,4.6rem);
+  line-height:1.08;letter-spacing:-.02em;word-break:keep-all;
+}
+.lead{
+  margin-top:clamp(1.2rem,2.5vw,2rem);max-width:620px;
+  font-size:clamp(.98rem,1.3vw,1.15rem);line-height:1.85;opacity:.82;word-break:keep-all;
+}
+.ghost{
+  position:absolute;top:-.06em;right:-.03em;z-index:0;
+  font-family:var(--serif);font-weight:900;line-height:.8;
+  font-size:clamp(9rem,28vw,24rem);
+  color:transparent;-webkit-text-stroke:1.5px rgba(23,21,18,.16);
+  pointer-events:none;user-select:none;
+}
+.sec-dark .ghost{-webkit-text-stroke-color:rgba(243,239,230,.16)}
+.sec-accent .ghost{-webkit-text-stroke-color:rgba(243,239,230,.28)}
+@supports not (-webkit-text-stroke:1px #000){
+  .ghost{color:rgba(128,128,128,.1);-webkit-text-stroke:0}
+}
+.chapter .wrap{position:relative;z-index:1}
+
+/* ---------- ch.1 demo ---------- */
+.demo-grid{
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:clamp(1.8rem,4vw,4rem);
+  margin-top:clamp(2.4rem,5vw,4rem);
+}
+@media (min-width:960px){
+  .demo-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
+  .demo-menu-col{order:-1}
+}
+@media (max-width:959px){
+  .demo-stage-col{position:sticky;top:0;z-index:6;background:var(--ink);padding-block:.6rem}
+}
+.nick-field{margin-bottom:1.4rem}
+.nick-field label{display:block;font-size:.78rem;letter-spacing:.16em;font-weight:800;opacity:.72;margin-bottom:.4rem}
+.nick-field input{
+  width:100%;max-width:320px;background:transparent;border:0;
+  border-bottom:2px solid rgba(243,239,230,.4);
+  color:inherit;font:inherit;font-size:1.05rem;padding:.45rem .1rem;border-radius:0;
+}
+.nick-field input::placeholder{color:rgba(243,239,230,.35)}
+.nick-field input:focus{border-bottom-color:var(--paper)}
+.menu-item{
+  display:block;width:100%;text-align:left;
+  border-top:1px solid rgba(243,239,230,.28);
+  padding:1.25rem .5rem;
+  transition:background .16s ease,color .16s ease,padding-left .16s ease;
+}
+.menu-item:last-of-type{border-bottom:1px solid rgba(243,239,230,.28)}
+.menu-item:hover,.menu-item:focus-visible{background:var(--paper);color:var(--ink);padding-left:1rem}
+.menu-item:active{transform:scale(.985)}
+.menu-line{
+  display:flex;align-items:baseline;gap:.9rem;
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(1.3rem,2.4vw,1.85rem);letter-spacing:-.01em;
+}
+.leader{flex:1 1 auto;min-width:1.5rem;align-self:center;border-bottom:2px dotted currentColor;opacity:.45}
+.menu-price{white-space:nowrap;font-variant-numeric:tabular-nums}
+.menu-desc{display:block;margin-top:.4rem;font-size:.93rem;opacity:.72;word-break:keep-all}
+.menu-cue{
+  display:block;margin-top:.5rem;font-size:.78rem;font-weight:800;letter-spacing:.1em;
+  color:var(--accent);opacity:0;transform:translateX(-6px);
+  transition:opacity .18s ease,transform .18s ease;
+}
+.menu-item:hover .menu-cue,.menu-item:focus-visible .menu-cue{opacity:1;transform:none}
+.menu-hint{margin-top:1.3rem;font-size:.88rem;opacity:.6;line-height:1.7;word-break:keep-all}
+
+.frame{
+  position:relative;aspect-ratio:16/10;overflow:hidden;
+  background:radial-gradient(120% 95% at 72% 18%,#26222b 0%,#121016 55%,#0a090d 100%);
+  border:1px solid rgba(243,239,230,.3);
+}
+.frame::before{
+  content:"";position:absolute;inset:0;opacity:.06;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(243,239,230,.5) 3px 4px);
+}
+.frame.hit{animation:frame-hit .55s ease}
+@keyframes frame-hit{0%{box-shadow:0 0 0 0 rgba(43,63,242,.85)}100%{box-shadow:0 0 0 28px rgba(43,63,242,0)}}
+.live-badge{position:absolute;top:14px;left:14px;z-index:3;display:flex;align-items:center;gap:.6rem}
+.live-pill{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:var(--accent);color:var(--paper);
+  font-size:.7rem;font-weight:800;letter-spacing:.16em;padding:.32rem .6rem;
+}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--paper);animation:pulse 1.6s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.live-viewers{font-size:.78rem;opacity:.75;font-variant-numeric:tabular-nums}
+.chat-feed{
+  position:absolute;left:14px;bottom:12px;right:38%;z-index:2;
+  display:flex;flex-direction:column;gap:.3rem;
+}
+.chat-line{font-size:clamp(.7rem,1.4vw,.82rem);line-height:1.4;animation:chat-in .25s ease both;word-break:break-all}
+.chat-nick{color:#9aa8ff;font-weight:700;margin-right:.45rem}
+.chat-text{color:rgba(243,239,230,.85)}
+@keyframes chat-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.overlay-host{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.don{
+  background:var(--paper);color:var(--ink);text-align:center;
+  border:2px solid var(--ink);box-shadow:7px 7px 0 var(--accent);
+  padding:clamp(.9rem,2.6vw,1.5rem) clamp(1.1rem,3.4vw,2.2rem);
+  max-width:80%;
+  animation:don-pop .55s cubic-bezier(.18,1.5,.35,1) both;
+}
+.don.out{animation:don-out .45s ease both}
+@keyframes don-pop{0%{opacity:0;transform:scale(.55) translateY(28px)}100%{opacity:1;transform:none}}
+@keyframes don-out{to{opacity:0;transform:translateY(-16px) scale(.94)}}
+.don-badge{font-size:.66rem;font-weight:800;letter-spacing:.18em;color:var(--accent);margin-bottom:.45rem}
+.don-nick{font-weight:800;font-size:clamp(.95rem,2vw,1.2rem)}
+.don-nick span{font-weight:500;opacity:.55;font-size:.82em}
+.don-amt{
+  font-family:var(--serif);font-weight:900;line-height:1.15;
+  font-size:clamp(1.8rem,4.6vw,3.1rem);
+  margin:.1rem 0 .25rem;font-variant-numeric:tabular-nums;
+}
+.don-msg{font-size:clamp(.82rem,1.6vw,.98rem);opacity:.85;word-break:keep-all}
+.cf{
+  position:absolute;left:50%;top:46%;width:9px;height:13px;z-index:3;
+  background:var(--paper);pointer-events:none;
+  animation:cf-fly .85s cubic-bezier(.16,.8,.32,1) both;
+}
+.cf-alt{background:var(--accent)}
+@keyframes cf-fly{
+  0%{opacity:1;transform:translate(-50%,-50%) rotate(0deg)}
+  100%{opacity:0;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(var(--rz))}
+}
+.frame-caption{
+  margin-top:.85rem;font-size:.85rem;word-break:keep-all;
+  display:flex;align-items:center;justify-content:space-between;gap:.7rem 1.4rem;flex-wrap:wrap;
+}
+.frame-caption .cap-text{opacity:.55}
+.sound-toggle{
+  flex:none;display:inline-flex;align-items:center;gap:.55rem;
+  border:1px solid rgba(243,239,230,.5);
+  padding:.42rem .85rem;
+  font-size:.72rem;font-weight:800;letter-spacing:.16em;
+  transition:border-color .18s ease,opacity .18s ease,transform .18s ease;
+}
+.sound-toggle:hover{transform:translateY(-1px);border-color:var(--paper)}
+.sound-toggle::before{
+  content:"";width:8px;height:8px;border-radius:50%;flex:none;
+  border:1px solid rgba(243,239,230,.85);background:var(--accent);
+  transition:background .18s ease;
+}
+.sound-toggle[aria-pressed="false"]{opacity:.55}
+.sound-toggle[aria-pressed="false"]::before{background:transparent}
+
+/* ---------- ch.2 steps ---------- */
+.steps{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(1.6rem,3vw,3rem);margin-top:clamp(2.4rem,5vw,4rem);
+}
+@media (max-width:860px){.steps{grid-template-columns:minmax(0,1fr)}}
+.step{border-top:3px solid var(--ink);padding-top:1.2rem}
+.step-num{font-family:var(--serif);font-weight:900;font-size:clamp(2.8rem,6vw,4.6rem);line-height:1;color:var(--accent)}
+.step h3{margin:.65rem 0 .55rem;font-size:clamp(1.2rem,2vw,1.5rem);font-weight:800;word-break:keep-all}
+.step p{opacity:.78;line-height:1.75;word-break:keep-all;font-size:clamp(.94rem,1.2vw,1.02rem)}
+.pull{
+  margin-top:clamp(2.8rem,6vw,4.5rem);max-width:34ch;
+  font-family:var(--serif);font-weight:700;line-height:1.45;word-break:keep-all;
+  font-size:clamp(1.35rem,3vw,2.1rem);
+  border-left:6px solid var(--accent);padding-left:1.2rem;
+}
+
+/* ---------- ch.3 zero ---------- */
+.zero-num{
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(6.4rem,25vw,21rem);
+  line-height:.92;letter-spacing:-.04em;margin-left:-.03em;
+}
+.zero-title{
+  font-family:var(--serif);font-weight:900;word-break:keep-all;
+  font-size:clamp(1.7rem,4.4vw,3.3rem);line-height:1.2;
+  margin-top:clamp(1rem,2.5vw,2rem);
+}
+.zero-lead{margin-top:1.4rem;max-width:560px;line-height:1.85;font-size:clamp(.98rem,1.3vw,1.12rem);opacity:.9;word-break:keep-all}
+.rcpt-heading{
+  margin-top:clamp(2.6rem,5vw,4rem);
+  font-family:var(--serif);font-weight:700;
+  font-size:clamp(1.15rem,2.2vw,1.5rem);word-break:keep-all;
+}
+.rcpt-grid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:clamp(2rem,4vw,3.2rem);align-items:start;
+  max-width:920px;margin-top:clamp(1.6rem,3vw,2.4rem);
+}
+@media (max-width:820px){.rcpt-grid{grid-template-columns:minmax(0,1fr);max-width:520px}}
+.rcpt{
+  position:relative;background:var(--paper);color:var(--ink);
+  padding:clamp(1.5rem,3vw,2.1rem) clamp(1.2rem,2.6vw,1.8rem) 2.2rem;
+  filter:drop-shadow(9px 9px 0 rgba(23,21,18,.42));
+}
+.rcpt::after{
+  content:"";position:absolute;top:100%;left:0;width:100%;height:10px;
+  background-image:
+    linear-gradient(135deg,var(--paper) 7px,transparent 0),
+    linear-gradient(-135deg,var(--paper) 7px,transparent 0);
+  background-size:14px 14px;background-repeat:repeat-x;
+}
+.rcpt--old{transform:rotate(-1.2deg)}
+.rcpt--new{transform:rotate(1deg)}
+.rcpt-shop{
+  font-family:var(--serif);font-weight:900;text-align:center;
+  font-size:clamp(1.25rem,2vw,1.5rem);letter-spacing:-.01em;
+}
+.rcpt-label{
+  text-align:center;font-size:.66rem;font-weight:800;
+  letter-spacing:.55em;text-indent:.55em;opacity:.55;margin-top:.25rem;
+}
+.rcpt-date{
+  text-align:center;font-size:.78rem;opacity:.6;margin-top:.15rem;
+  padding-bottom:.9rem;border-bottom:2px dotted rgba(23,21,18,.45);
+}
+.rcpt-rows{margin-top:.3rem}
+.rcpt-row{
+  display:flex;align-items:baseline;gap:.7rem;padding:.68rem 0;
+  border-bottom:1px dotted rgba(23,21,18,.4);
+  font-size:clamp(.88rem,1.2vw,.98rem);
+}
+.rcpt-row:last-of-type{border-bottom:0}
+.rcpt-row .leader{opacity:.4}
+.rcpt-val{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:700}
+.rcpt-val--minus{font-weight:800}
+.rcpt-val--zero{color:var(--accent);font-weight:900}
+.rcpt-total{
+  display:flex;align-items:baseline;gap:.7rem;
+  padding-top:1rem;border-top:3px solid var(--ink);
+  font-family:var(--serif);font-weight:900;
+  font-size:clamp(1.05rem,1.7vw,1.25rem);
+}
+.rcpt--new .rcpt-total .rcpt-val{color:var(--accent)}
+.rcpt-when{margin-top:.4rem;text-align:right;font-size:.8rem;font-weight:700;opacity:.6}
+.rcpt--new .rcpt-when{color:var(--accent);opacity:1}
+.rcpt-fine{margin-top:1.1rem;font-size:.74rem;opacity:.55;line-height:1.6;word-break:keep-all}
+.rcpt-stamp{
+  position:absolute;right:16px;bottom:56px;
+  width:94px;height:94px;border:3px solid currentColor;border-radius:50%;
+  display:grid;place-items:center;text-align:center;
+  font-family:var(--serif);font-weight:900;font-size:1.05rem;line-height:1.25;
+  letter-spacing:.05em;transform:rotate(-12deg);
+  pointer-events:none;mix-blend-mode:multiply;
+}
+.rcpt-stamp::before{content:"";position:absolute;inset:5px;border:1px solid currentColor;border-radius:50%;opacity:.7}
+.rcpt-stamp--old{color:rgba(23,21,18,.32)}
+.rcpt-stamp--new{color:var(--accent)}
+.zero-note{margin-top:1.6rem;font-size:.85rem;opacity:.65}
+
+/* ---------- final cta ---------- */
+.cta .h2{font-size:clamp(2.3rem,7.4vw,5.8rem)}
+.cta-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-top:clamp(2rem,4.5vw,3.4rem)}
+.cta-login{margin-top:1.4rem;font-size:.95rem;opacity:.75}
+.cta-login a{font-weight:800;text-decoration:underline;text-underline-offset:4px}
+.cta-login a:hover{color:var(--accent)}
+.cta-viewer{margin-top:clamp(2.2rem,4vw,3rem);font-size:.92rem;opacity:.6;word-break:keep-all}
+.cta-viewer a{text-decoration:underline;text-underline-offset:4px;font-weight:700}
+
+/* ---------- footer ---------- */
+.footer{
+  background:var(--ink);color:var(--paper);
+  border-top:6px solid var(--accent);
+  padding:clamp(2.8rem,6vw,4.2rem) 0 1.8rem;
+}
+.footer-grid{display:flex;flex-wrap:wrap;gap:2.2rem 3.5rem;justify-content:space-between;align-items:flex-start}
+.footer-logo img{height:24px;width:auto;filter:invert(1) hue-rotate(180deg)}
+.footer-tag{margin-top:.9rem;font-size:.9rem;opacity:.6;word-break:keep-all}
+.footer-col h4{font-size:.76rem;letter-spacing:.18em;font-weight:800;opacity:.5;margin-bottom:.8rem}
+.footer-col ul{list-style:none}
+.footer-col li{margin-bottom:.5rem}
+.footer-col a{font-size:.95rem;font-weight:600;opacity:.85}
+.footer-col a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
+.footer-bottom{
+  margin-top:clamp(2.2rem,5vw,3.5rem);padding-top:1.2rem;
+  border-top:1px solid rgba(243,239,230,.2);
+  display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-between;
+  font-size:.82rem;opacity:.5;
+}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
+.rv.in{opacity:1;transform:none}
+/* 영수증은 리빌 후에도 기울기 유지 (.rv.in 의 transform:none 보다 우선) */
+.rcpt--old.rv.in{transform:rotate(-1.2deg)}
+.rcpt--new.rv.in{transform:rotate(1deg)}
+
+/* ---------- reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .rv{transform:none}
+}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="logo" href="/"><img src="/assets/gyeideuk-logo.png" alt="계이득" /></a>
-      <nav class="site-nav">
-        <a href="/channels">채널 탐색</a>
-        <a href="/login">로그인</a>
-        <a class="btn btn-primary btn-sm" href="/signup?role=streamer">스트리머로 시작</a>
-        <button class="theme-toggle" type="button" aria-label="테마 전환"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
-      </nav>
-    </div>
-  </header>
+<a class="skip" href="#main">본문으로 건너뛰기</a>
 
-  <main>
-    <!-- 히어로: 설명하지 않고 바로 만지게 한다 -->
-    <section class="hero">
-      <span class="eyebrow"><i class="dot"></i>LIVE DEMO — 지금 이 화면이 데모입니다</span>
-      <h1>후원이 <span class="accent">3초 만에</span><br />방송에 뜨는 경험</h1>
-      <p class="sub">아래 시그니처 카드를 눌러 방송 화면에 직접 쏴보세요.<br />시청자가 보게 될 화면 그대로입니다.</p>
-    </section>
+<!-- ========== masthead ========== -->
+<header class="masthead">
+  <a class="masthead-logo" href="/" aria-label="계이득 홈">
+    <img src="/assets/gyeideuk-logo.png" alt="계이득" height="26">
+  </a>
+  <nav aria-label="주요 메뉴">
+    <a class="nav-hide" href="/channels">채널 탐색</a>
+    <a href="/login">로그인</a>
+    <a class="nav-cta" href="/signup?role=streamer">시작하기</a>
+  </nav>
+</header>
 
-    <section class="demo" aria-label="인터랙티브 데모">
-      <div class="demo-panel">
-        <div class="panel-label">시청자가 보는 후원 메뉴판</div>
-        <div class="demo-sigs">
-          <button class="demo-sig" type="button"><span class="s-emoji">👋</span><span class="s-title">환영 인사</span><span class="s-amount">1,000원</span></button>
-          <button class="demo-sig" type="button"><span class="s-emoji">🔥</span><span class="s-title">풀콤보 리액션</span><span class="s-amount">5,000원</span></button>
-          <button class="demo-sig" type="button"><span class="s-emoji">🎵</span><span class="s-title">노래 한 곡 신청</span><span class="s-amount">10,000원</span></button>
-          <button class="demo-sig" type="button"><span class="s-emoji">🎉</span><span class="s-title">레전드 소원권</span><span class="s-amount">50,000원</span></button>
+<main id="main">
+
+  <!-- ========== hero ========== -->
+  <section class="hero" aria-label="계이득 소개">
+    <div class="wrap">
+      <p class="hero-meta rv">
+        <span>후원의 판을 다시 짜는 선언 · 제0호</span>
+        <span>수수료 0% · 계좌 직행</span>
+      </p>
+      <h1 class="h1">
+        <span class="ln rv">이체 한 번.</span>
+        <span class="ln ln--2 rv" style="--d:.08s"><em class="acc">3초</em> 뒤,</span>
+        <span class="ln rv" style="--d:.16s">방송이 터진다.</span>
+      </h1>
+      <div class="hero-foot">
+        <div class="hero-ctas rv" style="--d:.24s">
+          <a class="btn btn--primary" href="/signup?role=streamer">스트리머로 시작하기</a>
+          <a class="btn" href="#demo">메뉴판 눌러보기 ↓</a>
         </div>
-        <div class="demo-nick-row">
-          <label for="demo-nick">내 닉네임으로 쏘기</label>
-          <input id="demo-nick" type="text" maxlength="10" value="민수" autocomplete="off" />
-        </div>
-        <p class="demo-hint">실제 서비스에선 이 메뉴판이 스트리머의 계좌이체 후원 페이지가 됩니다 — 수수료 0%.</p>
+        <p class="hero-sub rv" style="--d:.3s">
+          계이득은 스트리머 후원에서 플랫폼을 지웠습니다.
+          시청자는 가입도 앱도 없이 계좌이체 한 번,
+          후원금은 수수료 0%로 스트리머 계좌에 직행,
+          연출은 3초 만에 방송 화면 위로.
+          중간에 남는 건 아무것도 없습니다.
+        </p>
       </div>
-
-      <div class="demo-stream frame" aria-label="방송 화면 미리보기">
-        <div class="stream-top">
-          <span class="badge-live"><i></i>ON AIR</span>
-          <span class="stream-viewers"><span id="demo-viewers">1,284</span>명 시청 중</span>
-          <span class="stream-timecode"><span class="level-meter" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="demo-timecode">00:00:00</span></span>
-        </div>
-        <p class="stream-hintline">← 카드를 누르면 여기에 후원이 뜹니다</p>
-        <div id="demo-overlay"></div>
-        <div class="demo-ticker-wrap" id="demo-ticker"></div>
-      </div>
-    </section>
-
-    <div class="hero-cta">
-      <a class="btn btn-primary" href="/signup?role=streamer">내 후원 페이지 만들기</a>
-      <a class="btn btn-outline" href="/channels">채널 둘러보기</a>
     </div>
+    <span class="vert" aria-hidden="true">IDEUKGAE · FEE 0% · LIVE IN 3 SEC</span>
+  </section>
 
-    <!-- 어떻게 되는 건지: 3단계 -->
-    <section class="section reveal">
-      <div class="sec-label">어떻게 되는 거예요?</div>
-      <h2>계좌이체가 방송 리액션이 되기까지</h2>
-      <p class="sec-sub">시청자는 앱 설치도 회원가입도 필요 없습니다. 은행 앱에서 이체 한 번이면 끝.</p>
+  <!-- ========== ticker ========== -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-track">
+      <div class="ticker-group">
+        <span class="tk"><em>방금</em>밤새는감자 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>1분 전</em>츄르수집가 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>2분 전</em>옆집시청자 님 — 환영인사 1,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>3분 전</em>도네장인 님 — 소원권 50,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>4분 전</em>새벽두시반 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>5분 전</em>하이라이트요정 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
+      </div>
+      <div class="ticker-group">
+        <span class="tk"><em>방금</em>밤새는감자 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>1분 전</em>츄르수집가 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>2분 전</em>옆집시청자 님 — 환영인사 1,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>3분 전</em>도네장인 님 — 소원권 50,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>4분 전</em>새벽두시반 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
+        <span class="tk"><em>5분 전</em>하이라이트요정 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ch.1 signature menu / live demo ========== -->
+  <section class="chapter sec-dark" id="demo" aria-label="시그니처 메뉴판 데모">
+    <span class="ghost" aria-hidden="true">01</span>
+    <div class="wrap">
+      <p class="kicker rv">제1장 — 시그니처 메뉴판</p>
+      <h2 class="h2 rv" style="--d:.06s">후원에<br>메뉴판이 생겼다.</h2>
+      <p class="lead rv" style="--d:.12s">
+        금액마다 방송 리액션을 정해두는 것. 계이득은 그걸 <strong>시그니처</strong>라고 부릅니다.
+        시청자는 얼마를 보낼지 고민하는 대신, 메뉴판에서 고르듯 주문합니다.
+        아래는 실제로 작동하는 메뉴판입니다 — 눌러보세요.
+      </p>
+
+      <div class="demo-grid">
+        <div class="demo-stage-col rv" style="--d:.1s">
+          <figure>
+            <div class="frame" id="demo-frame">
+              <div class="live-badge" aria-hidden="true">
+                <span class="live-pill"><span class="live-dot"></span>LIVE</span>
+                <span class="live-viewers">시청 <span id="viewer-count">1,284</span>명</span>
+              </div>
+              <div class="chat-feed" id="chat-feed" aria-hidden="true"></div>
+              <div class="overlay-host" id="overlay-host" aria-hidden="true"></div>
+            </div>
+            <figcaption class="frame-caption">
+              <span class="cap-text">방송 화면 미리보기 — 실제 방송에서는 OBS 위에 이대로 올라갑니다.</span>
+              <button type="button" class="sound-toggle" id="sound-toggle" aria-pressed="true">효과음 <span id="sound-state">ON</span></button>
+            </figcaption>
+          </figure>
+        </div>
+
+        <div class="demo-menu-col rv" style="--d:.18s">
+          <div class="nick-field">
+            <label for="demo-nick">내 닉네임으로 쏴보기 (선택)</label>
+            <input id="demo-nick" type="text" maxlength="12" autocomplete="off" placeholder="예: 밤새는감자">
+          </div>
+
+          <button type="button" class="menu-item" data-sig="0">
+            <span class="menu-line"><span class="menu-name">환영인사</span><span class="leader"></span><span class="menu-price">1,000원</span></span>
+            <span class="menu-desc">이름 부르고, 손 흔들고, 정착 확정.</span>
+            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
+          </button>
+          <button type="button" class="menu-item" data-sig="1">
+            <span class="menu-line"><span class="menu-name">풀콤보</span><span class="leader"></span><span class="menu-price">5,000원</span></span>
+            <span class="menu-desc">감사인사–리액션–댄스, 끊김 없는 3단 콤보.</span>
+            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
+          </button>
+          <button type="button" class="menu-item" data-sig="2">
+            <span class="menu-line"><span class="menu-name">노래신청</span><span class="leader"></span><span class="menu-price">10,000원</span></span>
+            <span class="menu-desc">신청곡 즉석 라이브. 음정은 보장 못 합니다.</span>
+            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
+          </button>
+          <button type="button" class="menu-item" data-sig="3">
+            <span class="menu-line"><span class="menu-name">소원권</span><span class="leader"></span><span class="menu-price">50,000원</span></span>
+            <span class="menu-desc">방송에서 가능한 거라면, 뭐든 이뤄드립니다.</span>
+            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
+          </button>
+
+          <p class="menu-hint">
+            메뉴 이름도, 가격도, 연출도 전부 스트리머가 정합니다.
+            가만히 두면 — 다른 시청자들이 먼저 쏩니다.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ch.2 how it works ========== -->
+  <section class="chapter" aria-label="작동 방식">
+    <span class="ghost" aria-hidden="true">02</span>
+    <div class="wrap">
+      <p class="kicker rv">제2장 — 작동 방식</p>
+      <h2 class="h2 rv" style="--d:.06s">복잡한 일은<br>전부 프로그램 몫.</h2>
+
       <div class="steps">
-        <div class="step">
-          <strong>메뉴판에서 고르고 이체</strong>
-          <span>시청자가 후원 페이지에서 시그니처를 고르면 입금코드가 발급됩니다. 토스·카카오페이 송금 링크로 바로 이체.</span>
+        <div class="step rv" style="--d:.08s">
+          <p class="step-num" aria-hidden="true">1</p>
+          <h3>고르고, 보낸다</h3>
+          <p>시청자는 후원 페이지에서 시그니처를 고르고 계좌이체를 합니다. 가입도, 앱 설치도, 결제 비밀번호 등록도 없습니다. 은행 앱 하나면 끝.</p>
         </div>
-        <div class="step">
-          <strong>계이득이 입금을 감지</strong>
-          <span>스트리머 PC의 계이득 프로그램이 입금 알림을 감지하고 메시지와 자동으로 짝을 맞춥니다.</span>
+        <div class="step rv" style="--d:.16s">
+          <p class="step-num" aria-hidden="true">2</p>
+          <h3>입금을 감지한다</h3>
+          <p>스트리머 PC의 계이득 프로그램이 계좌 입금을 실시간으로 감지합니다. 스트리머는 아무것도 누르지 않습니다. 방송만 하면 됩니다.</p>
         </div>
-        <div class="step">
-          <strong>방송에 바로 재생</strong>
-          <span>닉네임·금액·메시지와 함께 시그니처 연출이 OBS 오버레이로 터집니다. 방금 위에서 보신 그대로.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 수수료 비교 -->
-    <section class="section reveal">
-      <div class="sec-label">그래서 얼마 떼는데요?</div>
-      <h2>안 뗍니다. 후원은 내 계좌로 직행.</h2>
-      <div class="fee-compare">
-        <div class="fee-card theirs">
-          <div class="fee-name">기존 후원 플랫폼</div>
-          <div class="fee-value">수 %</div>
-          <ul>
-            <li>플랫폼 + 결제 수수료 차감</li>
-            <li>정산까지 며칠 대기</li>
-            <li>출금 신청 절차</li>
-          </ul>
-        </div>
-        <div class="fee-card ours">
-          <div class="fee-name">계이득</div>
-          <div class="fee-value">0%</div>
-          <ul>
-            <li>시청자 계좌 → 내 계좌 직행</li>
-            <li>정산 대기 없음, 즉시 입금</li>
-            <li>플랫폼이 돈을 만지지 않음</li>
-          </ul>
+        <div class="step rv" style="--d:.24s">
+          <p class="step-num" aria-hidden="true">3</p>
+          <h3>방송이 터진다</h3>
+          <p>닉네임·금액·메시지가 시그니처 연출과 함께 OBS 화면에 등장합니다. 입금 순간부터 여기까지, 3초.</p>
         </div>
       </div>
-    </section>
 
-    <!-- 마지막 CTA -->
-    <section class="final-cta reveal">
-      <h2>내 방송에도 5분이면 붙습니다</h2>
-      <p>후원 페이지 만들고, 프로그램 연결하고, 시그니처 공개하면 끝.</p>
-      <a class="btn btn-primary" href="/signup?role=streamer">무료로 시작하기</a>
-    </section>
-  </main>
+      <p class="pull rv" style="--d:.1s">시청자의 준비물은 은행 앱 하나. 스트리머의 준비물은 계좌 하나.</p>
+    </div>
+  </section>
 
-  <footer class="site-footer">
-    <nav><a href="/terms.html">이용약관</a><a href="/privacy.html">개인정보처리방침</a></nav>
-    <p style="margin-top:10px">© 계이득</p>
-  </footer>
+  <!-- ========== ch.3 zero fee ========== -->
+  <section class="chapter sec-accent" aria-label="수수료 0%">
+    <span class="ghost" aria-hidden="true">03</span>
+    <div class="wrap">
+      <p class="kicker rv">제3장 — 수수료</p>
+      <p class="zero-num rv" style="--d:.06s" aria-hidden="true">0%</p>
+      <h2 class="zero-title rv" style="--d:.12s">우리는 후원금에<br>손대지 않는다.</h2>
+      <p class="zero-lead rv" style="--d:.18s">
+        후원금은 시청자 계좌에서 스트리머 계좌로 직행합니다.
+        플랫폼이 중간에서 돈을 만지지 않으니, 떼일 수수료도 없고 기다릴 정산일도 없습니다.
+        오만 원을 받으면, 오만 원이 남습니다.
+      </p>
 
-  <script src="/assets/landing.js"></script>
+      <p class="rcpt-heading rv" style="--d:.2s">같은 오만 원, 영수증 두 장.</p>
+
+      <div class="rcpt-grid">
+        <article class="rcpt rcpt--old rv" style="--d:.24s" aria-label="보통의 후원 플랫폼 정산 영수증 예시">
+          <p class="rcpt-shop">보통의 후원 플랫폼</p>
+          <p class="rcpt-label">영수증</p>
+          <p class="rcpt-date">방송 후원 결산 · 어느 날</p>
+          <div class="rcpt-rows">
+            <div class="rcpt-row"><span>시청자가 보낸 마음</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">50,000원</span></div>
+            <div class="rcpt-row"><span>플랫폼이 가져가는 몫</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--minus">−10,000원</span></div>
+            <div class="rcpt-row"><span>정산 수수료</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--minus">−500원</span></div>
+            <div class="rcpt-row"><span>정산까지 기다리는 날</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">14일</span></div>
+          </div>
+          <p class="rcpt-total"><span>계좌에 찍히는 돈</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">39,500원</span></p>
+          <p class="rcpt-when">— 그것도 2주 뒤에</p>
+          <p class="rcpt-fine">* 예시 수치입니다. 어디는 더 떼고 어디는 덜 떼지만, 어쨌든 뗍니다.</p>
+          <span class="rcpt-stamp rcpt-stamp--old" aria-hidden="true">미결</span>
+        </article>
+
+        <article class="rcpt rcpt--new rv" style="--d:.3s" aria-label="계이득 정산 영수증">
+          <p class="rcpt-shop">계이득</p>
+          <p class="rcpt-label">영수증</p>
+          <p class="rcpt-date">방송 후원 결산 · 오늘</p>
+          <div class="rcpt-rows">
+            <div class="rcpt-row"><span>시청자가 보낸 마음</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">50,000원</span></div>
+            <div class="rcpt-row"><span>플랫폼이 가져가는 몫</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--zero">−0원</span></div>
+            <div class="rcpt-row"><span>정산 수수료</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--zero">−0원</span></div>
+            <div class="rcpt-row"><span>정산까지 기다리는 날</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--zero">0일</span></div>
+          </div>
+          <p class="rcpt-total"><span>계좌에 찍히는 돈</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">50,000원</span></p>
+          <p class="rcpt-when">— 이체 즉시</p>
+          <p class="rcpt-fine">시청자 계좌에서 스트리머 계좌로 직행. 중간에 아무도 없습니다.</p>
+          <span class="rcpt-stamp rcpt-stamp--new" aria-hidden="true">결산<br>완료</span>
+        </article>
+      </div>
+      <p class="zero-note rv" style="--d:.26s">* 후원금은 계이득의 계좌를 단 1초도 거치지 않습니다.</p>
+    </div>
+  </section>
+
+  <!-- ========== final cta ========== -->
+  <section class="chapter cta" aria-label="시작하기">
+    <div class="wrap">
+      <p class="kicker rv">마지막 장 — 시작</p>
+      <h2 class="h2 rv" style="--d:.06s">계좌 하나로,<br>오늘 밤 방송부터.</h2>
+      <div class="cta-ctas rv" style="--d:.14s">
+        <a class="btn btn--primary btn--big" href="/signup?role=streamer">스트리머로 시작하기</a>
+        <a class="btn btn--big" href="/channels">채널 둘러보기</a>
+      </div>
+      <p class="cta-login rv" style="--d:.2s">이미 계정이 있다면 <a href="/login">로그인</a></p>
+      <p class="cta-viewer rv" style="--d:.26s">시청자라면 — <a href="/channels">채널 탐색</a>에서 좋아하는 스트리머의 메뉴판을 먼저 구경해 보세요.</p>
+    </div>
+  </section>
+</main>
+
+<!-- ========== footer ========== -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="footer-logo" href="/" aria-label="계이득 홈">
+          <img src="/assets/gyeideuk-logo.png" alt="계이득" height="24">
+        </a>
+        <p class="footer-tag">스트리머 후원, 수수료 0%.<br>이체 한 번이 방송을 터뜨립니다.</p>
+      </div>
+      <div class="footer-col">
+        <h4>바로가기</h4>
+        <ul>
+          <li><a href="/signup?role=streamer">스트리머 가입</a></li>
+          <li><a href="/channels">채널 탐색</a></li>
+          <li><a href="/login">로그인</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>약관</h4>
+        <ul>
+          <li><a href="/terms.html">이용약관</a></li>
+          <li><a href="/privacy.html">개인정보처리방침</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© <span id="year">2026</span> 계이득 (ideukgae)</span>
+      <span>후원금은 플랫폼을 거치지 않고 스트리머 계좌로 직행합니다.</span>
+    </div>
+  </div>
+</footer>
+
+<noscript>
+  <style>
+    .rv{opacity:1;transform:none}
+    .rcpt--old.rv{transform:rotate(-1.2deg)}
+    .rcpt--new.rv{transform:rotate(1deg)}
+  </style>
+</noscript>
+
+<script>
+(function () {
+  'use strict';
+
+  var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+  function reduced() { return motionQuery.matches; }
+
+  /* ---------- scroll reveal ---------- */
+  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.rv'));
+  if ('IntersectionObserver' in window && !reduced()) {
+    var revealIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          revealIO.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    var viewportH = window.innerHeight || document.documentElement.clientHeight;
+    revealEls.forEach(function (el) {
+      /* above-the-fold content shows immediately; the rest animates on scroll */
+      if (el.getBoundingClientRect().top < viewportH * 0.9) {
+        el.classList.add('in');
+      } else {
+        revealIO.observe(el);
+      }
+    });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* ---------- demo data ---------- */
+  var SIGNATURES = [
+    { name: '환영인사', amount: 1000,
+      msgs: ['처음 왔어요, 반가워요!', '지나가다 정착합니다', '오늘부터 1일이에요', '인사받아 주세요!'],
+      chat: ['어서와~', '뉴비다 뉴비!', '정착 축하ㅋㅋ'] },
+    { name: '풀콤보', amount: 5000,
+      msgs: ['오늘 방송 미쳤다 ㅋㅋ', '이건 못 참지', '풀콤보 가즈아', '하이라이트 각입니다'],
+      chat: ['풀콤보 떴다ㅋㅋㅋ', '와 3단 콤보 실화냐', '박수 8888'] },
+    { name: '노래신청', amount: 10000,
+      msgs: ['벚꽃엔딩 불러주세요', '신청곡: 사건의 지평선', '발라드 하나 부탁해요', '그 노래 한 번만 더!'],
+      chat: ['노래 타임이다', '음정 파이팅ㅋㅋ', '떼창 준비하겠습니다'] },
+    { name: '소원권', amount: 50000,
+      msgs: ['다음 방송 야외로 가요', '제 닉으로 삼행시 부탁!', '치킨 먹방 공약 갑니다', '1시간 연장권 쓰겠습니다'],
+      chat: ['ㄷㄷ 소원권 등장', '5만원 스케일 무엇', '공약 박제 갑니다'] }
+  ];
+  var NICKS = ['밤새는감자', '츄르수집가', '도네장인', '새벽두시반', '옆집시청자', '구독3일차', '하이라이트요정', '무한잠수함', '계이득첫후원', '턱괴고시청'];
+  var AMBIENT = ['ㅋㅋㅋㅋㅋㅋ', '오늘 사람 많네', '와 방금 뭐임', '형 그거 한 번만 더', '?? 방금 들어왔는데', '888888', '도네 나이스', '이 방송 왜 이제 알았지'];
+
+  var frame = document.getElementById('demo-frame');
+  var overlayHost = document.getElementById('overlay-host');
+  var chatFeed = document.getElementById('chat-feed');
+  var viewerEl = document.getElementById('viewer-count');
+  var nickInput = document.getElementById('demo-nick');
+
+  function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+  function formatWon(n) { return n.toLocaleString('ko-KR') + '원'; }
+
+  /* ---------- chat feed ---------- */
+  function pushChat(nick, text) {
+    if (!chatFeed) return;
+    var line = document.createElement('div');
+    line.className = 'chat-line';
+    var nickEl = document.createElement('span');
+    nickEl.className = 'chat-nick';
+    nickEl.textContent = nick;
+    var textEl = document.createElement('span');
+    textEl.className = 'chat-text';
+    textEl.textContent = text;
+    line.appendChild(nickEl);
+    line.appendChild(textEl);
+    chatFeed.appendChild(line);
+    while (chatFeed.children.length > 6) chatFeed.removeChild(chatFeed.firstChild);
+  }
+
+  /* ---------- amount count-up ---------- */
+  function countUp(el, target) {
+    if (reduced() || !window.requestAnimationFrame) {
+      el.textContent = formatWon(target);
+      return;
+    }
+    var t0 = null;
+    var DURATION = 620;
+    function tick(now) {
+      if (t0 === null) t0 = now;
+      var p = Math.min(1, (now - t0) / DURATION);
+      var eased = 1 - Math.pow(1 - p, 3);
+      el.textContent = formatWon(Math.round(target * eased));
+      if (p < 1 && el.isConnected) window.requestAnimationFrame(tick);
+    }
+    window.requestAnimationFrame(tick);
+  }
+
+  /* ---------- donation chime (WebAudio) ---------- */
+  var audioCtx = null;
+  var userGestured = false;
+  var soundOn = !reduced(); /* prefers-reduced-motion 사용자는 기본 OFF */
+  var soundToggle = document.getElementById('sound-toggle');
+  var soundState = document.getElementById('sound-state');
+
+  function syncSoundToggle() {
+    if (!soundToggle) return;
+    soundToggle.setAttribute('aria-pressed', String(soundOn));
+    if (soundState) soundState.textContent = soundOn ? 'ON' : 'OFF';
+  }
+  syncSoundToggle();
+
+  function ensureAudio() {
+    /* 첫 실제 사용자 인터랙션 전에는 AudioContext를 만들지도, 깨우지도 않는다 */
+    if (!userGestured) return null;
+    try {
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      if (!audioCtx) audioCtx = new AC();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    } catch (e) { return null; }
+  }
+
+  function onFirstGesture() {
+    if (userGestured) return;
+    userGestured = true;
+    if (soundOn) ensureAudio();
+  }
+  document.addEventListener('pointerdown', onFirstGesture, true);
+  document.addEventListener('keydown', onFirstGesture, true);
+
+  if (soundToggle) {
+    soundToggle.addEventListener('click', function () {
+      soundOn = !soundOn;
+      syncSoundToggle();
+      if (soundOn) ensureAudio();
+    });
+  }
+
+  function playChime(amount) {
+    if (!soundOn) return;
+    var ctx = ensureAudio();
+    if (!ctx) return; /* 제스처 전 자동 데모는 여기서 무음 처리 */
+    try {
+      var notes = amount >= 50000 ? [523.25, 659.25, 783.99, 1046.5, 1318.51]
+        : amount >= 10000 ? [523.25, 659.25, 783.99, 1046.5]
+        : amount >= 5000 ? [523.25, 659.25, 783.99]
+        : [659.25, 783.99];
+      for (var i = 0; i < notes.length; i++) {
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.value = notes[i];
+        var t = ctx.currentTime + i * 0.09;
+        gain.gain.setValueAtTime(0.0001, t);
+        gain.gain.exponentialRampToValueAtTime(0.05, t + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(t);
+        osc.stop(t + 0.4);
+      }
+    } catch (e) { /* 오디오 실패는 조용히 무시 */ }
+  }
+
+  /* ---------- donation overlay ---------- */
+  function clearOverlay() {
+    if (!overlayHost) return;
+    while (overlayHost.firstChild) overlayHost.removeChild(overlayHost.firstChild);
+  }
+
+  function fireDonation(sig, nickOverride) {
+    if (!overlayHost || !frame || !sig) return;
+    clearOverlay();
+
+    var nick = nickOverride || pick(NICKS);
+    var msg = pick(sig.msgs);
+
+    var card = document.createElement('div');
+    card.className = 'don';
+
+    var badge = document.createElement('div');
+    badge.className = 'don-badge';
+    badge.textContent = '시그니처 · ' + sig.name;
+
+    var nickRow = document.createElement('div');
+    nickRow.className = 'don-nick';
+    nickRow.textContent = nick;
+    var honor = document.createElement('span');
+    honor.textContent = ' 님';
+    nickRow.appendChild(honor);
+
+    var amt = document.createElement('div');
+    amt.className = 'don-amt';
+    amt.textContent = formatWon(sig.amount);
+
+    var msgEl = document.createElement('div');
+    msgEl.className = 'don-msg';
+    msgEl.textContent = '“' + msg + '”';
+
+    card.appendChild(badge);
+    card.appendChild(nickRow);
+    card.appendChild(amt);
+    card.appendChild(msgEl);
+    overlayHost.appendChild(card);
+    countUp(amt, sig.amount);
+
+    if (!reduced()) {
+      for (var i = 0; i < 16; i++) {
+        var cf = document.createElement('span');
+        cf.className = i % 3 === 0 ? 'cf cf-alt' : 'cf';
+        var angle = Math.random() * Math.PI * 2;
+        var dist = 90 + Math.random() * 150;
+        cf.style.setProperty('--tx', Math.round(Math.cos(angle) * dist * 1.4) + 'px');
+        cf.style.setProperty('--ty', Math.round(Math.sin(angle) * dist) + 'px');
+        cf.style.setProperty('--rz', Math.round(Math.random() * 720 - 360) + 'deg');
+        cf.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';
+        overlayHost.appendChild(cf);
+      }
+    }
+
+    frame.classList.remove('hit');
+    void frame.offsetWidth;
+    frame.classList.add('hit');
+
+    playChime(sig.amount);
+
+    window.setTimeout(function () {
+      if (card.isConnected) card.classList.add('out');
+    }, 3300);
+    window.setTimeout(function () {
+      if (card.parentNode === overlayHost) clearOverlay();
+    }, 3850);
+
+    window.setTimeout(function () { pushChat(pick(NICKS), pick(sig.chat)); }, 700);
+    window.setTimeout(function () { pushChat(pick(NICKS), pick(sig.chat)); }, 1500);
+  }
+
+  /* ---------- menu buttons ---------- */
+  var lastUserFire = 0;
+  var menuButtons = Array.prototype.slice.call(document.querySelectorAll('.menu-item'));
+  menuButtons.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var idx = parseInt(btn.getAttribute('data-sig'), 10);
+      var sig = SIGNATURES[idx];
+      if (!sig) return;
+      lastUserFire = Date.now();
+      var nick = '';
+      if (nickInput) nick = nickInput.value.replace(/\s+/g, ' ').trim().slice(0, 12);
+      fireDonation(sig, nick || null);
+    });
+  });
+
+  /* ---------- idle auto demo + ambience ---------- */
+  if (frame) {
+    var demoVisible = false;
+    var firstShown = false;
+
+    pushChat('옆집시청자', '오늘 사람 많네');
+    pushChat('구독3일차', 'ㅋㅋㅋㅋㅋㅋ');
+
+    if ('IntersectionObserver' in window) {
+      var stageIO = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          demoVisible = entry.isIntersecting;
+          if (entry.isIntersecting && !firstShown) {
+            firstShown = true;
+            window.setTimeout(function () {
+              if (Date.now() - lastUserFire > 4000) fireDonation(SIGNATURES[1], null);
+            }, 900);
+          }
+        });
+      }, { threshold: 0.3 });
+      stageIO.observe(frame);
+    } else {
+      demoVisible = true;
+    }
+
+    window.setInterval(function () {
+      if (!demoVisible || document.hidden) return;
+      if (Date.now() - lastUserFire < 9000) return;
+      fireDonation(pick(SIGNATURES), null);
+    }, 5600);
+
+    window.setInterval(function () {
+      if (!demoVisible || document.hidden) return;
+      if (Math.random() < 0.65) pushChat(pick(NICKS), pick(AMBIENT));
+    }, 2800);
+
+    var viewers = 1284;
+    window.setInterval(function () {
+      if (!demoVisible || document.hidden || !viewerEl) return;
+      viewers += Math.floor(Math.random() * 23) - 10;
+      if (viewers < 980) viewers = 980 + Math.floor(Math.random() * 40);
+      viewerEl.textContent = viewers.toLocaleString('ko-KR');
+    }, 2400);
+  }
+
+  /* ---------- footer year ---------- */
+  var yearEl = document.getElementById('year');
+  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+})();
+</script>
 </body>
 </html>
