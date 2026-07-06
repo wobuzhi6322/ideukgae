@@ -38,6 +38,12 @@
 - **뱃지** `.badge(-blue/-green/-danger)`: 틴트 배경 필. LIVE 뱃지는 badge-danger.
 - **스켈레톤** `.skeleton`: shimmer 제공.
 
+## 랜딩 예외 (2026-07-06)
+
+랜딩(index.html + landing.css/js)은 "첫인상에서 제품을 만져보게 한다"가 목적 — **인터랙티브 데모**(미니 메뉴판 → 가짜 방송 프레임에 오버레이 발사)가 히어로다.
+랜딩 한정 허용: 방송 프레임 블루 글로우, 스파클 파티클, LIVE 펄스, 스크롤 리빌. 그 외 페이지는 여전히 장식 금지.
+자동 데모 루프와 파티클은 `prefers-reduced-motion` 존중.
+
 ## 페이지 적용 원칙
 
 1. 스타일시트 링크를 `assets/site.css` → `assets/v2.css`로 교체(그 외 페이지 자체 CSS 유지).

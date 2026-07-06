@@ -3,25 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>계이득 — 스트리머 후원 플랫폼</title>
+  <title>계이득 — 수수료 0% 스트리머 후원 플랫폼</title>
   <meta name="robots" content="noindex" />
   <link rel="stylesheet" href="/assets/v2.css" />
-    <script src="/assets/theme.js"></script>
-  <style>
-    .hero { padding: 96px 20px 72px; text-align: center; }
-    .hero img.logo { height: 40px; margin: 0 auto 36px; }
-    .hero h1 { font-size: clamp(1.9rem, 5vw, 3.1rem); }
-    .hero h1 .accent { color: var(--blue); }
-    .hero p { margin: 18px auto 0; max-width: 440px; color: var(--secondary); font-size: 17px; }
-    .hero .actions { margin-top: 36px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .points { max-width: 880px; margin: 0 auto; padding: 0 20px 96px; display: grid; gap: 16px; grid-template-columns: repeat(3, 1fr); }
-    .point { padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--radius-lg); text-align: left; }
-    .point strong { display: block; font-size: 16px; margin-bottom: 6px; }
-    .point span { color: var(--muted); font-size: 14.5px; line-height: 1.55; }
-    .site-footer { border-top: 1px solid var(--line); padding: 28px 20px 48px; text-align: center; color: var(--muted); font-size: 13.5px; }
-    .site-footer a { color: var(--secondary); margin: 0 8px; }
-    @media (max-width: 720px) { .points { grid-template-columns: 1fr; } .hero { padding-top: 72px; } }
-  </style>
+  <script src="/assets/theme.js"></script>
+  <link rel="stylesheet" href="/assets/landing.css" />
 </head>
 <body>
   <header class="site-header">
@@ -37,29 +23,97 @@
   </header>
 
   <main>
+    <!-- 히어로: 설명하지 않고 바로 만지게 한다 -->
     <section class="hero">
-      <img class="logo" src="/assets/gyeideuk-logo.png" alt="계이득" />
-      <h1>수수료 <span class="accent">0%</span>로 받는<br />방송 후원</h1>
-      <p>시청자는 계좌이체로 바로 후원하고, 방송에는 시그니처가 뜹니다.<br />정산 대기 없이 내 계좌로 즉시.</p>
-      <div class="actions">
-        <a class="btn btn-primary" href="/signup?role=streamer">후원 페이지 만들기</a>
-        <a class="btn btn-outline" href="/channels">채널 둘러보기</a>
+      <span class="eyebrow"><i class="dot"></i>지금 이 화면이 데모입니다</span>
+      <h1>후원이 <span class="accent">3초 만에</span><br />방송에 뜨는 경험</h1>
+      <p class="sub">아래 시그니처 카드를 눌러 방송 화면에 직접 쏴보세요.<br />시청자가 보게 될 화면 그대로입니다.</p>
+    </section>
+
+    <section class="demo" aria-label="인터랙티브 데모">
+      <div class="demo-panel">
+        <div class="panel-label">시청자가 보는 후원 메뉴판</div>
+        <div class="demo-sigs">
+          <button class="demo-sig" type="button"><span class="s-emoji">👋</span><span class="s-title">환영 인사</span><span class="s-amount">1,000원</span></button>
+          <button class="demo-sig" type="button"><span class="s-emoji">🔥</span><span class="s-title">풀콤보 리액션</span><span class="s-amount">5,000원</span></button>
+          <button class="demo-sig" type="button"><span class="s-emoji">🎵</span><span class="s-title">노래 한 곡 신청</span><span class="s-amount">10,000원</span></button>
+          <button class="demo-sig" type="button"><span class="s-emoji">🎉</span><span class="s-title">레전드 소원권</span><span class="s-amount">50,000원</span></button>
+        </div>
+        <div class="demo-nick-row">
+          <label for="demo-nick">내 닉네임으로 쏘기</label>
+          <input id="demo-nick" type="text" maxlength="10" value="민수" autocomplete="off" />
+        </div>
+        <p class="demo-hint">실제 서비스에선 이 메뉴판이 스트리머의 계좌이체 후원 페이지가 됩니다 — 수수료 0%.</p>
+      </div>
+
+      <div class="demo-stream" aria-label="방송 화면 미리보기">
+        <div class="stream-top">
+          <span class="badge-live"><i></i>LIVE</span>
+          <span class="stream-viewers"><span id="demo-viewers">1,284</span>명 시청 중</span>
+        </div>
+        <p class="stream-hintline">← 카드를 누르면 여기에 후원이 뜹니다</p>
+        <div id="demo-overlay"></div>
+        <div class="demo-ticker-wrap" id="demo-ticker"></div>
       </div>
     </section>
 
-    <section class="points">
-      <div class="point">
-        <strong>수수료 0% · 즉시 정산</strong>
-        <span>플랫폼이 돈을 거치지 않습니다. 후원은 스트리머 계좌로 직행합니다.</span>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="/signup?role=streamer">내 후원 페이지 만들기</a>
+      <a class="btn btn-outline" href="/channels">채널 둘러보기</a>
+    </div>
+
+    <!-- 어떻게 되는 건지: 3단계 -->
+    <section class="section reveal">
+      <div class="sec-label">어떻게 되는 거예요?</div>
+      <h2>계좌이체가 방송 리액션이 되기까지</h2>
+      <p class="sec-sub">시청자는 앱 설치도 회원가입도 필요 없습니다. 은행 앱에서 이체 한 번이면 끝.</p>
+      <div class="steps">
+        <div class="step">
+          <strong>메뉴판에서 고르고 이체</strong>
+          <span>시청자가 후원 페이지에서 시그니처를 고르면 입금코드가 발급됩니다. 토스·카카오페이 송금 링크로 바로 이체.</span>
+        </div>
+        <div class="step">
+          <strong>계이득이 입금을 감지</strong>
+          <span>스트리머 PC의 계이득 프로그램이 입금 알림을 감지하고 메시지와 자동으로 짝을 맞춥니다.</span>
+        </div>
+        <div class="step">
+          <strong>방송에 바로 재생</strong>
+          <span>닉네임·금액·메시지와 함께 시그니처 연출이 OBS 오버레이로 터집니다. 방금 위에서 보신 그대로.</span>
+        </div>
       </div>
-      <div class="point">
-        <strong>시그니처 메뉴판</strong>
-        <span>금액별 리액션을 미리 보여주고, 시청자가 골라서 후원합니다.</span>
+    </section>
+
+    <!-- 수수료 비교 -->
+    <section class="section reveal">
+      <div class="sec-label">그래서 얼마 떼는데요?</div>
+      <h2>안 뗍니다. 후원은 내 계좌로 직행.</h2>
+      <div class="fee-compare">
+        <div class="fee-card theirs">
+          <div class="fee-name">기존 후원 플랫폼</div>
+          <div class="fee-value">수 %</div>
+          <ul>
+            <li>플랫폼 + 결제 수수료 차감</li>
+            <li>정산까지 며칠 대기</li>
+            <li>출금 신청 절차</li>
+          </ul>
+        </div>
+        <div class="fee-card ours">
+          <div class="fee-name">계이득</div>
+          <div class="fee-value">0%</div>
+          <ul>
+            <li>시청자 계좌 → 내 계좌 직행</li>
+            <li>정산 대기 없음, 즉시 입금</li>
+            <li>플랫폼이 돈을 만지지 않음</li>
+          </ul>
+        </div>
       </div>
-      <div class="point">
-        <strong>방송에 바로</strong>
-        <span>입금이 감지되면 메시지와 함께 오버레이가 재생됩니다.</span>
-      </div>
+    </section>
+
+    <!-- 마지막 CTA -->
+    <section class="final-cta reveal">
+      <h2>내 방송에도 5분이면 붙습니다</h2>
+      <p>후원 페이지 만들고, 프로그램 연결하고, 시그니처 공개하면 끝.</p>
+      <a class="btn btn-primary" href="/signup?role=streamer">무료로 시작하기</a>
     </section>
   </main>
 
@@ -67,5 +121,7 @@
     <nav><a href="/terms.html">이용약관</a><a href="/privacy.html">개인정보처리방침</a></nav>
     <p style="margin-top:10px">© 계이득</p>
   </footer>
+
+  <script src="/assets/landing.js"></script>
 </body>
 </html>
