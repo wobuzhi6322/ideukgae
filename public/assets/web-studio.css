@@ -1,6 +1,8 @@
 /* =============================================================================
-   계이득 스튜디오 /studio (WSC) — DESIGN v2 클린 라이트
-   토큰은 v2.css :root 그대로 사용 — 새 색·폰트 발명 금지 (DESIGN.md)
+   계이득 스튜디오 /studio (WSC) — DESIGN v5 "D안" 스티커/쿠폰 룩
+   토큰은 v2.css :root 그대로 사용 — 새 색·폰트 발명 금지 (하드코딩 0)
+   기능 화면: 스티커 감성은 카드·뱃지·버튼 문법으로만(도장·기울임·별 장식 금지),
+   카드 그림자는 소형 하드섀도(--hard, 3px). 잠금([예약]) 카드만 옐로 쿠폰.
    데스크톱: 상단 site-header + 좌측 사이드바 / 모바일(<900px): 하단 탭 4개
    ========================================================================== */
 
@@ -9,6 +11,11 @@
   color: var(--primary);
   word-break: keep-all;
   overflow-wrap: anywhere;
+}
+
+/* display:flex/grid 규칙이 UA [hidden]을 이기지 못하게 — 스켈레톤 잔상 방지 */
+.studio-body [hidden] {
+  display: none !important;
 }
 
 .studio-body .sr-only {
@@ -26,7 +33,7 @@
 /* --- 게이트 (로딩/온보딩/에러) ------------------------------------------- */
 
 .studio-gate {
-  min-height: calc(100vh - 61px);
+  min-height: calc(100vh - 62px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -40,10 +47,10 @@
 .gate-box {
   width: min(460px, 100%);
   padding: 32px 28px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard);
   text-align: center;
 }
 
@@ -69,7 +76,7 @@
 .studio-shell {
   display: grid;
   grid-template-columns: 236px minmax(0, 1fr);
-  min-height: calc(100vh - 61px);
+  min-height: calc(100vh - 62px);
 }
 
 .studio-shell[hidden] {
@@ -78,14 +85,14 @@
 
 .studio-side {
   position: sticky;
-  top: 61px;
+  top: 62px;
   align-self: start;
-  height: calc(100vh - 61px);
+  height: calc(100vh - 62px);
   display: flex;
   flex-direction: column;
   gap: 18px;
   padding: 20px 14px;
-  border-right: 1px solid var(--line);
+  border-right: 2px solid var(--ink);
   background: var(--page);
 }
 
@@ -102,13 +109,15 @@
   gap: 8px;
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid transparent;
+  border: none;
   border-radius: var(--radius);
   background: none;
   color: var(--secondary);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 0.95rem;
   text-align: left;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
 .side-nav button:hover {
@@ -119,16 +128,16 @@
 .side-nav button.active {
   color: var(--blue);
   background: var(--blue-2);
-  border-color: transparent;
 }
 
 .nav-lock {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--muted);
-  background: var(--surface-2);
-  border-radius: 999px;
-  padding: 2px 8px;
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--primary);
+  background: var(--yellow-2);
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  padding: 1px 8px;
   white-space: nowrap;
 }
 
@@ -140,11 +149,12 @@
 .side-foot a {
   color: var(--secondary);
   font-size: 0.92rem;
+  font-weight: 700;
   text-decoration: none;
 }
 
 .side-foot a:hover {
-  color: var(--primary);
+  color: var(--blue);
 }
 
 /* --- 메인 ------------------------------------------------------------------ */
@@ -166,7 +176,7 @@
 
 .studio-mainhead h1 {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   line-height: 1.2;
 }
 
@@ -177,29 +187,32 @@
   flex-shrink: 0;
 }
 
+/* 스티커 뱃지 문법: 9px 라운드 + 1.5px 잉크 보더 + 틴트 배경 (v2 .badge) */
 .mock-badge {
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--yellow) 14%, var(--page));
-  color: var(--yellow);
+  padding: 2px 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--yellow-2);
+  color: var(--primary);
   font-size: 0.78rem;
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
 }
 
 .conn-chip {
-  padding: 3px 10px;
-  border-radius: 999px;
+  padding: 2px 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
   background: var(--surface-2);
   color: var(--secondary);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
 }
 
 .conn-chip.conn-on {
   color: var(--green);
-  background: color-mix(in srgb, var(--green) 12%, var(--page));
+  background: var(--green-2);
 }
 
 .conn-chip.conn-off {
@@ -212,13 +225,13 @@
 
 /* --- 패널·카드 --------------------------------------------------------------- */
 
-/* 패널 = v2 .card 규칙(흰 배경 + 1px line + 은은한 그림자) */
+/* 패널 = D 카드(잉크 보더 + 하드섀도). 기능 화면이라 그림자는 소형 3px(--hard). */
 .panel {
   padding: 20px 22px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard);
   margin: 0 0 16px;
   min-width: 0;
 }
@@ -234,7 +247,7 @@
 
 .panel-head h2 {
   margin: 0;
-  font-size: 1.08rem;
+  font-size: 1.15rem;
 }
 
 .panel-sub {
@@ -251,10 +264,10 @@
 
 .stat-card {
   padding: 18px 20px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard);
   min-width: 0;
 }
 
@@ -262,13 +275,15 @@
   margin: 0 0 6px;
   color: var(--muted);
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* 큰 숫자는 Jua (DESIGN v5 display) */
 .stat-value {
   margin: 0;
-  font-size: 1.7rem;
-  font-weight: 800;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.9rem;
   line-height: 1.15;
 }
 
@@ -340,16 +355,17 @@
 
 .feed-amount {
   flex-shrink: 0;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--primary);
 }
 
 .feed-badge {
   flex-shrink: 0;
   font-size: 0.75rem;
-  font-weight: 700;
-  border-radius: 999px;
-  padding: 2px 8px;
+  font-weight: 800;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  padding: 1px 8px;
   background: var(--surface-2);
   color: var(--secondary);
   white-space: nowrap;
@@ -357,7 +373,7 @@
 
 .feed-badge.b-auto {
   color: var(--green);
-  background: color-mix(in srgb, var(--green) 12%, var(--page));
+  background: var(--green-2);
 }
 
 .feed-badge.b-manual {
@@ -366,8 +382,8 @@
 }
 
 .feed-badge.b-unmatched {
-  color: var(--yellow);
-  background: color-mix(in srgb, var(--yellow) 14%, var(--page));
+  color: var(--primary);
+  background: var(--yellow-2);
 }
 
 /* --- QR -------------------------------------------------------------------- */
@@ -388,19 +404,20 @@
 .page-link-row a {
   color: var(--blue);
   text-decoration: none;
-  font-weight: 700;
+  font-weight: 800;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
 }
 
+/* 카드 안 카드 금지 — 내부 프레임은 절취선(dashed)으로 */
 .qr-box {
   display: inline-block;
   padding: 12px;
-  border: 1px solid var(--line);
+  border: 2px dashed var(--border);
   border-radius: var(--radius);
-  background: var(--page);
+  background: var(--surface);
   margin-bottom: 12px;
 }
 
@@ -417,8 +434,8 @@
 }
 
 /* --- 버튼·입력 ----------------------------------------------------------------
-   버튼·인풋 기본 스타일은 v2.css(.btn/.btn-primary/filled input)를 그대로 사용.
-   .btn-ghost는 v2 기본 버튼(회색 필)으로 렌더된다. */
+   버튼·인풋 기본 스타일은 v2.css(.btn/.btn-primary/2px 잉크 인풋)를 그대로 사용.
+   .btn-ghost는 v2 기본 버튼(크림 스티커)으로 렌더된다. */
 
 .linklike {
   padding: 0;
@@ -449,13 +466,10 @@
 
 /* --- 설정 폼 ------------------------------------------------------------------ */
 
-.settings-form fieldset.panel {
-  border: 1px solid var(--line);
-}
-
 .settings-form legend {
   padding: 0 6px;
   font-weight: 800;
+  color: var(--primary);
 }
 
 .field {
@@ -500,15 +514,18 @@
   align-items: center;
   flex-shrink: 0;
   padding: 0 8px 0 14px;
-  border-radius: 10px 0 0 10px;
-  background: var(--surface-3);
-  color: var(--muted);
+  border: 2px solid var(--ink);
+  border-right: none;
+  border-radius: 12px 0 0 12px;
+  background: var(--surface-2);
+  color: var(--secondary);
   font-size: 0.92rem;
+  font-weight: 700;
   white-space: nowrap;
 }
 
 .handle-row input {
-  border-radius: 0 10px 10px 0;
+  border-radius: 0 12px 12px 0;
 }
 
 .preset-row {
@@ -540,7 +557,7 @@
 
 .subfields {
   padding: 12px;
-  border: 1px dashed var(--border);
+  border: 2px dashed var(--border);
   border-radius: var(--radius);
   margin-bottom: 14px;
 }
@@ -559,15 +576,40 @@
   flex-wrap: wrap;
 }
 
+/* --- 필터 칩(버튼 문법: 잉크 보더 + 소형 하드섀도) ------------------------------- */
+
+.chip,
 .mobile-quicklinks button {
-  padding: 7px 14px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--page);
+  padding: 6px 14px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--surface);
   color: var(--secondary);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease,
+    color 0.15s ease;
+}
+
+.chip:hover,
+.mobile-quicklinks button:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
+  color: var(--primary);
+}
+
+.chip:active,
+.mobile-quicklinks button:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.chip.active {
+  color: var(--blue);
+  background: var(--blue-2);
 }
 
 /* --- 시그니처 테이블 ------------------------------------------------------------ */
@@ -585,6 +627,9 @@
 }
 
 .table-scroll {
+  /* position: relative — 내부 sr-only(absolute)가 스크롤 컨테이너를 탈출해
+     문서 가로 오버플로를 만들지 않도록 컨테이닝 블록을 고정 */
+  position: relative;
   overflow-x: auto;
   padding: 8px 10px;
 }
@@ -611,7 +656,7 @@
 .don-table th {
   color: var(--muted);
   font-size: 0.82rem;
-  font-weight: 700;
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -623,8 +668,8 @@
 .sig-thumb {
   width: 56px;
   height: 42px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  border-radius: 8px;
+  border: 1.5px solid var(--ink);
   background: var(--surface-2);
   object-fit: cover;
   display: block;
@@ -633,15 +678,15 @@
 .sig-thumb-fallback {
   width: 56px;
   height: 42px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
+  border-radius: 8px;
+  border: 1.5px solid var(--ink);
   background: var(--surface-2);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--muted);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .sig-title-cell {
@@ -657,23 +702,24 @@
 .sig-media-badge {
   display: inline-block;
   margin-left: 6px;
-  padding: 2px 8px;
-  border-radius: 999px;
+  padding: 0 7px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
   background: var(--surface-2);
   color: var(--muted);
   font-size: 0.72rem;
-  font-weight: 700;
+  font-weight: 800;
   vertical-align: 1px;
 }
 
 .pin-btn {
-  border: none;
+  border: 1.5px solid var(--ink);
   background: var(--surface-2);
-  border-radius: 999px;
-  padding: 5px 12px;
+  border-radius: 9px;
+  padding: 4px 12px;
   color: var(--muted);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 800;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -691,9 +737,9 @@
 .sort-btns button {
   width: 30px;
   height: 30px;
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  background: var(--surface-2);
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: var(--surface);
   color: var(--secondary);
   cursor: pointer;
   line-height: 1;
@@ -711,24 +757,6 @@
   gap: 8px;
   margin-bottom: 14px;
   flex-wrap: wrap;
-}
-
-.chip {
-  padding: 7px 16px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  background: var(--page);
-  color: var(--secondary);
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.chip.active {
-  color: var(--on-blue);
-  background: var(--blue);
-  border-color: var(--blue);
 }
 
 .don-msg {
@@ -793,22 +821,25 @@
   margin: 0 0 10px;
 }
 
+/* 연결 코드 = 옐로 하이라이트 쿠폰 박스(절취선), 코드는 크게 Pretendard 800 */
 .connect-code-box {
   margin: 16px 0;
-  padding: 22px 18px;
+  padding: 24px 18px;
+  border: 2px dashed var(--ink);
   border-radius: var(--radius);
-  background: var(--blue-2);
+  background: var(--yellow-2);
   text-align: center;
 }
 
 .connect-code {
   margin: 0 0 6px;
-  font-family: "Cascadia Mono", Consolas, monospace;
-  font-size: clamp(1.7rem, 7vw, 2.6rem);
+  font-family: var(--font);
+  font-size: clamp(1.8rem, 7vw, 2.8rem);
   font-weight: 800;
-  letter-spacing: 0.3em;
-  text-indent: 0.3em;
-  color: var(--blue);
+  letter-spacing: 0.18em;
+  text-indent: 0.18em;
+  line-height: 1.2;
+  color: var(--primary);
   overflow-wrap: anywhere;
 }
 
@@ -822,12 +853,13 @@
   margin-bottom: 8px;
 }
 
-/* --- 잠금 카드([예약]) -------------------------------------------------------------- */
+/* --- 잠금 카드([예약]) — 옐로 쿠폰 -------------------------------------------------- */
 
 .locked-card {
   text-align: center;
-  padding: 40px 24px;
-  background: var(--surface);
+  padding: 44px 24px;
+  border: 2px dashed var(--ink);
+  background: var(--yellow-2);
   box-shadow: none;
 }
 
@@ -837,16 +869,17 @@
 
 .locked-card p {
   margin: 0;
-  color: var(--muted);
+  color: var(--secondary);
 }
 
 .locked-card .locked-badge {
   display: inline-block;
   margin: 0 0 14px;
-  padding: 3px 12px;
-  border-radius: 999px;
-  background: var(--blue-2);
-  color: var(--blue);
+  padding: 2px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--primary);
   font-size: 0.8rem;
   font-weight: 800;
 }
@@ -905,7 +938,7 @@
 
 .skeleton-bar {
   height: 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface-3) 50%, var(--surface-2) 75%);
   background-size: 200% 100%;
   animation: studio-shimmer 1.4s infinite linear;
@@ -935,33 +968,39 @@
 
 .toast {
   padding: 12px 16px;
+  border: 2px solid var(--ink);
   border-radius: var(--radius);
-  border: 1px solid var(--line);
-  background: var(--page);
+  background: var(--surface);
   color: var(--primary);
-  box-shadow: var(--shadow);
+  box-shadow: var(--hard);
   font-size: 0.92rem;
+  font-weight: 700;
   text-align: center;
 }
 
 .toast.err {
-  border-color: var(--danger);
+  background: var(--danger-2);
   color: var(--danger);
 }
 
 .toast.okv {
-  border-color: var(--green);
+  background: var(--green-2);
 }
 
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: color-mix(in srgb, var(--primary) 40%, transparent);
+  background: color-mix(in srgb, var(--ink) 42%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
   z-index: 55;
+}
+
+/* 다크에선 잉크가 크림이라 스크림은 페이지(딥네이비) 기반으로 */
+:root[data-theme="dark"] .modal-backdrop {
+  background: color-mix(in srgb, var(--page) 62%, transparent);
 }
 
 .modal-backdrop[hidden] {
@@ -971,15 +1010,15 @@
 .modal {
   width: min(440px, 100%);
   padding: 24px 22px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard-lg);
 }
 
 .modal h2 {
   margin: 0 0 8px;
-  font-size: 1.15rem;
+  font-size: 1.25rem;
 }
 
 /* --- 모바일 하단 탭 -------------------------------------------------------------- */
@@ -1009,7 +1048,7 @@
     z-index: 40;
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    border-top: 1px solid var(--line);
+    border-top: 2px solid var(--ink);
     background: var(--header);
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
@@ -1027,7 +1066,7 @@
     background: none;
     color: var(--muted);
     font-size: 0.82rem;
-    font-weight: 700;
+    font-weight: 800;
     cursor: pointer;
     white-space: nowrap;
   }
@@ -1059,5 +1098,17 @@
 
   .don-msg {
     max-width: 180px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-bar {
+    animation: none;
+  }
+
+  .chip,
+  .mobile-quicklinks button,
+  .side-nav button {
+    transition: none;
   }
 }

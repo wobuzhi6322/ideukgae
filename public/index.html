@@ -1,410 +1,664 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="계이득 — 수수료 0% 스트리머 후원. 시청자는 이체 한 번, 후원금은 스트리머 계좌 직행, 연출은 3초 만에 방송 화면에.">
-<meta name="theme-color" content="#f3efe6">
-<title>계이득 — 이체 한 번, 3초 뒤, 방송이 터진다</title>
+<meta name="description" content="계이득 — 수수료 0% 스트리머 후원 플랫폼. 시청자가 시그니처를 골라 이체하면 3초 만에 방송에 팡. 돈은 내 계좌로 직행, 정산 대기 없음.">
+<meta name="theme-color" content="#FFF7EA">
+<title>계이득 — 수수료 0% 후원, 3초 만에 방송에 팡!</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+<script>document.documentElement.className += ' js';</script>
 <style>
+/* ================= 기본 ================= */
 :root{
-  --paper:#f3efe6;
-  --ink:#171512;
-  --accent:#2b3ff2;
-  --serif:'Noto Serif KR','Nanum Myeongjo',serif;
-  --sans:'Pretendard Variable',Pretendard,-apple-system,'Segoe UI','Malgun Gothic',sans-serif;
+  --cream:#FFF7EA;
+  --paper:#FFFDF7;
+  --ink:#17265C;
+  --ink-soft:#4A5680;
+  --blue:#2E53FF;
+  --blue-deep:#1D3BD1;
+  --yellow:#FFCE31;
+  --yellow-soft:#FFE58A;
+  --mint:#93E5C1;
+  --pink:#FFB3C7;
+  --lav:#C9B8FF;
+  --red:#FF5A5A;
+  --border:2.5px solid var(--ink);
+  --font-body:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  --font-fun:"Jua","Pretendard Variable",sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
 body{
-  background:var(--paper);
+  font-family:var(--font-body);
+  background:var(--cream);
   color:var(--ink);
-  font-family:var(--sans);
   line-height:1.6;
-  overflow-x:hidden;
+  word-break:keep-all;
   -webkit-font-smoothing:antialiased;
 }
 img{max-width:100%;display:block}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
-::selection{background:var(--accent);color:var(--paper)}
-:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
-.sec-dark :focus-visible,.sec-accent :focus-visible{outline-color:var(--paper)}
+a{color:inherit}
+button{font-family:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px;border-radius:8px}
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;
+}
+.container{width:100%;max-width:1140px;margin:0 auto;padding:0 22px}
+section[id]{scroll-margin-top:92px}
 
-.wrap{max-width:1320px;margin-inline:auto;padding-inline:clamp(20px,5vw,72px)}
-.serif{font-family:var(--serif)}
+/* 등장 애니메이션(JS 있을 때만 숨김) */
+.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s ease,transform .55s ease}
+.js .reveal.in{opacity:1;transform:none}
 
-/* ---------- skip link ---------- */
-.skip{
-  position:absolute;left:-999px;top:0;z-index:100;
-  background:var(--ink);color:var(--paper);padding:.7rem 1.2rem;font-weight:700;
-}
-.skip:focus{left:0}
-
-/* ---------- masthead ---------- */
-.masthead{
-  display:flex;align-items:center;justify-content:space-between;gap:1rem;
-  padding:1rem clamp(20px,5vw,72px);
-  border-bottom:2px solid var(--ink);
-}
-.masthead-logo img{height:26px;width:auto}
-.masthead nav{display:flex;align-items:center;gap:clamp(.8rem,2.4vw,1.8rem);font-weight:700;font-size:.94rem;white-space:nowrap}
-.masthead nav a:not(.nav-cta):hover{color:var(--accent);text-decoration:underline;text-underline-offset:4px}
-.nav-cta{background:var(--ink);color:var(--paper);padding:.55rem 1.05rem;transition:background .18s ease}
-.nav-cta:hover{background:var(--accent)}
-@media (max-width:540px){.nav-hide{display:none}}
-
-/* ---------- hero ---------- */
-.hero{position:relative;padding-block:clamp(3rem,7vw,6.5rem) clamp(3rem,6vw,5rem)}
-.hero-meta{
-  display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;
-  border-bottom:1px solid var(--ink);padding-bottom:.7rem;
-  margin-bottom:clamp(2rem,5vw,4rem);
-  font-size:clamp(.72rem,1.4vw,.85rem);letter-spacing:.14em;font-weight:700;
-}
-.h1{
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(2.55rem,10.5vw,9rem);
-  line-height:1.04;letter-spacing:-.03em;word-break:keep-all;
-}
-.h1 .ln{display:block}
-.h1 .ln--2{margin-left:clamp(1.5rem,11vw,10rem)}
-.h1 .acc{font-style:normal;color:var(--accent)}
-.hero-foot{
-  display:flex;flex-wrap:wrap;gap:2.2rem 3rem;justify-content:space-between;align-items:flex-end;
-  margin-top:clamp(2.5rem,6vw,4.5rem);
-}
-.hero-sub{max-width:430px;font-size:clamp(.98rem,1.3vw,1.1rem);line-height:1.85;opacity:.82;word-break:keep-all}
-.hero-ctas{display:flex;gap:.9rem;flex-wrap:wrap}
-.vert{
-  position:absolute;top:38%;right:clamp(2px,1vw,18px);
-  writing-mode:vertical-rl;font-size:.7rem;letter-spacing:.42em;font-weight:700;opacity:.4;
-  display:none;
-}
-@media (min-width:1100px){.vert{display:block}}
-
-/* ---------- buttons ---------- */
+/* ================= 버튼 ================= */
 .btn{
-  display:inline-flex;align-items:center;gap:.55rem;
-  padding:1rem 1.8rem;font-weight:800;font-size:1rem;
-  border:2px solid var(--ink);background:transparent;color:var(--ink);
-  transition:transform .18s ease,background .18s ease,color .18s ease,border-color .18s ease;
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-weight:800;font-size:1rem;text-decoration:none;cursor:pointer;
+  border:var(--border);border-radius:999px;padding:14px 28px;
+  background:#fff;color:var(--ink);
+  box-shadow:4px 4px 0 var(--ink);
+  transition:transform .15s ease,box-shadow .15s ease;
 }
-.btn:hover{transform:translateY(-3px)}
-.btn--primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
-.btn--primary:hover{background:var(--ink);border-color:var(--ink)}
-.btn--big{padding:1.2rem 2.4rem;font-size:clamp(1.02rem,1.6vw,1.2rem)}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn--blue{background:var(--blue);color:#fff}
+.btn--yellow{background:var(--yellow);color:var(--ink)}
+.btn--sm{padding:9px 18px;font-size:.9rem;box-shadow:3px 3px 0 var(--ink)}
+.btn--lg{padding:16px 32px;font-size:1.08rem}
 
-/* ---------- ticker ---------- */
-.ticker{border-block:2px solid var(--ink);overflow:hidden;padding:.85rem 0}
-.ticker-track{display:flex;width:max-content;animation:tick 34s linear infinite}
-.ticker-group{display:flex;align-items:center;gap:2.2rem;padding-right:2.2rem;white-space:nowrap}
-.tk{font-size:.94rem;font-weight:600}
-.tk em{font-style:normal;color:var(--accent);font-weight:800;margin-right:.45rem}
-.tk-star{color:var(--accent);font-size:.8rem}
+/* ================= 헤더 ================= */
+.site-head{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,247,234,.93);
+  backdrop-filter:blur(8px);
+  border-bottom:var(--border);
+}
+.site-head__in{display:flex;align-items:center;justify-content:space-between;height:66px}
+.brand{display:inline-flex;align-items:center}
+.brand__logo{height:30px;width:auto}
+.site-nav{display:flex;align-items:center;gap:22px}
+.site-nav__link{font-weight:700;text-decoration:none;font-size:.95rem}
+.site-nav__link:hover{color:var(--blue)}
+
+/* ================= 히어로 ================= */
+.hero{position:relative;overflow:hidden;padding:clamp(56px,8vw,104px) 0 clamp(48px,6vw,80px)}
+.hero::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:radial-gradient(rgba(23,38,92,.07) 1.5px,transparent 1.5px);
+  background-size:24px 24px;
+}
+.hero__grid{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:40px;align-items:center}
+.hero__badge{
+  display:inline-block;font-family:var(--font-fun);font-size:1rem;
+  background:var(--yellow);border:var(--border);border-radius:999px;
+  padding:9px 20px;box-shadow:3px 3px 0 var(--ink);
+  transform:rotate(-2.5deg);margin-bottom:22px;
+}
+.hero__title{
+  font-size:clamp(2.15rem,5.6vw,3.9rem);
+  font-weight:900;line-height:1.22;letter-spacing:-.025em;
+}
+.wavy{
+  text-decoration-line:underline;text-decoration-style:wavy;
+  text-decoration-color:var(--blue);text-decoration-thickness:.12em;
+  text-underline-offset:.2em;
+}
+.hero__sub{
+  margin-top:22px;max-width:520px;
+  font-size:clamp(1.02rem,1.7vw,1.18rem);line-height:1.75;color:var(--ink-soft);
+}
+.hero__sub strong{color:var(--ink)}
+.hero__cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:30px}
+.hero__note{margin-top:16px;font-size:.9rem;color:var(--ink-soft)}
+
+/* 히어로 무대: 쿠폰 부채꼴 */
+.hero__stage{position:relative;min-height:480px}
+.ticket{
+  position:absolute;left:50%;width:min(300px,80%);
+  display:flex;align-items:stretch;
+  background:#fff;border:var(--border);border-radius:14px;
+  box-shadow:5px 5px 0 var(--ink);
+  transform:translateX(var(--dx,-50%)) rotate(var(--rot,0deg));
+  animation:floaty 4.5s ease-in-out infinite;
+  animation-delay:var(--delay,0s);
+}
+.ticket__stub{
+  flex:0 0 92px;display:grid;place-items:center;
+  font-weight:900;font-size:.98rem;
+  border-right:2.5px dashed var(--ink);
+  border-radius:11px 0 0 11px;
+  padding:14px 8px;
+}
+.ticket__name{
+  display:flex;align-items:center;padding:14px 16px;
+  font-family:var(--font-fun);font-size:1.08rem;
+}
+.ticket--1{top:4%;--rot:-7deg;--dx:-56%;--delay:0s}
+.ticket--2{top:26%;--rot:4deg;--dx:-43%;--delay:.6s}
+.ticket--3{top:48%;--rot:-3deg;--dx:-57%;--delay:1.2s}
+.ticket--4{top:70%;--rot:5deg;--dx:-45%;--delay:1.8s}
+.ticket--1 .ticket__stub{background:var(--mint)}
+.ticket--2 .ticket__stub{background:var(--yellow-soft)}
+.ticket--3 .ticket__stub{background:var(--pink)}
+.ticket--4 .ticket__stub{background:var(--lav)}
+@keyframes floaty{
+  0%,100%{transform:translateX(var(--dx,-50%)) rotate(var(--rot,0deg)) translateY(0)}
+  50%{transform:translateX(var(--dx,-50%)) rotate(var(--rot,0deg)) translateY(-9px)}
+}
+.sticker-pang{
+  position:absolute;top:-3%;right:2%;width:112px;height:112px;
+  background:var(--yellow);
+  clip-path:polygon(50% 0%,59% 12%,72% 5%,75% 19%,90% 17%,86% 31%,100% 37%,90% 48%,99% 60%,85% 65%,89% 80%,74% 79%,71% 93%,59% 85%,50% 100%,41% 85%,29% 93%,26% 79%,11% 80%,15% 65%,1% 60%,10% 48%,0% 37%,14% 31%,10% 17%,25% 19%,28% 5%,41% 12%);
+  display:grid;place-items:center;
+  filter:drop-shadow(3px 3px 0 rgba(23,38,92,.28));
+  transform:rotate(9deg);
+}
+.sticker-pang span{font-family:var(--font-fun);font-size:1.5rem;transform:rotate(-9deg)}
+.sticker-3s{
+  position:absolute;bottom:0;left:2%;width:96px;height:96px;
+  background:#fff;border:2.5px dashed var(--ink);border-radius:50%;
+  display:grid;place-items:center;text-align:center;
+  font-family:var(--font-fun);font-size:1.05rem;line-height:1.25;
+  transform:rotate(-8deg);box-shadow:3px 3px 0 rgba(23,38,92,.18);
+}
+.coin{
+  position:absolute;width:42px;height:42px;border-radius:50%;
+  background:var(--yellow);border:var(--border);
+  display:grid;place-items:center;font-weight:900;
+  box-shadow:inset -3px -3px 0 rgba(23,38,92,.16),3px 3px 0 rgba(23,38,92,.18);
+  animation:floaty 3.8s ease-in-out infinite;
+  --dx:0;--rot:0deg;
+}
+.coin--1{top:10%;left:0;--delay:.3s;animation-delay:.3s}
+.coin--2{bottom:16%;right:8%;animation-delay:1.4s}
+.spark{position:absolute;color:var(--blue);font-size:26px;line-height:1}
+.spark--1{top:2%;left:26%}
+.spark--2{top:44%;right:0;font-size:20px}
+.spark--3{bottom:6%;left:38%;font-size:18px}
+
+/* ================= 티커 ================= */
+.ticker-wrap{overflow:hidden;padding:20px 0 26px}
+.ticker{
+  width:105%;margin-left:-2.5%;
+  background:var(--ink);color:#fff;
+  border-top:var(--border);border-bottom:var(--border);
+  transform:rotate(-1.2deg);
+  padding:12px 0;overflow:hidden;
+}
+.ticker__track{display:flex;width:max-content;animation:tick 30s linear infinite}
+.ticker__group{display:flex;gap:30px;padding-right:30px}
+.ticker__item{display:flex;align-items:center;white-space:nowrap;font-family:var(--font-fun);font-size:1.02rem}
+.ticker__item::after{content:"✦";margin-left:30px;color:var(--yellow)}
+.ticker__item em{font-style:normal;color:var(--yellow);margin-left:6px}
 @keyframes tick{to{transform:translateX(-50%)}}
 
-/* ---------- chapters common ---------- */
-.chapter{position:relative;overflow:hidden;padding-block:clamp(4.5rem,10vw,8.5rem)}
-.sec-dark{background:var(--ink);color:var(--paper)}
-.sec-accent{background:var(--accent);color:var(--paper)}
+/* ================= 공통 섹션 헤딩 ================= */
+.section{padding:clamp(64px,9vw,110px) 0}
 .kicker{
-  display:flex;align-items:center;gap:1rem;
-  font-size:.82rem;font-weight:800;letter-spacing:.2em;
-  margin-bottom:clamp(1.8rem,4vw,3.2rem);
+  display:inline-block;font-family:var(--font-fun);font-size:.98rem;
+  background:#fff;border:var(--border);border-radius:999px;
+  padding:8px 18px;box-shadow:3px 3px 0 var(--ink);
+  transform:rotate(-2deg);margin-bottom:20px;
 }
-.kicker::before{content:"";width:3rem;height:3px;background:currentColor;flex:none}
+.kicker--yellow{background:var(--yellow)}
+.kicker--mint{background:var(--mint)}
+.kicker--pink{background:var(--pink)}
 .h2{
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(2.1rem,6vw,4.6rem);
-  line-height:1.08;letter-spacing:-.02em;word-break:keep-all;
+  font-size:clamp(1.72rem,3.8vw,2.6rem);
+  font-weight:900;line-height:1.3;letter-spacing:-.02em;
 }
-.lead{
-  margin-top:clamp(1.2rem,2.5vw,2rem);max-width:620px;
-  font-size:clamp(.98rem,1.3vw,1.15rem);line-height:1.85;opacity:.82;word-break:keep-all;
+.section-sub{
+  margin-top:16px;color:var(--ink-soft);
+  font-size:clamp(1rem,1.6vw,1.14rem);line-height:1.75;
 }
-.ghost{
-  position:absolute;top:-.06em;right:-.03em;z-index:0;
-  font-family:var(--serif);font-weight:900;line-height:.8;
-  font-size:clamp(9rem,28vw,24rem);
-  color:transparent;-webkit-text-stroke:1.5px rgba(23,21,18,.16);
-  pointer-events:none;user-select:none;
-}
-.sec-dark .ghost{-webkit-text-stroke-color:rgba(243,239,230,.16)}
-.sec-accent .ghost{-webkit-text-stroke-color:rgba(243,239,230,.28)}
-@supports not (-webkit-text-stroke:1px #000){
-  .ghost{color:rgba(128,128,128,.1);-webkit-text-stroke:0}
-}
-.chapter .wrap{position:relative;z-index:1}
+.center{text-align:center}
+.center .section-sub{max-width:600px;margin-left:auto;margin-right:auto}
 
-/* ---------- ch.1 demo ---------- */
-.demo-grid{
-  display:grid;grid-template-columns:minmax(0,1fr);
-  gap:clamp(1.8rem,4vw,4rem);
-  margin-top:clamp(2.4rem,5vw,4rem);
+/* ================= 데모 ================= */
+.demo__grid{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  gap:36px;align-items:start;margin-top:46px;
 }
-@media (min-width:960px){
-  .demo-grid{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
-  .demo-menu-col{order:-1}
+.menu{
+  background:var(--paper);border:var(--border);border-radius:28px;
+  box-shadow:7px 7px 0 rgba(23,38,92,.16);
+  padding:26px 24px;
 }
-@media (max-width:959px){
-  .demo-stage-col{position:sticky;top:0;z-index:6;background:var(--ink);padding-block:.6rem}
+.menu__head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}
+.menu__title{font-family:var(--font-fun);font-size:1.35rem}
+.menu__hint{font-size:.82rem;color:var(--ink-soft)}
+.menu__list{display:flex;flex-direction:column;gap:16px;margin-top:16px}
+.sig-card{
+  --stub:96px;
+  position:relative;display:flex;align-items:stretch;width:100%;
+  background:#fff;border:var(--border);border-radius:16px;
+  box-shadow:4px 4px 0 var(--ink);
+  text-align:left;cursor:pointer;
+  transition:transform .15s ease,box-shadow .15s ease;
 }
-.nick-field{margin-bottom:1.4rem}
-.nick-field label{display:block;font-size:.78rem;letter-spacing:.16em;font-weight:800;opacity:.72;margin-bottom:.4rem}
-.nick-field input{
-  width:100%;max-width:320px;background:transparent;border:0;
-  border-bottom:2px solid rgba(243,239,230,.4);
-  color:inherit;font:inherit;font-size:1.05rem;padding:.45rem .1rem;border-radius:0;
+.sig-card:hover{transform:translate(-2px,-2px) rotate(-.4deg);box-shadow:6px 6px 0 var(--ink)}
+.sig-card:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.sig-card::before,.sig-card::after{
+  content:"";position:absolute;left:calc(var(--stub) - 7px);
+  width:14px;height:14px;border-radius:50%;
+  background:var(--paper);border:2.5px solid var(--ink);z-index:1;
 }
-.nick-field input::placeholder{color:rgba(243,239,230,.35)}
-.nick-field input:focus{border-bottom-color:var(--paper)}
-.menu-item{
-  display:block;width:100%;text-align:left;
-  border-top:1px solid rgba(243,239,230,.28);
-  padding:1.25rem .5rem;
-  transition:background .16s ease,color .16s ease,padding-left .16s ease;
+.sig-card::before{top:-9px}
+.sig-card::after{bottom:-9px}
+.sig-card__stub{
+  flex:0 0 var(--stub);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
+  border-right:2.5px dashed var(--ink);border-radius:13px 0 0 13px;
+  padding:12px 6px;
 }
-.menu-item:last-of-type{border-bottom:1px solid rgba(243,239,230,.28)}
-.menu-item:hover,.menu-item:focus-visible{background:var(--paper);color:var(--ink);padding-left:1rem}
-.menu-item:active{transform:scale(.985)}
-.menu-line{
-  display:flex;align-items:baseline;gap:.9rem;
-  font-family:var(--serif);font-weight:700;
-  font-size:clamp(1.3rem,2.4vw,1.85rem);letter-spacing:-.01em;
+.sig-card__emoji{font-size:1.35rem;line-height:1}
+.sig-card__price{font-weight:900;font-size:.95rem}
+.sig-card__body{display:flex;flex-direction:column;justify-content:center;padding:12px 16px;gap:2px}
+.sig-card__name{font-family:var(--font-fun);font-size:1.16rem;line-height:1.3}
+.sig-card__desc{font-size:.85rem;color:var(--ink-soft)}
+.sig-card__go{
+  margin-left:auto;align-self:center;padding:0 16px 0 6px;
+  font-family:var(--font-fun);font-size:.92rem;color:var(--blue);
+  white-space:nowrap;
 }
-.leader{flex:1 1 auto;min-width:1.5rem;align-self:center;border-bottom:2px dotted currentColor;opacity:.45}
-.menu-price{white-space:nowrap;font-variant-numeric:tabular-nums}
-.menu-desc{display:block;margin-top:.4rem;font-size:.93rem;opacity:.72;word-break:keep-all}
-.menu-cue{
-  display:block;margin-top:.5rem;font-size:.78rem;font-weight:800;letter-spacing:.1em;
-  color:var(--accent);opacity:0;transform:translateX(-6px);
-  transition:opacity .18s ease,transform .18s ease;
+.t-welcome .sig-card__stub{background:var(--mint)}
+.t-combo .sig-card__stub{background:var(--yellow-soft)}
+.t-song .sig-card__stub{background:var(--pink)}
+.t-wish .sig-card__stub{background:var(--lav)}
+.demo-inputs{display:grid;grid-template-columns:1fr 1.5fr;gap:10px;margin-top:18px}
+.demo-inputs input{
+  width:100%;border:var(--border);border-radius:12px;
+  background:#fff;padding:11px 14px;font-size:.92rem;font-family:inherit;color:var(--ink);
 }
-.menu-item:hover .menu-cue,.menu-item:focus-visible .menu-cue{opacity:1;transform:none}
-.menu-hint{margin-top:1.3rem;font-size:.88rem;opacity:.6;line-height:1.7;word-break:keep-all}
+.demo-inputs input::placeholder{color:#9AA3C0}
+.menu__foot{margin-top:14px;font-size:.82rem;color:var(--ink-soft)}
 
-.frame{
-  position:relative;aspect-ratio:16/10;overflow:hidden;
-  background:radial-gradient(120% 95% at 72% 18%,#26222b 0%,#121016 55%,#0a090d 100%);
-  border:1px solid rgba(243,239,230,.3);
+/* 방송 화면 */
+.tv{
+  background:var(--ink);border-radius:26px;padding:14px;
+  box-shadow:9px 9px 0 rgba(23,38,92,.18);
 }
-.frame::before{
-  content:"";position:absolute;inset:0;opacity:.06;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(243,239,230,.5) 3px 4px);
+.tv__screen{
+  position:relative;overflow:hidden;border-radius:16px;aspect-ratio:16/10;
+  background:radial-gradient(120% 95% at 82% 0%,#6C5CE7 0%,#4A44C4 46%,#2E3178 100%);
 }
-.frame.hit{animation:frame-hit .55s ease}
-@keyframes frame-hit{0%{box-shadow:0 0 0 0 rgba(43,63,242,.85)}100%{box-shadow:0 0 0 28px rgba(43,63,242,0)}}
-.live-badge{position:absolute;top:14px;left:14px;z-index:3;display:flex;align-items:center;gap:.6rem}
-.live-pill{
-  display:inline-flex;align-items:center;gap:.4rem;
-  background:var(--accent);color:var(--paper);
-  font-size:.7rem;font-weight:800;letter-spacing:.16em;padding:.32rem .6rem;
+.tv__screen::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 16% 24%,rgba(255,255,255,.10) 0 52px,transparent 53px),
+    radial-gradient(circle at 88% 68%,rgba(255,255,255,.07) 0 74px,transparent 75px);
 }
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(--paper);animation:pulse 1.6s ease infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-.live-viewers{font-size:.78rem;opacity:.75;font-variant-numeric:tabular-nums}
-.chat-feed{
-  position:absolute;left:14px;bottom:12px;right:38%;z-index:2;
-  display:flex;flex-direction:column;gap:.3rem;
+.tv__desk{
+  position:absolute;left:0;right:0;bottom:0;height:16%;
+  background:#1B2350;border-top:3px solid rgba(255,255,255,.14);z-index:3;
 }
-.chat-line{font-size:clamp(.7rem,1.4vw,.82rem);line-height:1.4;animation:chat-in .25s ease both;word-break:break-all}
-.chat-nick{color:#9aa8ff;font-weight:700;margin-right:.45rem}
-.chat-text{color:rgba(243,239,230,.85)}
-@keyframes chat-in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-.overlay-host{position:absolute;inset:0;z-index:4;display:flex;align-items:center;justify-content:center;pointer-events:none}
-.don{
-  background:var(--paper);color:var(--ink);text-align:center;
-  border:2px solid var(--ink);box-shadow:7px 7px 0 var(--accent);
-  padding:clamp(.9rem,2.6vw,1.5rem) clamp(1.1rem,3.4vw,2.2rem);
-  max-width:80%;
-  animation:don-pop .55s cubic-bezier(.18,1.5,.35,1) both;
+.tv__stand{width:110px;height:16px;background:var(--ink);margin:0 auto;border-radius:0 0 14px 14px}
+.tv__base{width:190px;height:10px;background:var(--ink);border-radius:99px;margin:2px auto 0}
+.live{
+  position:absolute;top:12px;left:12px;z-index:4;
+  display:flex;align-items:center;gap:7px;
+  background:#FF3B3B;color:#fff;font-weight:800;font-size:.74rem;
+  border-radius:999px;padding:4px 12px;letter-spacing:.06em;
 }
-.don.out{animation:don-out .45s ease both}
-@keyframes don-pop{0%{opacity:0;transform:scale(.55) translateY(28px)}100%{opacity:1;transform:none}}
-@keyframes don-out{to{opacity:0;transform:translateY(-16px) scale(.94)}}
-.don-badge{font-size:.66rem;font-weight:800;letter-spacing:.18em;color:var(--accent);margin-bottom:.45rem}
-.don-nick{font-weight:800;font-size:clamp(.95rem,2vw,1.2rem)}
-.don-nick span{font-weight:500;opacity:.55;font-size:.82em}
-.don-amt{
-  font-family:var(--serif);font-weight:900;line-height:1.15;
-  font-size:clamp(1.8rem,4.6vw,3.1rem);
-  margin:.1rem 0 .25rem;font-variant-numeric:tabular-nums;
+.live__dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.viewers{
+  position:absolute;top:12px;right:12px;z-index:4;
+  background:rgba(12,18,46,.62);color:#fff;font-size:.76rem;font-weight:700;
+  border-radius:999px;padding:4px 12px;
+  font-variant-numeric:tabular-nums;
 }
-.don-msg{font-size:clamp(.82rem,1.6vw,.98rem);opacity:.85;word-break:keep-all}
-.cf{
-  position:absolute;left:50%;top:46%;width:9px;height:13px;z-index:3;
-  background:var(--paper);pointer-events:none;
-  animation:cf-fly .85s cubic-bezier(.16,.8,.32,1) both;
+.chat{
+  position:absolute;left:12px;bottom:19%;z-index:4;
+  display:flex;flex-direction:column;align-items:flex-start;gap:6px;
+  max-width:62%;pointer-events:none;
 }
-.cf-alt{background:var(--accent)}
-@keyframes cf-fly{
-  0%{opacity:1;transform:translate(-50%,-50%) rotate(0deg)}
-  100%{opacity:0;transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) rotate(var(--rz))}
+.chat__line{
+  background:rgba(10,16,40,.58);color:#EDEFFA;
+  border-radius:10px;padding:4px 11px;font-size:.76rem;line-height:1.45;
+  animation:chatIn .28s ease;
 }
-.frame-caption{
-  margin-top:.85rem;font-size:.85rem;word-break:keep-all;
-  display:flex;align-items:center;justify-content:space-between;gap:.7rem 1.4rem;flex-wrap:wrap;
-}
-.frame-caption .cap-text{opacity:.55}
-.sound-toggle{
-  flex:none;display:inline-flex;align-items:center;gap:.55rem;
-  border:1px solid rgba(243,239,230,.5);
-  padding:.42rem .85rem;
-  font-size:.72rem;font-weight:800;letter-spacing:.16em;
-  transition:border-color .18s ease,opacity .18s ease,transform .18s ease;
-}
-.sound-toggle:hover{transform:translateY(-1px);border-color:var(--paper)}
-.sound-toggle::before{
-  content:"";width:8px;height:8px;border-radius:50%;flex:none;
-  border:1px solid rgba(243,239,230,.85);background:var(--accent);
-  transition:background .18s ease;
-}
-.sound-toggle[aria-pressed="false"]{opacity:.55}
-.sound-toggle[aria-pressed="false"]::before{background:transparent}
+@keyframes chatIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
 
-/* ---------- ch.2 steps ---------- */
-.steps{
+/* 캐릭터 */
+.buddy{
+  position:absolute;left:50%;bottom:8%;z-index:2;
+  width:clamp(88px,24%,116px);
+  transform:translateX(-50%);
+}
+.buddy--jump{animation:jump .6s ease}
+@keyframes jump{
+  0%,100%{transform:translateX(-50%) translateY(0)}
+  40%{transform:translateX(-50%) translateY(-16%)}
+}
+.buddy__bubble{
+  position:absolute;bottom:104%;left:58%;
+  background:#fff;border:3px solid var(--ink);border-radius:14px;
+  padding:6px 13px;font-family:var(--font-fun);font-size:.92rem;color:var(--ink);
+  white-space:nowrap;pointer-events:none;
+  opacity:0;transform:translateY(8px) scale(.8);
+  transition:opacity .2s ease,transform .2s ease;
+}
+.buddy__bubble::after{
+  content:"";position:absolute;bottom:-7px;left:18px;
+  width:11px;height:11px;background:#fff;
+  border-right:3px solid var(--ink);border-bottom:3px solid var(--ink);
+  transform:rotate(45deg);
+}
+.buddy--talk .buddy__bubble{opacity:1;transform:none}
+.buddy__head{
+  position:relative;width:100%;aspect-ratio:1/1;
+  background:#FFDFAE;border:3px solid var(--ink);border-radius:50%;
+}
+.buddy__head::before,.buddy__head::after{
+  content:"";position:absolute;top:50%;width:14%;height:9%;
+  background:var(--pink);border-radius:50%;
+}
+.buddy__head::before{left:13%}
+.buddy__head::after{right:13%}
+.buddy__band{
+  position:absolute;top:-9%;left:13%;width:74%;height:42%;
+  border:7px solid var(--ink);border-bottom:none;
+  border-radius:999px 999px 0 0;
+}
+.buddy__ear{
+  position:absolute;top:32%;width:22%;height:30%;
+  background:var(--blue);border:3px solid var(--ink);border-radius:38%;
+}
+.buddy__ear--l{left:-11%}
+.buddy__ear--r{right:-11%}
+.buddy__eye{position:absolute;top:39%;width:9%;aspect-ratio:1/1;background:var(--ink);border-radius:50%}
+.buddy__eye--l{left:29%}
+.buddy__eye--r{right:29%}
+.buddy__mouth{
+  position:absolute;top:53%;left:50%;transform:translateX(-50%);
+  width:21%;height:13%;background:#FF8FA3;
+  border:3px solid var(--ink);border-top:none;
+  border-radius:0 0 999px 999px;
+}
+.buddy__body{
+  width:66%;height:30px;margin:-7px auto 0;
+  background:var(--blue);border:3px solid var(--ink);border-radius:16px 16px 0 0;
+}
+
+/* 후원 알림 */
+#alertHost{
+  position:absolute;inset:0;z-index:6;
+  display:flex;justify-content:center;align-items:flex-start;
+  pointer-events:none;
+}
+.alert{
+  width:min(88%,350px);margin-top:6.5%;
+  background:#fff;border:3px solid var(--ink);border-radius:18px;
+  padding:14px 16px 12px;
+  box-shadow:5px 5px 0 var(--yellow);
+  animation:alertIn .45s cubic-bezier(.2,1.4,.4,1);
+}
+@keyframes alertIn{
+  from{opacity:0;transform:translateY(-24px) scale(.6)}
+  to{opacity:1;transform:none}
+}
+.alert__head{display:flex;align-items:center;gap:12px}
+.alert__emoji{
+  flex:0 0 46px;width:46px;height:46px;border-radius:50%;
+  border:2.5px solid var(--ink);display:grid;place-items:center;font-size:1.4rem;
+}
+.alert__nick{font-size:.95rem;line-height:1.35}
+.alert__nick strong{font-weight:900}
+.alert__amount{font-weight:900;color:var(--blue);font-size:1.08rem;line-height:1.3}
+.alert__msg{
+  margin-top:9px;font-family:var(--font-fun);font-size:1rem;line-height:1.45;
+  overflow-wrap:anywhere;
+}
+.alert__bar{
+  display:block;height:7px;margin-top:10px;
+  background:var(--yellow);border:2px solid var(--ink);border-radius:99px;
+  animation:drain 3.6s linear forwards;
+}
+@keyframes drain{from{width:100%}to{width:0}}
+
+/* 콘페티 */
+.confetti-host{position:absolute;left:50%;top:32%;z-index:7;pointer-events:none}
+.confetti{
+  position:absolute;width:10px;height:14px;opacity:0;
+  animation:conf .9s ease-out forwards;
+}
+@keyframes conf{
+  0%{opacity:1;transform:translate(0,0) rotate(0deg)}
+  70%{opacity:1}
+  100%{opacity:0;transform:translate(var(--tx,0),var(--ty,0)) rotate(var(--rz,0deg))}
+}
+
+.demo__caption{
+  margin-top:20px;text-align:center;
+  font-size:.9rem;color:var(--ink-soft);
+}
+.perks{
+  margin-top:40px;display:flex;flex-wrap:wrap;justify-content:center;
+  align-items:center;gap:12px;
+}
+.perks__label{font-family:var(--font-fun);font-size:1.05rem;margin-right:6px}
+.perk{
+  background:#fff;border:var(--border);border-radius:999px;
+  padding:10px 20px;font-weight:800;font-size:.92rem;
+  box-shadow:3px 3px 0 rgba(23,38,92,.16);
+}
+.perk:nth-child(odd){transform:rotate(-1.2deg)}
+.perk:nth-child(even){transform:rotate(1.2deg)}
+.perk em{font-style:normal;color:var(--blue)}
+
+/* ================= 작동 방식 ================= */
+.how{background:#FFF1D9}
+.how__grid{
   display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:clamp(1.6rem,3vw,3rem);margin-top:clamp(2.4rem,5vw,4rem);
+  gap:24px;margin-top:52px;
 }
-@media (max-width:860px){.steps{grid-template-columns:minmax(0,1fr)}}
-.step{border-top:3px solid var(--ink);padding-top:1.2rem}
-.step-num{font-family:var(--serif);font-weight:900;font-size:clamp(2.8rem,6vw,4.6rem);line-height:1;color:var(--accent)}
-.step h3{margin:.65rem 0 .55rem;font-size:clamp(1.2rem,2vw,1.5rem);font-weight:800;word-break:keep-all}
-.step p{opacity:.78;line-height:1.75;word-break:keep-all;font-size:clamp(.94rem,1.2vw,1.02rem)}
-.pull{
-  margin-top:clamp(2.8rem,6vw,4.5rem);max-width:34ch;
-  font-family:var(--serif);font-weight:700;line-height:1.45;word-break:keep-all;
-  font-size:clamp(1.35rem,3vw,2.1rem);
-  border-left:6px solid var(--accent);padding-left:1.2rem;
+.step{
+  position:relative;background:#fff;border:3px solid var(--ink);border-radius:26px;
+  padding:34px 24px 30px;box-shadow:6px 6px 0 rgba(23,38,92,.16);
+  text-align:center;
 }
+.step__num{
+  position:absolute;top:-17px;left:-9px;width:46px;height:46px;border-radius:50%;
+  background:var(--blue);color:#fff;border:3px solid var(--ink);
+  display:grid;place-items:center;font-family:var(--font-fun);font-size:1.25rem;
+  transform:rotate(-8deg);box-shadow:3px 3px 0 var(--ink);
+}
+.step__title{font-family:var(--font-fun);font-size:1.32rem;margin-top:4px}
+.step__body{margin-top:10px;font-size:.95rem;color:var(--ink-soft);line-height:1.7}
+.ico{height:92px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.ico-board{
+  position:relative;width:88px;height:72px;
+  background:var(--paper);border:3px solid var(--ink);border-radius:14px;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  gap:7px;padding:0 13px;
+}
+.ico-board__flag{
+  position:absolute;top:-13px;left:50%;transform:translateX(-50%) rotate(3deg);
+  width:34px;height:15px;background:var(--yellow);
+  border:2.5px solid var(--ink);border-radius:6px;
+}
+.ico-board__row{display:block;height:9px;width:var(--w,60%);background:var(--mint);border:2px solid var(--ink);border-radius:99px}
+.ico-board__row:nth-of-type(2){background:var(--yellow)}
+.ico-board__row:nth-of-type(3){background:var(--pink)}
+.ico-flow{display:flex;align-items:center;gap:9px}
+.ico-coin{
+  width:46px;height:46px;border-radius:50%;
+  background:var(--yellow);border:3px solid var(--ink);
+  display:grid;place-items:center;font-weight:900;font-size:1.05rem;
+  box-shadow:inset -3px -3px 0 rgba(23,38,92,.15);
+}
+.ico-dash{position:relative;width:44px;border-top:4px dashed var(--ink)}
+.ico-dash::after{
+  content:"";position:absolute;right:-4px;top:-9px;
+  border:7px solid transparent;border-left:11px solid var(--ink);
+}
+.ico-bank{position:relative;width:56px;height:42px;background:#fff;border:3px solid var(--ink);border-radius:10px;overflow:hidden}
+.ico-bank::before{content:"";position:absolute;top:7px;left:0;right:0;height:9px;background:var(--blue)}
+.ico-star{
+  width:88px;height:88px;background:var(--yellow);
+  clip-path:polygon(50% 0%,59% 12%,72% 5%,75% 19%,90% 17%,86% 31%,100% 37%,90% 48%,99% 60%,85% 65%,89% 80%,74% 79%,71% 93%,59% 85%,50% 100%,41% 85%,29% 93%,26% 79%,11% 80%,15% 65%,1% 60%,10% 48%,0% 37%,14% 31%,10% 17%,25% 19%,28% 5%,41% 12%);
+  display:grid;place-items:center;
+  font-family:var(--font-fun);font-size:1.3rem;
+  filter:drop-shadow(3px 3px 0 rgba(23,38,92,.25));
+}
+.ico-star span{transform:rotate(-6deg)}
 
-/* ---------- ch.3 zero ---------- */
-.zero-num{
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(6.4rem,25vw,21rem);
-  line-height:.92;letter-spacing:-.04em;margin-left:-.03em;
-}
-.zero-title{
-  font-family:var(--serif);font-weight:900;word-break:keep-all;
-  font-size:clamp(1.7rem,4.4vw,3.3rem);line-height:1.2;
-  margin-top:clamp(1rem,2.5vw,2rem);
-}
-.zero-lead{margin-top:1.4rem;max-width:560px;line-height:1.85;font-size:clamp(.98rem,1.3vw,1.12rem);opacity:.9;word-break:keep-all}
-.rcpt-heading{
-  margin-top:clamp(2.6rem,5vw,4rem);
-  font-family:var(--serif);font-weight:700;
-  font-size:clamp(1.15rem,2.2vw,1.5rem);word-break:keep-all;
-}
-.rcpt-grid{
+/* ================= 수수료 0% ================= */
+.fee{background:var(--ink);color:#EDEFFA}
+.fee .h2{color:#fff}
+.fee .h2 em{font-style:normal;color:var(--yellow)}
+.fee .section-sub{color:#B9C2E4}
+.fee__receipts{
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
-  gap:clamp(2rem,4vw,3.2rem);align-items:start;
-  max-width:920px;margin-top:clamp(1.6rem,3vw,2.4rem);
+  gap:34px;max-width:880px;margin:56px auto 0;
+  align-items:start;
 }
-@media (max-width:820px){.rcpt-grid{grid-template-columns:minmax(0,1fr);max-width:520px}}
-.rcpt{
-  position:relative;background:var(--paper);color:var(--ink);
-  padding:clamp(1.5rem,3vw,2.1rem) clamp(1.2rem,2.6vw,1.8rem) 2.2rem;
-  filter:drop-shadow(9px 9px 0 rgba(23,21,18,.42));
+.receipt{
+  position:relative;background:#fff;color:var(--ink);
+  border-radius:8px 8px 0 0;padding:28px 26px 36px;
+  filter:drop-shadow(7px 9px 0 rgba(0,0,0,.28));
 }
-.rcpt::after{
-  content:"";position:absolute;top:100%;left:0;width:100%;height:10px;
+.receipt::after{
+  content:"";position:absolute;top:100%;left:0;width:100%;height:11px;
   background-image:
-    linear-gradient(135deg,var(--paper) 7px,transparent 0),
-    linear-gradient(-135deg,var(--paper) 7px,transparent 0);
-  background-size:14px 14px;background-repeat:repeat-x;
+    linear-gradient(135deg,#fff 8px,transparent 0),
+    linear-gradient(-135deg,#fff 8px,transparent 0);
+  background-size:16px 16px;
+  background-repeat:repeat-x;
 }
-.rcpt--old{transform:rotate(-1.2deg)}
-.rcpt--new{transform:rotate(1deg)}
-.rcpt-shop{
-  font-family:var(--serif);font-weight:900;text-align:center;
-  font-size:clamp(1.25rem,2vw,1.5rem);letter-spacing:-.01em;
+.receipt--sad{transform:rotate(-1.3deg)}
+.receipt--win{transform:rotate(1.1deg)}
+.receipt__shop{text-align:center;font-family:var(--font-fun);font-size:1.28rem}
+.receipt__label{
+  text-align:center;font-size:.75rem;letter-spacing:.55em;text-indent:.55em;
+  color:#8A8F9E;margin-top:4px;
 }
-.rcpt-label{
-  text-align:center;font-size:.66rem;font-weight:800;
-  letter-spacing:.55em;text-indent:.55em;opacity:.55;margin-top:.25rem;
+.receipt__date{
+  text-align:center;font-size:.78rem;color:#8A8F9E;
+  border-bottom:2px dashed #D9D4C8;padding-bottom:14px;margin-top:2px;
 }
-.rcpt-date{
-  text-align:center;font-size:.78rem;opacity:.6;margin-top:.15rem;
-  padding-bottom:.9rem;border-bottom:2px dotted rgba(23,21,18,.45);
+.receipt__rows{margin-top:6px}
+.receipt__row{
+  display:flex;justify-content:space-between;gap:14px;
+  padding:10px 2px;border-bottom:2px dashed #D9D4C8;
+  font-size:.94rem;font-variant-numeric:tabular-nums;
 }
-.rcpt-rows{margin-top:.3rem}
-.rcpt-row{
-  display:flex;align-items:baseline;gap:.7rem;padding:.68rem 0;
-  border-bottom:1px dotted rgba(23,21,18,.4);
-  font-size:clamp(.88rem,1.2vw,.98rem);
+.receipt__row dt{color:#5B6070}
+.receipt__row dd{font-weight:700}
+.receipt__row .minus{color:var(--red)}
+.receipt__row .zero{color:var(--blue);font-weight:900}
+.receipt__total{
+  display:flex;justify-content:space-between;align-items:baseline;gap:14px;
+  padding:16px 2px 4px;font-weight:900;font-size:1.06rem;
 }
-.rcpt-row:last-of-type{border-bottom:0}
-.rcpt-row .leader{opacity:.4}
-.rcpt-val{white-space:nowrap;font-variant-numeric:tabular-nums;font-weight:700}
-.rcpt-val--minus{font-weight:800}
-.rcpt-val--zero{color:var(--accent);font-weight:900}
-.rcpt-total{
-  display:flex;align-items:baseline;gap:.7rem;
-  padding-top:1rem;border-top:3px solid var(--ink);
-  font-family:var(--serif);font-weight:900;
-  font-size:clamp(1.05rem,1.7vw,1.25rem);
-}
-.rcpt--new .rcpt-total .rcpt-val{color:var(--accent)}
-.rcpt-when{margin-top:.4rem;text-align:right;font-size:.8rem;font-weight:700;opacity:.6}
-.rcpt--new .rcpt-when{color:var(--accent);opacity:1}
-.rcpt-fine{margin-top:1.1rem;font-size:.74rem;opacity:.55;line-height:1.6;word-break:keep-all}
-.rcpt-stamp{
-  position:absolute;right:16px;bottom:56px;
-  width:94px;height:94px;border:3px solid currentColor;border-radius:50%;
+.receipt__total .sum{font-size:1.3rem;font-variant-numeric:tabular-nums}
+.receipt__total .sum small{display:block;text-align:right;font-size:.76rem;font-weight:700;color:#8A8F9E}
+.receipt--win .receipt__total .sum{color:var(--blue)}
+.receipt__fine{margin-top:14px;font-size:.76rem;color:#8A8F9E;line-height:1.55}
+.stamp{
+  position:absolute;right:16px;bottom:52px;
+  width:96px;height:96px;border:4px solid currentColor;border-radius:50%;
   display:grid;place-items:center;text-align:center;
-  font-family:var(--serif);font-weight:900;font-size:1.05rem;line-height:1.25;
-  letter-spacing:.05em;transform:rotate(-12deg);
-  pointer-events:none;mix-blend-mode:multiply;
+  font-family:var(--font-fun);font-size:1.02rem;line-height:1.2;
+  transform:rotate(-14deg);opacity:.85;pointer-events:none;
 }
-.rcpt-stamp::before{content:"";position:absolute;inset:5px;border:1px solid currentColor;border-radius:50%;opacity:.7}
-.rcpt-stamp--old{color:rgba(23,21,18,.32)}
-.rcpt-stamp--new{color:var(--accent)}
-.zero-note{margin-top:1.6rem;font-size:.85rem;opacity:.65}
-
-/* ---------- final cta ---------- */
-.cta .h2{font-size:clamp(2.3rem,7.4vw,5.8rem)}
-.cta-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-top:clamp(2rem,4.5vw,3.4rem)}
-.cta-login{margin-top:1.4rem;font-size:.95rem;opacity:.75}
-.cta-login a{font-weight:800;text-decoration:underline;text-underline-offset:4px}
-.cta-login a:hover{color:var(--accent)}
-.cta-viewer{margin-top:clamp(2.2rem,4vw,3rem);font-size:.92rem;opacity:.6;word-break:keep-all}
-.cta-viewer a{text-decoration:underline;text-underline-offset:4px;font-weight:700}
-
-/* ---------- footer ---------- */
-.footer{
-  background:var(--ink);color:var(--paper);
-  border-top:6px solid var(--accent);
-  padding:clamp(2.8rem,6vw,4.2rem) 0 1.8rem;
+.stamp--gray{color:#9AA0AE}
+.stamp--red{color:var(--red)}
+.fee__why{
+  max-width:720px;margin:52px auto 0;
+  background:var(--paper);color:var(--ink);
+  border:3px solid var(--ink);border-radius:24px;
+  box-shadow:6px 6px 0 rgba(0,0,0,.3);
+  padding:28px 30px;
 }
-.footer-grid{display:flex;flex-wrap:wrap;gap:2.2rem 3.5rem;justify-content:space-between;align-items:flex-start}
-.footer-logo img{height:24px;width:auto;filter:invert(1) hue-rotate(180deg)}
-.footer-tag{margin-top:.9rem;font-size:.9rem;opacity:.6;word-break:keep-all}
-.footer-col h4{font-size:.76rem;letter-spacing:.18em;font-weight:800;opacity:.5;margin-bottom:.8rem}
-.footer-col ul{list-style:none}
-.footer-col li{margin-bottom:.5rem}
-.footer-col a{font-size:.95rem;font-weight:600;opacity:.85}
-.footer-col a:hover{opacity:1;text-decoration:underline;text-underline-offset:4px}
-.footer-bottom{
-  margin-top:clamp(2.2rem,5vw,3.5rem);padding-top:1.2rem;
-  border-top:1px solid rgba(243,239,230,.2);
-  display:flex;flex-wrap:wrap;gap:.6rem 2rem;justify-content:space-between;
-  font-size:.82rem;opacity:.5;
+.fee__why h3{font-family:var(--font-fun);font-size:1.25rem}
+.fee__why p{margin-top:10px;color:var(--ink-soft);line-height:1.75}
+.fee__why p strong{color:var(--ink)}
+.zeroes{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:48px}
+.zero{
+  width:124px;height:124px;border-radius:50%;
+  background:var(--yellow);color:var(--ink);border:3px solid var(--ink);
+  display:grid;place-items:center;text-align:center;
+  transform:rotate(var(--r,0deg));
+  box-shadow:4px 4px 0 rgba(0,0,0,.3);
+}
+.zero>span{display:block}
+.zero .big{font-family:var(--font-fun);font-size:1.5rem;line-height:1.1;display:block}
+.zero .small{font-size:.8rem;font-weight:800;display:block;margin-top:3px}
+.zero--1{--r:-4deg}
+.zero--2{--r:3deg}
+.zero--3{--r:-2deg}
+
+/* ================= 최종 CTA ================= */
+.cta__panel{
+  position:relative;overflow:hidden;
+  background:var(--yellow);border:3px solid var(--ink);border-radius:36px;
+  box-shadow:10px 10px 0 rgba(23,38,92,.2);
+  padding:clamp(44px,7vw,80px) clamp(24px,5vw,64px);
+  text-align:center;
+}
+.cta__deco{
+  position:absolute;width:120px;height:120px;background:#fff;opacity:.55;
+  clip-path:polygon(50% 0%,59% 12%,72% 5%,75% 19%,90% 17%,86% 31%,100% 37%,90% 48%,99% 60%,85% 65%,89% 80%,74% 79%,71% 93%,59% 85%,50% 100%,41% 85%,29% 93%,26% 79%,11% 80%,15% 65%,1% 60%,10% 48%,0% 37%,14% 31%,10% 17%,25% 19%,28% 5%,41% 12%);
+}
+.cta__deco--1{top:-34px;left:-30px}
+.cta__deco--2{bottom:-40px;right:-26px;width:150px;height:150px}
+.cta__title{position:relative;font-size:clamp(1.8rem,4.4vw,2.9rem);font-weight:900;line-height:1.3;letter-spacing:-.02em}
+.cta__sub{position:relative;margin-top:16px;font-size:clamp(1rem,1.7vw,1.15rem);color:#5C4A00}
+.cta__btns{position:relative;display:flex;flex-wrap:wrap;justify-content:center;gap:14px;margin-top:32px}
+.cta__note{position:relative;margin-top:18px;font-size:.88rem;color:#5C4A00}
+
+/* ================= 푸터 ================= */
+.site-foot{background:var(--ink);color:#B9C2E4;padding:58px 0 42px}
+.site-foot__top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  gap:28px;flex-wrap:wrap;
+}
+.site-foot__brand img{
+  height:28px;width:auto;
+  filter:invert(1) hue-rotate(180deg);
+}
+.site-foot__tag{margin-top:14px;font-family:var(--font-fun);font-size:1.02rem;color:#EDEFFA}
+.site-foot__nav{display:flex;gap:24px;flex-wrap:wrap}
+.site-foot__nav a{color:#EDEFFA;text-decoration:none;font-weight:700;font-size:.92rem}
+.site-foot__nav a:hover{color:var(--yellow)}
+.site-foot__line{border:none;border-top:1px solid rgba(255,255,255,.16);margin:34px 0 22px}
+.site-foot__fine{font-size:.8rem;line-height:1.7;color:#8E99C4}
+.site-foot__copy{margin-top:12px;font-size:.8rem;color:#8E99C4}
+
+/* ================= 반응형 ================= */
+@media (max-width:960px){
+  .hero__grid{grid-template-columns:1fr;gap:24px}
+  .hero__stage{min-height:430px;margin-top:26px}
+  .demo__grid{grid-template-columns:1fr}
+  .demo__screen{order:-1}
+  .how__grid{grid-template-columns:1fr;max-width:560px;margin-left:auto;margin-right:auto}
+  .fee__receipts{grid-template-columns:1fr;max-width:480px}
+}
+@media (max-width:640px){
+  .site-nav{gap:14px}
+  .site-nav__link--hide-sm{display:none}
+  .hero__stage{min-height:380px}
+  .ticket{width:min(258px,88%)}
+  .sticker-pang{width:92px;height:92px;right:0}
+  .sticker-3s{width:84px;height:84px;font-size:.95rem}
+  .sig-card{--stub:84px}
+  .sig-card__go{display:none}
+  .demo-inputs{grid-template-columns:1fr}
+  .btn--lg{width:100%;}
+  .hero__cta .btn{width:100%}
+  .cta__btns .btn{width:100%}
+  .zero{width:108px;height:108px}
 }
 
-/* ---------- reveal ---------- */
-.rv{opacity:0;transform:translateY(26px);transition:opacity .8s ease,transform .8s cubic-bezier(.16,1,.3,1);transition-delay:var(--d,0s)}
-.rv.in{opacity:1;transform:none}
-/* 영수증은 리빌 후에도 기울기 유지 (.rv.in 의 transform:none 보다 우선) */
-.rcpt--old.rv.in{transform:rotate(-1.2deg)}
-.rcpt--new.rv.in{transform:rotate(1deg)}
-
-/* ---------- reduced motion ---------- */
+/* ================= 모션 최소화 ================= */
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{
@@ -412,291 +666,366 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
     animation-iteration-count:1 !important;
     transition-duration:.01ms !important;
   }
-  .rv{transform:none}
 }
 </style>
 </head>
 <body>
-<a class="skip" href="#main">본문으로 건너뛰기</a>
 
-<!-- ========== masthead ========== -->
-<header class="masthead">
-  <a class="masthead-logo" href="/" aria-label="계이득 홈">
-    <img src="/assets/gyeideuk-logo.png" alt="계이득" height="26">
-  </a>
-  <nav aria-label="주요 메뉴">
-    <a class="nav-hide" href="/channels">채널 탐색</a>
-    <a href="/login">로그인</a>
-    <a class="nav-cta" href="/signup?role=streamer">시작하기</a>
-  </nav>
+<header class="site-head">
+  <div class="container site-head__in">
+    <a class="brand" href="/">
+      <img class="brand__logo" src="/assets/gyeideuk-logo.png" alt="계이득 홈" width="120" height="30">
+    </a>
+    <nav class="site-nav" aria-label="주요 메뉴">
+      <a class="site-nav__link site-nav__link--hide-sm" href="/channels">채널 탐색</a>
+      <a class="site-nav__link" href="/login">로그인</a>
+      <a class="btn btn--blue btn--sm" href="/signup?role=streamer">무료로 시작</a>
+    </nav>
+  </div>
 </header>
 
-<main id="main">
+<main>
 
-  <!-- ========== hero ========== -->
-  <section class="hero" aria-label="계이득 소개">
-    <div class="wrap">
-      <p class="hero-meta rv">
-        <span>후원의 판을 다시 짜는 선언 · 제0호</span>
-        <span>수수료 0% · 계좌 직행</span>
-      </p>
-      <h1 class="h1">
-        <span class="ln rv">이체 한 번.</span>
-        <span class="ln ln--2 rv" style="--d:.08s"><em class="acc">3초</em> 뒤,</span>
-        <span class="ln rv" style="--d:.16s">방송이 터진다.</span>
-      </h1>
-      <div class="hero-foot">
-        <div class="hero-ctas rv" style="--d:.24s">
-          <a class="btn btn--primary" href="/signup?role=streamer">스트리머로 시작하기</a>
-          <a class="btn" href="#demo">메뉴판 눌러보기 ↓</a>
-        </div>
-        <p class="hero-sub rv" style="--d:.3s">
-          계이득은 스트리머 후원에서 플랫폼을 지웠습니다.
-          시청자는 가입도 앱도 없이 계좌이체 한 번,
-          후원금은 수수료 0%로 스트리머 계좌에 직행,
-          연출은 3초 만에 방송 화면 위로.
-          중간에 남는 건 아무것도 없습니다.
+  <!-- ============ 히어로 ============ -->
+  <section class="hero">
+    <div class="container hero__grid">
+      <div>
+        <p class="hero__badge">수수료 0% · 정산 대기 0일</p>
+        <h1 class="hero__title">내 후원인데,<br>왜 <span class="wavy">남이 떼</span> 가요?</h1>
+        <p class="hero__sub">
+          계이득은 돈에 손을 안 댑니다. 시청자가 시그니처를 골라 이체하면 —
+          <strong>돈은 내 계좌로 직행, 연출은 3초 만에 방송으로 직행.</strong>
+          정산 대기요? 그런 건 애초에 없어요.
         </p>
+        <div class="hero__cta">
+          <a class="btn btn--blue btn--lg" href="/signup?role=streamer">수수료 0%로 시작하기</a>
+          <a class="btn btn--lg" href="#demo">일단 구경할래요 👀</a>
+        </div>
+        <p class="hero__note">스트리머 가입 1분 · 시청자는 가입도, 앱 설치도 필요 없어요</p>
+      </div>
+      <div class="hero__stage" aria-hidden="true">
+        <div class="sticker-pang"><span>팡!</span></div>
+        <div class="ticket ticket--1"><span class="ticket__stub">₩1,000</span><span class="ticket__name">환영인사 🙌</span></div>
+        <div class="ticket ticket--2"><span class="ticket__stub">₩5,000</span><span class="ticket__name">풀콤보 🥳</span></div>
+        <div class="ticket ticket--3"><span class="ticket__stub">₩10,000</span><span class="ticket__name">노래신청 🎤</span></div>
+        <div class="ticket ticket--4"><span class="ticket__stub">₩50,000</span><span class="ticket__name">소원권 🧞</span></div>
+        <div class="sticker-3s">입금부터<br>3초 컷</div>
+        <span class="coin coin--1">₩</span>
+        <span class="coin coin--2">₩</span>
+        <span class="spark spark--1">✦</span>
+        <span class="spark spark--2">✦</span>
+        <span class="spark spark--3">✦</span>
       </div>
     </div>
-    <span class="vert" aria-hidden="true">IDEUKGAE · FEE 0% · LIVE IN 3 SEC</span>
   </section>
 
-  <!-- ========== ticker ========== -->
-  <div class="ticker" aria-hidden="true">
-    <div class="ticker-track">
-      <div class="ticker-group">
-        <span class="tk"><em>방금</em>밤새는감자 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>1분 전</em>츄르수집가 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>2분 전</em>옆집시청자 님 — 환영인사 1,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>3분 전</em>도네장인 님 — 소원권 50,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>4분 전</em>새벽두시반 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>5분 전</em>하이라이트요정 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
-      </div>
-      <div class="ticker-group">
-        <span class="tk"><em>방금</em>밤새는감자 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>1분 전</em>츄르수집가 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>2분 전</em>옆집시청자 님 — 환영인사 1,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>3분 전</em>도네장인 님 — 소원권 50,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>4분 전</em>새벽두시반 님 — 풀콤보 5,000원</span><span class="tk-star">✦</span>
-        <span class="tk"><em>5분 전</em>하이라이트요정 님 — 노래신청 10,000원</span><span class="tk-star">✦</span>
+  <!-- ============ 후원 티커 ============ -->
+  <div class="ticker-wrap" aria-hidden="true">
+    <div class="ticker">
+      <div class="ticker__track">
+        <div class="ticker__group">
+          <span class="ticker__item">🙌 감자튀김 님 · 환영인사<em>1,000원</em></span>
+          <span class="ticker__item">🥳 야식요정 님 · 풀콤보<em>5,000원</em></span>
+          <span class="ticker__item">🎤 새벽감성 님 · 노래신청<em>10,000원</em></span>
+          <span class="ticker__item">🧞 옆집사장 님 · 소원권<em>50,000원</em></span>
+          <span class="ticker__item">🥳 치킨은두마리 님 · 풀콤보<em>5,000원</em></span>
+          <span class="ticker__item">🧞 숙제하다말고 님 · 소원권<em>50,000원</em></span>
+          <span class="ticker__item">🙌 지나가던1 님 · 환영인사<em>1,000원</em></span>
+          <span class="ticker__item">🎤 모니터앞피자 님 · 노래신청<em>10,000원</em></span>
+        </div>
+        <div class="ticker__group">
+          <span class="ticker__item">🙌 감자튀김 님 · 환영인사<em>1,000원</em></span>
+          <span class="ticker__item">🥳 야식요정 님 · 풀콤보<em>5,000원</em></span>
+          <span class="ticker__item">🎤 새벽감성 님 · 노래신청<em>10,000원</em></span>
+          <span class="ticker__item">🧞 옆집사장 님 · 소원권<em>50,000원</em></span>
+          <span class="ticker__item">🥳 치킨은두마리 님 · 풀콤보<em>5,000원</em></span>
+          <span class="ticker__item">🧞 숙제하다말고 님 · 소원권<em>50,000원</em></span>
+          <span class="ticker__item">🙌 지나가던1 님 · 환영인사<em>1,000원</em></span>
+          <span class="ticker__item">🎤 모니터앞피자 님 · 노래신청<em>10,000원</em></span>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ========== ch.1 signature menu / live demo ========== -->
-  <section class="chapter sec-dark" id="demo" aria-label="시그니처 메뉴판 데모">
-    <span class="ghost" aria-hidden="true">01</span>
-    <div class="wrap">
-      <p class="kicker rv">제1장 — 시그니처 메뉴판</p>
-      <h2 class="h2 rv" style="--d:.06s">후원에<br>메뉴판이 생겼다.</h2>
-      <p class="lead rv" style="--d:.12s">
-        금액마다 방송 리액션을 정해두는 것. 계이득은 그걸 <strong>시그니처</strong>라고 부릅니다.
-        시청자는 얼마를 보낼지 고민하는 대신, 메뉴판에서 고르듯 주문합니다.
-        아래는 실제로 작동하는 메뉴판입니다 — 눌러보세요.
-      </p>
+  <!-- ============ 인터랙티브 데모 ============ -->
+  <section class="section" id="demo">
+    <div class="container">
+      <div class="center reveal">
+        <p class="kicker kicker--yellow">눌러보는 데모</p>
+        <h2 class="h2">말로 설명 안 할게요.<br>직접 쏴 보세요.</h2>
+        <p class="section-sub">
+          메뉴판에서 시그니처를 고르면 옆 방송 화면에 그대로 터집니다.
+          실제 방송에서 시청자가 겪는 흐름, 그대로예요.
+        </p>
+      </div>
 
-      <div class="demo-grid">
-        <div class="demo-stage-col rv" style="--d:.1s">
-          <figure>
-            <div class="frame" id="demo-frame">
-              <div class="live-badge" aria-hidden="true">
-                <span class="live-pill"><span class="live-dot"></span>LIVE</span>
-                <span class="live-viewers">시청 <span id="viewer-count">1,284</span>명</span>
-              </div>
-              <div class="chat-feed" id="chat-feed" aria-hidden="true"></div>
-              <div class="overlay-host" id="overlay-host" aria-hidden="true"></div>
+      <div class="demo__grid">
+        <div class="demo__menu reveal">
+          <div class="menu">
+            <div class="menu__head">
+              <h3 class="menu__title">오늘의 시그니처 메뉴판</h3>
+              <p class="menu__hint">이름·금액·연출은 스트리머 마음대로</p>
             </div>
-            <figcaption class="frame-caption">
-              <span class="cap-text">방송 화면 미리보기 — 실제 방송에서는 OBS 위에 이대로 올라갑니다.</span>
-              <button type="button" class="sound-toggle" id="sound-toggle" aria-pressed="true">효과음 <span id="sound-state">ON</span></button>
-            </figcaption>
-          </figure>
+            <div class="menu__list">
+              <button type="button" class="sig-card t-welcome" data-tier="welcome">
+                <span class="sig-card__stub"><span class="sig-card__emoji">🙌</span><span class="sig-card__price">₩1,000</span></span>
+                <span class="sig-card__body">
+                  <span class="sig-card__name">환영인사</span>
+                  <span class="sig-card__desc">어서오세요 도장 쾅</span>
+                </span>
+                <span class="sig-card__go">쏘기 →</span>
+              </button>
+              <button type="button" class="sig-card t-combo" data-tier="combo">
+                <span class="sig-card__stub"><span class="sig-card__emoji">🥳</span><span class="sig-card__price">₩5,000</span></span>
+                <span class="sig-card__body">
+                  <span class="sig-card__name">풀콤보</span>
+                  <span class="sig-card__desc">리액션 풀세트 발사</span>
+                </span>
+                <span class="sig-card__go">쏘기 →</span>
+              </button>
+              <button type="button" class="sig-card t-song" data-tier="song">
+                <span class="sig-card__stub"><span class="sig-card__emoji">🎤</span><span class="sig-card__price">₩10,000</span></span>
+                <span class="sig-card__body">
+                  <span class="sig-card__name">노래신청</span>
+                  <span class="sig-card__desc">신청곡이 바로 재생</span>
+                </span>
+                <span class="sig-card__go">쏘기 →</span>
+              </button>
+              <button type="button" class="sig-card t-wish" data-tier="wish">
+                <span class="sig-card__stub"><span class="sig-card__emoji">🧞</span><span class="sig-card__price">₩50,000</span></span>
+                <span class="sig-card__body">
+                  <span class="sig-card__name">소원권</span>
+                  <span class="sig-card__desc">소원 하나 들어드림</span>
+                </span>
+                <span class="sig-card__go">쏘기 →</span>
+              </button>
+            </div>
+            <div class="demo-inputs">
+              <div>
+                <label class="sr-only" for="nickInput">방송에 띄울 닉네임</label>
+                <input id="nickInput" type="text" maxlength="12" placeholder="닉네임 (비우면 랜덤)" autocomplete="off">
+              </div>
+              <div>
+                <label class="sr-only" for="msgInput">방송에 띄울 한마디</label>
+                <input id="msgInput" type="text" maxlength="40" placeholder="방송에 띄울 한마디 (비우면 랜덤)" autocomplete="off">
+              </div>
+            </div>
+            <p class="menu__foot">💡 가만히 두면 다른 시청자들이 알아서 쏩니다. 진짜예요.</p>
+          </div>
         </div>
 
-        <div class="demo-menu-col rv" style="--d:.18s">
-          <div class="nick-field">
-            <label for="demo-nick">내 닉네임으로 쏴보기 (선택)</label>
-            <input id="demo-nick" type="text" maxlength="12" autocomplete="off" placeholder="예: 밤새는감자">
+        <div class="demo__screen reveal">
+          <div class="tv">
+            <div class="tv__screen" id="tvScreen">
+              <p class="live"><span class="live__dot"></span>LIVE</p>
+              <p class="viewers">👀 <span id="viewerCount">1,024</span>명</p>
+              <div class="chat" id="chatHost" aria-hidden="true"></div>
+              <div class="buddy" id="buddy" aria-hidden="true">
+                <span class="buddy__bubble" id="buddyBubble">고마워요!!</span>
+                <div class="buddy__head">
+                  <span class="buddy__band"></span>
+                  <span class="buddy__ear buddy__ear--l"></span>
+                  <span class="buddy__ear buddy__ear--r"></span>
+                  <span class="buddy__eye buddy__eye--l"></span>
+                  <span class="buddy__eye buddy__eye--r"></span>
+                  <span class="buddy__mouth"></span>
+                </div>
+                <div class="buddy__body"></div>
+              </div>
+              <div class="tv__desk"></div>
+              <div id="alertHost"></div>
+            </div>
           </div>
+          <div class="tv__stand" aria-hidden="true"></div>
+          <div class="tv__base" aria-hidden="true"></div>
+          <p class="demo__caption">지금 보신 이 화면, 실제 OBS 오버레이와 같은 물건입니다. 그대로 방송에 올라가요.</p>
+        </div>
+      </div>
 
-          <button type="button" class="menu-item" data-sig="0">
-            <span class="menu-line"><span class="menu-name">환영인사</span><span class="leader"></span><span class="menu-price">1,000원</span></span>
-            <span class="menu-desc">이름 부르고, 손 흔들고, 정착 확정.</span>
-            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
-          </button>
-          <button type="button" class="menu-item" data-sig="1">
-            <span class="menu-line"><span class="menu-name">풀콤보</span><span class="leader"></span><span class="menu-price">5,000원</span></span>
-            <span class="menu-desc">감사인사–리액션–댄스, 끊김 없는 3단 콤보.</span>
-            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
-          </button>
-          <button type="button" class="menu-item" data-sig="2">
-            <span class="menu-line"><span class="menu-name">노래신청</span><span class="leader"></span><span class="menu-price">10,000원</span></span>
-            <span class="menu-desc">신청곡 즉석 라이브. 음정은 보장 못 합니다.</span>
-            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
-          </button>
-          <button type="button" class="menu-item" data-sig="3">
-            <span class="menu-line"><span class="menu-name">소원권</span><span class="leader"></span><span class="menu-price">50,000원</span></span>
-            <span class="menu-desc">방송에서 가능한 거라면, 뭐든 이뤄드립니다.</span>
-            <span class="menu-cue">눌러서 방송에 쏘기 →</span>
-          </button>
+      <p class="sr-only" aria-live="polite" id="demoAnnounce"></p>
 
-          <p class="menu-hint">
-            메뉴 이름도, 가격도, 연출도 전부 스트리머가 정합니다.
-            가만히 두면 — 다른 시청자들이 먼저 쏩니다.
+      <div class="perks reveal">
+        <p class="perks__label">시청자 입장에서는요?</p>
+        <p class="perk">가입? <em>안 해요</em></p>
+        <p class="perk">앱 설치? <em>안 해요</em></p>
+        <p class="perk">이체 한 번? <em>그게 다예요</em></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 작동 방식 ============ -->
+  <section class="section how" id="how">
+    <div class="container">
+      <div class="center reveal">
+        <p class="kicker kicker--mint">작동 방식</p>
+        <h2 class="h2">할 일은 셋.<br>나머지는 계이득이 합니다.</h2>
+      </div>
+      <div class="how__grid">
+        <div class="step reveal">
+          <p class="step__num">1</p>
+          <div class="ico" aria-hidden="true">
+            <div class="ico-board">
+              <span class="ico-board__flag"></span>
+              <span class="ico-board__row" style="--w:72%"></span>
+              <span class="ico-board__row" style="--w:52%"></span>
+              <span class="ico-board__row" style="--w:63%"></span>
+            </div>
+          </div>
+          <h3 class="step__title">메뉴판 차리기</h3>
+          <p class="step__body">
+            시그니처의 이름·금액·연출을 등록하세요.
+            1,000원 환영인사부터 50,000원 소원권까지, 가격표는 내 마음대로.
+          </p>
+        </div>
+        <div class="step reveal">
+          <p class="step__num">2</p>
+          <div class="ico" aria-hidden="true">
+            <div class="ico-flow">
+              <span class="ico-coin">₩</span>
+              <span class="ico-dash"></span>
+              <span class="ico-bank"></span>
+            </div>
+          </div>
+          <h3 class="step__title">시청자는 이체 한 번</h3>
+          <p class="step__body">
+            메뉴 고르고 계좌이체하면 끝.
+            가입도, 앱 설치도, 카드 등록도 없습니다. 돈은 내 계좌로 바로 도착.
+          </p>
+        </div>
+        <div class="step reveal">
+          <p class="step__num">3</p>
+          <div class="ico" aria-hidden="true">
+            <div class="ico-star"><span>팡!</span></div>
+          </div>
+          <h3 class="step__title">3초 뒤 방송에 팡</h3>
+          <p class="step__body">
+            스트리머 PC의 계이득 프로그램이 입금을 감지하고,
+            닉네임·금액·메시지와 함께 연출을 쏘아 올립니다.
           </p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== ch.2 how it works ========== -->
-  <section class="chapter" aria-label="작동 방식">
-    <span class="ghost" aria-hidden="true">02</span>
-    <div class="wrap">
-      <p class="kicker rv">제2장 — 작동 방식</p>
-      <h2 class="h2 rv" style="--d:.06s">복잡한 일은<br>전부 프로그램 몫.</h2>
+  <!-- ============ 수수료 0% ============ -->
+  <section class="section fee" id="fee">
+    <div class="container">
+      <div class="center reveal">
+        <p class="kicker kicker--pink">수수료 이야기</p>
+        <h2 class="h2">말은 다 <em>0%</em>라 하니까,<br>영수증으로 보여드릴게요.</h2>
+        <p class="section-sub">같은 10만 원 후원, 통장에 찍히는 숫자는 다릅니다.</p>
+      </div>
 
-      <div class="steps">
-        <div class="step rv" style="--d:.08s">
-          <p class="step-num" aria-hidden="true">1</p>
-          <h3>고르고, 보낸다</h3>
-          <p>시청자는 후원 페이지에서 시그니처를 고르고 계좌이체를 합니다. 가입도, 앱 설치도, 결제 비밀번호 등록도 없습니다. 은행 앱 하나면 끝.</p>
+      <div class="fee__receipts">
+        <div class="receipt receipt--sad reveal">
+          <p class="receipt__shop">보통의 후원 플랫폼</p>
+          <p class="receipt__label">영수증</p>
+          <p class="receipt__date">방송 후원 · 어느 날</p>
+          <dl class="receipt__rows">
+            <div class="receipt__row"><dt>시청자 후원</dt><dd>100,000원</dd></div>
+            <div class="receipt__row"><dt>플랫폼 수수료</dt><dd class="minus">−20,000원</dd></div>
+            <div class="receipt__row"><dt>정산 수수료</dt><dd class="minus">−500원</dd></div>
+            <div class="receipt__row"><dt>정산 대기</dt><dd>D+14</dd></div>
+          </dl>
+          <p class="receipt__total"><span>내 통장에</span><span class="sum">79,500원<small>…2주 뒤에</small></span></p>
+          <p class="receipt__fine">* 예시 수치입니다. 어디는 더 떼고 어디는 덜 떼지만, 어쨌든 뗍니다.</p>
+          <span class="stamp stamp--gray" aria-hidden="true">어딘가<br>허전</span>
         </div>
-        <div class="step rv" style="--d:.16s">
-          <p class="step-num" aria-hidden="true">2</p>
-          <h3>입금을 감지한다</h3>
-          <p>스트리머 PC의 계이득 프로그램이 계좌 입금을 실시간으로 감지합니다. 스트리머는 아무것도 누르지 않습니다. 방송만 하면 됩니다.</p>
-        </div>
-        <div class="step rv" style="--d:.24s">
-          <p class="step-num" aria-hidden="true">3</p>
-          <h3>방송이 터진다</h3>
-          <p>닉네임·금액·메시지가 시그니처 연출과 함께 OBS 화면에 등장합니다. 입금 순간부터 여기까지, 3초.</p>
+
+        <div class="receipt receipt--win reveal">
+          <p class="receipt__shop">계이득</p>
+          <p class="receipt__label">영수증</p>
+          <p class="receipt__date">방송 후원 · 오늘</p>
+          <dl class="receipt__rows">
+            <div class="receipt__row"><dt>시청자 후원</dt><dd>100,000원</dd></div>
+            <div class="receipt__row"><dt>플랫폼 수수료</dt><dd class="zero">0원</dd></div>
+            <div class="receipt__row"><dt>정산 수수료</dt><dd class="zero">0원</dd></div>
+            <div class="receipt__row"><dt>정산 대기</dt><dd class="zero">없음</dd></div>
+          </dl>
+          <p class="receipt__total"><span>내 통장에</span><span class="sum">100,000원<small>이체 즉시</small></span></p>
+          <p class="receipt__fine">시청자 계좌에서 스트리머 계좌로. 중간에 아무도 없습니다.</p>
+          <span class="stamp stamp--red" aria-hidden="true">계이득!</span>
         </div>
       </div>
 
-      <p class="pull rv" style="--d:.1s">시청자의 준비물은 은행 앱 하나. 스트리머의 준비물은 계좌 하나.</p>
-    </div>
-  </section>
-
-  <!-- ========== ch.3 zero fee ========== -->
-  <section class="chapter sec-accent" aria-label="수수료 0%">
-    <span class="ghost" aria-hidden="true">03</span>
-    <div class="wrap">
-      <p class="kicker rv">제3장 — 수수료</p>
-      <p class="zero-num rv" style="--d:.06s" aria-hidden="true">0%</p>
-      <h2 class="zero-title rv" style="--d:.12s">우리는 후원금에<br>손대지 않는다.</h2>
-      <p class="zero-lead rv" style="--d:.18s">
-        후원금은 시청자 계좌에서 스트리머 계좌로 직행합니다.
-        플랫폼이 중간에서 돈을 만지지 않으니, 떼일 수수료도 없고 기다릴 정산일도 없습니다.
-        오만 원을 받으면, 오만 원이 남습니다.
-      </p>
-
-      <p class="rcpt-heading rv" style="--d:.2s">같은 오만 원, 영수증 두 장.</p>
-
-      <div class="rcpt-grid">
-        <article class="rcpt rcpt--old rv" style="--d:.24s" aria-label="보통의 후원 플랫폼 정산 영수증 예시">
-          <p class="rcpt-shop">보통의 후원 플랫폼</p>
-          <p class="rcpt-label">영수증</p>
-          <p class="rcpt-date">방송 후원 결산 · 어느 날</p>
-          <div class="rcpt-rows">
-            <div class="rcpt-row"><span>시청자가 보낸 마음</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">50,000원</span></div>
-            <div class="rcpt-row"><span>플랫폼이 가져가는 몫</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--minus">−10,000원</span></div>
-            <div class="rcpt-row"><span>정산 수수료</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--minus">−500원</span></div>
-            <div class="rcpt-row"><span>정산까지 기다리는 날</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">14일</span></div>
-          </div>
-          <p class="rcpt-total"><span>계좌에 찍히는 돈</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">39,500원</span></p>
-          <p class="rcpt-when">— 그것도 2주 뒤에</p>
-          <p class="rcpt-fine">* 예시 수치입니다. 어디는 더 떼고 어디는 덜 떼지만, 어쨌든 뗍니다.</p>
-          <span class="rcpt-stamp rcpt-stamp--old" aria-hidden="true">미결</span>
-        </article>
-
-        <article class="rcpt rcpt--new rv" style="--d:.3s" aria-label="계이득 정산 영수증">
-          <p class="rcpt-shop">계이득</p>
-          <p class="rcpt-label">영수증</p>
-          <p class="rcpt-date">방송 후원 결산 · 오늘</p>
-          <div class="rcpt-rows">
-            <div class="rcpt-row"><span>시청자가 보낸 마음</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">50,000원</span></div>
-            <div class="rcpt-row"><span>플랫폼이 가져가는 몫</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--zero">−0원</span></div>
-            <div class="rcpt-row"><span>정산 수수료</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--zero">−0원</span></div>
-            <div class="rcpt-row"><span>정산까지 기다리는 날</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val rcpt-val--zero">0일</span></div>
-          </div>
-          <p class="rcpt-total"><span>계좌에 찍히는 돈</span><span class="leader" aria-hidden="true"></span><span class="rcpt-val">50,000원</span></p>
-          <p class="rcpt-when">— 이체 즉시</p>
-          <p class="rcpt-fine">시청자 계좌에서 스트리머 계좌로 직행. 중간에 아무도 없습니다.</p>
-          <span class="rcpt-stamp rcpt-stamp--new" aria-hidden="true">결산<br>완료</span>
-        </article>
+      <div class="fee__why reveal">
+        <h3>0%가 가능한 이유, 사실 단순해요</h3>
+        <p>
+          계이득은 결제를 중개하지 않습니다. 돈은 시청자 계좌에서 스트리머 계좌로
+          <strong>바로</strong> 갑니다. 저희 손을 거치지 않으니, 떼고 싶어도 뗄 수가 없어요.
+          플랫폼이 돈을 안 만지면 정산일이라는 개념도 사라집니다.
+        </p>
       </div>
-      <p class="zero-note rv" style="--d:.26s">* 후원금은 계이득의 계좌를 단 1초도 거치지 않습니다.</p>
+
+      <div class="zeroes reveal" aria-label="계이득의 세 가지 0">
+        <p class="zero zero--1"><span><span class="big">0원</span><span class="small">가입비</span></span></p>
+        <p class="zero zero--2"><span><span class="big">0%</span><span class="small">수수료</span></span></p>
+        <p class="zero zero--3"><span><span class="big">0일</span><span class="small">정산 대기</span></span></p>
+      </div>
     </div>
   </section>
 
-  <!-- ========== final cta ========== -->
-  <section class="chapter cta" aria-label="시작하기">
-    <div class="wrap">
-      <p class="kicker rv">마지막 장 — 시작</p>
-      <h2 class="h2 rv" style="--d:.06s">계좌 하나로,<br>오늘 밤 방송부터.</h2>
-      <div class="cta-ctas rv" style="--d:.14s">
-        <a class="btn btn--primary btn--big" href="/signup?role=streamer">스트리머로 시작하기</a>
-        <a class="btn btn--big" href="/channels">채널 둘러보기</a>
+  <!-- ============ 최종 CTA ============ -->
+  <section class="section">
+    <div class="container">
+      <div class="cta__panel reveal">
+        <span class="cta__deco cta__deco--1" aria-hidden="true"></span>
+        <span class="cta__deco cta__deco--2" aria-hidden="true"></span>
+        <h2 class="cta__title">오늘 만든 메뉴판,<br>오늘 밤 방송에서 팡!</h2>
+        <p class="cta__sub">가입 1분, 프로그램 설치 5분. 다음 방송부터 바로 후원 받으세요.</p>
+        <div class="cta__btns">
+          <a class="btn btn--blue btn--lg" href="/signup?role=streamer">스트리머로 시작하기</a>
+          <a class="btn btn--lg" href="/channels">쓰고 있는 채널 구경하기</a>
+        </div>
+        <p class="cta__note">가입 무료 · 수수료 0% · 그만둘 때 눈치 주는 사람 없음</p>
       </div>
-      <p class="cta-login rv" style="--d:.2s">이미 계정이 있다면 <a href="/login">로그인</a></p>
-      <p class="cta-viewer rv" style="--d:.26s">시청자라면 — <a href="/channels">채널 탐색</a>에서 좋아하는 스트리머의 메뉴판을 먼저 구경해 보세요.</p>
     </div>
   </section>
+
 </main>
 
-<!-- ========== footer ========== -->
-<footer class="footer">
-  <div class="wrap">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <a class="footer-logo" href="/" aria-label="계이득 홈">
-          <img src="/assets/gyeideuk-logo.png" alt="계이득" height="24">
-        </a>
-        <p class="footer-tag">스트리머 후원, 수수료 0%.<br>이체 한 번이 방송을 터뜨립니다.</p>
+<!-- ============ 푸터 ============ -->
+<footer class="site-foot">
+  <div class="container">
+    <div class="site-foot__top">
+      <div class="site-foot__brand">
+        <img src="/assets/gyeideuk-logo.png" alt="계이득" width="112" height="28">
+        <p class="site-foot__tag">떼는 것 없이, 계속 이득. 계이득.</p>
       </div>
-      <div class="footer-col">
-        <h4>바로가기</h4>
-        <ul>
-          <li><a href="/signup?role=streamer">스트리머 가입</a></li>
-          <li><a href="/channels">채널 탐색</a></li>
-          <li><a href="/login">로그인</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4>약관</h4>
-        <ul>
-          <li><a href="/terms.html">이용약관</a></li>
-          <li><a href="/privacy.html">개인정보처리방침</a></li>
-        </ul>
-      </div>
+      <nav class="site-foot__nav" aria-label="푸터 메뉴">
+        <a href="/channels">채널 탐색</a>
+        <a href="/login">로그인</a>
+        <a href="/terms.html">이용약관</a>
+        <a href="/privacy.html">개인정보처리방침</a>
+      </nav>
     </div>
-    <div class="footer-bottom">
-      <span>© <span id="year">2026</span> 계이득 (ideukgae)</span>
-      <span>후원금은 플랫폼을 거치지 않고 스트리머 계좌로 직행합니다.</span>
-    </div>
+    <hr class="site-foot__line">
+    <p class="site-foot__fine">
+      계이득은 후원금 결제를 중개하거나 보관하지 않습니다.
+      송금은 시청자와 스트리머의 계좌 간에 직접 이루어지며, 계이득은 입금 감지와 방송 연출만 담당합니다.
+    </p>
+    <p class="site-foot__copy">© 2026 계이득. All rights reserved.</p>
   </div>
 </footer>
-
-<noscript>
-  <style>
-    .rv{opacity:1;transform:none}
-    .rcpt--old.rv{transform:rotate(-1.2deg)}
-    .rcpt--new.rv{transform:rotate(1deg)}
-  </style>
-</noscript>
 
 <script>
 (function () {
   'use strict';
 
-  var motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
-  function reduced() { return motionQuery.matches; }
+  function reduced() {
+    return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+  function fmt(n) { return n.toLocaleString('ko-KR'); }
 
-  /* ---------- scroll reveal ---------- */
-  var revealEls = Array.prototype.slice.call(document.querySelectorAll('.rv'));
-  if ('IntersectionObserver' in window && !reduced()) {
+  /* ── 스크롤 등장 ─────────────────────── */
+  var reveals = document.querySelectorAll('.reveal');
+  function showAllReveals() {
+    Array.prototype.forEach.call(reveals, function (el) { el.classList.add('in'); });
+  }
+  if (reduced() || !('IntersectionObserver' in window)) {
+    showAllReveals();
+  } else {
     var revealIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
         if (entry.isIntersecting) {
@@ -704,286 +1033,248 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
           revealIO.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
-    var viewportH = window.innerHeight || document.documentElement.clientHeight;
-    revealEls.forEach(function (el) {
-      /* above-the-fold content shows immediately; the rest animates on scroll */
-      if (el.getBoundingClientRect().top < viewportH * 0.9) {
-        el.classList.add('in');
-      } else {
-        revealIO.observe(el);
-      }
-    });
-  } else {
-    revealEls.forEach(function (el) { el.classList.add('in'); });
+    }, { threshold: 0.12 });
+    Array.prototype.forEach.call(reveals, function (el) { revealIO.observe(el); });
   }
 
-  /* ---------- demo data ---------- */
-  var SIGNATURES = [
-    { name: '환영인사', amount: 1000,
-      msgs: ['처음 왔어요, 반가워요!', '지나가다 정착합니다', '오늘부터 1일이에요', '인사받아 주세요!'],
-      chat: ['어서와~', '뉴비다 뉴비!', '정착 축하ㅋㅋ'] },
-    { name: '풀콤보', amount: 5000,
-      msgs: ['오늘 방송 미쳤다 ㅋㅋ', '이건 못 참지', '풀콤보 가즈아', '하이라이트 각입니다'],
-      chat: ['풀콤보 떴다ㅋㅋㅋ', '와 3단 콤보 실화냐', '박수 8888'] },
-    { name: '노래신청', amount: 10000,
-      msgs: ['벚꽃엔딩 불러주세요', '신청곡: 사건의 지평선', '발라드 하나 부탁해요', '그 노래 한 번만 더!'],
-      chat: ['노래 타임이다', '음정 파이팅ㅋㅋ', '떼창 준비하겠습니다'] },
-    { name: '소원권', amount: 50000,
-      msgs: ['다음 방송 야외로 가요', '제 닉으로 삼행시 부탁!', '치킨 먹방 공약 갑니다', '1시간 연장권 쓰겠습니다'],
-      chat: ['ㄷㄷ 소원권 등장', '5만원 스케일 무엇', '공약 박제 갑니다'] }
-  ];
-  var NICKS = ['밤새는감자', '츄르수집가', '도네장인', '새벽두시반', '옆집시청자', '구독3일차', '하이라이트요정', '무한잠수함', '계이득첫후원', '턱괴고시청'];
-  var AMBIENT = ['ㅋㅋㅋㅋㅋㅋ', '오늘 사람 많네', '와 방금 뭐임', '형 그거 한 번만 더', '?? 방금 들어왔는데', '888888', '도네 나이스', '이 방송 왜 이제 알았지'];
-
-  var frame = document.getElementById('demo-frame');
-  var overlayHost = document.getElementById('overlay-host');
-  var chatFeed = document.getElementById('chat-feed');
-  var viewerEl = document.getElementById('viewer-count');
-  var nickInput = document.getElementById('demo-nick');
-
-  function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
-  function formatWon(n) { return n.toLocaleString('ko-KR') + '원'; }
-
-  /* ---------- chat feed ---------- */
-  function pushChat(nick, text) {
-    if (!chatFeed) return;
-    var line = document.createElement('div');
-    line.className = 'chat-line';
-    var nickEl = document.createElement('span');
-    nickEl.className = 'chat-nick';
-    nickEl.textContent = nick;
-    var textEl = document.createElement('span');
-    textEl.className = 'chat-text';
-    textEl.textContent = text;
-    line.appendChild(nickEl);
-    line.appendChild(textEl);
-    chatFeed.appendChild(line);
-    while (chatFeed.children.length > 6) chatFeed.removeChild(chatFeed.firstChild);
-  }
-
-  /* ---------- amount count-up ---------- */
-  function countUp(el, target) {
-    if (reduced() || !window.requestAnimationFrame) {
-      el.textContent = formatWon(target);
-      return;
+  /* ── 데모 데이터 ─────────────────────── */
+  var TIERS = {
+    welcome: {
+      name: '환영인사', amount: 1000, emoji: '🙌', color: '#93E5C1',
+      msgs: ['오늘 처음 왔는데 정착합니다', '출석 도장 쾅 찍고 가요', '지나가다 홀려서 눌렀어요'],
+      thanks: '어서오세요!!'
+    },
+    combo: {
+      name: '풀콤보', amount: 5000, emoji: '🥳', color: '#FFE066',
+      msgs: ['풀콤보 가즈아!!', '리액션 맛집이라 들었습니다', '오늘 방송 진짜 재밌어요'],
+      thanks: '풀콤보 발사!!'
+    },
+    song: {
+      name: '노래신청', amount: 10000, emoji: '🎤', color: '#FFB3C7',
+      msgs: ['신청곡: 신나는 걸로 부탁해요', '제 최애곡 틀어주세요', '노동요 한 곡 주세요'],
+      thanks: '바로 틀게요!!'
+    },
+    wish: {
+      name: '소원권', amount: 50000, emoji: '🧞', color: '#C9B8FF',
+      msgs: ['소원: 내일도 방송해 주세요', '소원권 씁니다, 치킨 먹방!', '제 소원은 콘텐츠 한 번 더'],
+      thanks: '소원 접수!!'
     }
-    var t0 = null;
-    var DURATION = 620;
-    function tick(now) {
-      if (t0 === null) t0 = now;
-      var p = Math.min(1, (now - t0) / DURATION);
-      var eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = formatWon(Math.round(target * eased));
-      if (p < 1 && el.isConnected) window.requestAnimationFrame(tick);
+  };
+  var TIER_KEYS = ['welcome', 'combo', 'song', 'wish'];
+  var NICKS = ['감자튀김', '야식요정', '침대와한몸', '구독3분차', '옆집사장', '새벽감성', '치킨은두마리', '지나가던1', '숙제하다말고', '모니터앞피자'];
+  var CHATS = ['ㅋㅋㅋㅋㅋㅋㅋ', '오늘 방송 꿀잼이네', '방금 그거 뭐예요??', '풀콤보 각이다', '저 시그니처 메뉴판 뭐죠', '와 3초 만에 뜨네', '밥 먹고 왔습니다', '소원권 가는 거야?', '어제 그 노래 또 듣고 싶다', '출첵하고 갑니다'];
+  var REACTS = ['와 방금 후원 떴다ㅋㅋ', '오 진짜 3초컷이네', '축하드려요!!', '나도 쏴볼까...', '연출 미쳤다ㅋㅋ'];
+
+  /* ── 데모 요소 ───────────────────────── */
+  var demo = document.getElementById('demo');
+  var screenEl = document.getElementById('tvScreen');
+  if (!demo || !screenEl) { return; }
+
+  var alertHost = document.getElementById('alertHost');
+  var chatHost = document.getElementById('chatHost');
+  var viewerEl = document.getElementById('viewerCount');
+  var announce = document.getElementById('demoAnnounce');
+  var buddy = document.getElementById('buddy');
+  var bubble = document.getElementById('buddyBubble');
+  var nickInput = document.getElementById('nickInput');
+  var msgInput = document.getElementById('msgInput');
+
+  /* ── 시청자 수 ───────────────────────── */
+  var viewers = 1024;
+  function tickViewers() {
+    viewers = Math.max(240, viewers + Math.floor(Math.random() * 23) - 10);
+    if (viewerEl) { viewerEl.textContent = fmt(viewers); }
+  }
+
+  /* ── 가짜 채팅 ───────────────────────── */
+  function pushChat(text) {
+    if (!chatHost) { return; }
+    var line = document.createElement('p');
+    line.className = 'chat__line';
+    line.textContent = text;
+    chatHost.appendChild(line);
+    while (chatHost.children.length > 4) {
+      chatHost.removeChild(chatHost.firstChild);
     }
-    window.requestAnimationFrame(tick);
+  }
+  pushChat(pick(CHATS));
+  pushChat(pick(CHATS));
+
+  /* ── 콘페티 ──────────────────────────── */
+  var CONF_COLORS = ['#FFCE31', '#2E53FF', '#FF5A5A', '#93E5C1', '#FFB3C7', '#C9B8FF'];
+  function burstConfetti() {
+    if (reduced()) { return; }
+    var host = document.createElement('div');
+    host.className = 'confetti-host';
+    for (var i = 0; i < 26; i++) {
+      var piece = document.createElement('span');
+      piece.className = 'confetti';
+      var ang = Math.random() * Math.PI * 2;
+      var dist = 60 + Math.random() * 150;
+      piece.style.setProperty('--tx', (Math.cos(ang) * dist).toFixed(1) + 'px');
+      piece.style.setProperty('--ty', (Math.sin(ang) * dist - 50).toFixed(1) + 'px');
+      piece.style.setProperty('--rz', Math.round(Math.random() * 540 - 270) + 'deg');
+      piece.style.background = CONF_COLORS[i % CONF_COLORS.length];
+      piece.style.animationDuration = (0.7 + Math.random() * 0.6).toFixed(2) + 's';
+      piece.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';
+      if (Math.random() > 0.5) { piece.style.borderRadius = '50%'; }
+      host.appendChild(piece);
+    }
+    screenEl.appendChild(host);
+    window.setTimeout(function () {
+      if (host.parentNode) { host.parentNode.removeChild(host); }
+    }, 1700);
   }
 
-  /* ---------- donation chime (WebAudio) ---------- */
-  var audioCtx = null;
-  var userGestured = false;
-  var soundOn = !reduced(); /* prefers-reduced-motion 사용자는 기본 OFF */
-  var soundToggle = document.getElementById('sound-toggle');
-  var soundState = document.getElementById('sound-state');
+  /* ── 후원 연출 ───────────────────────── */
+  var alertTimer = null;
+  var talkTimer = null;
+  var reactTimer = null;
 
-  function syncSoundToggle() {
-    if (!soundToggle) return;
-    soundToggle.setAttribute('aria-pressed', String(soundOn));
-    if (soundState) soundState.textContent = soundOn ? 'ON' : 'OFF';
-  }
-  syncSoundToggle();
+  function fireDonation(tierKey, custom) {
+    var tier = TIERS[tierKey];
+    if (!tier || !alertHost) { return; }
+    var nick = (custom && custom.nick) ? custom.nick : pick(NICKS);
+    var msg = (custom && custom.msg) ? custom.msg : pick(tier.msgs);
 
-  function ensureAudio() {
-    /* 첫 실제 사용자 인터랙션 전에는 AudioContext를 만들지도, 깨우지도 않는다 */
-    if (!userGestured) return null;
-    try {
-      var AC = window.AudioContext || window.webkitAudioContext;
-      if (!AC) return null;
-      if (!audioCtx) audioCtx = new AC();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-      return audioCtx;
-    } catch (e) { return null; }
-  }
-
-  function onFirstGesture() {
-    if (userGestured) return;
-    userGestured = true;
-    if (soundOn) ensureAudio();
-  }
-  document.addEventListener('pointerdown', onFirstGesture, true);
-  document.addEventListener('keydown', onFirstGesture, true);
-
-  if (soundToggle) {
-    soundToggle.addEventListener('click', function () {
-      soundOn = !soundOn;
-      syncSoundToggle();
-      if (soundOn) ensureAudio();
-    });
-  }
-
-  function playChime(amount) {
-    if (!soundOn) return;
-    var ctx = ensureAudio();
-    if (!ctx) return; /* 제스처 전 자동 데모는 여기서 무음 처리 */
-    try {
-      var notes = amount >= 50000 ? [523.25, 659.25, 783.99, 1046.5, 1318.51]
-        : amount >= 10000 ? [523.25, 659.25, 783.99, 1046.5]
-        : amount >= 5000 ? [523.25, 659.25, 783.99]
-        : [659.25, 783.99];
-      for (var i = 0; i < notes.length; i++) {
-        var osc = ctx.createOscillator();
-        var gain = ctx.createGain();
-        osc.type = 'triangle';
-        osc.frequency.value = notes[i];
-        var t = ctx.currentTime + i * 0.09;
-        gain.gain.setValueAtTime(0.0001, t);
-        gain.gain.exponentialRampToValueAtTime(0.05, t + 0.02);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start(t);
-        osc.stop(t + 0.4);
-      }
-    } catch (e) { /* 오디오 실패는 조용히 무시 */ }
-  }
-
-  /* ---------- donation overlay ---------- */
-  function clearOverlay() {
-    if (!overlayHost) return;
-    while (overlayHost.firstChild) overlayHost.removeChild(overlayHost.firstChild);
-  }
-
-  function fireDonation(sig, nickOverride) {
-    if (!overlayHost || !frame || !sig) return;
-    clearOverlay();
-
-    var nick = nickOverride || pick(NICKS);
-    var msg = pick(sig.msgs);
+    if (alertTimer) { window.clearTimeout(alertTimer); alertTimer = null; }
+    while (alertHost.firstChild) { alertHost.removeChild(alertHost.firstChild); }
 
     var card = document.createElement('div');
-    card.className = 'don';
+    card.className = 'alert';
 
-    var badge = document.createElement('div');
-    badge.className = 'don-badge';
-    badge.textContent = '시그니처 · ' + sig.name;
+    var head = document.createElement('div');
+    head.className = 'alert__head';
 
-    var nickRow = document.createElement('div');
-    nickRow.className = 'don-nick';
-    nickRow.textContent = nick;
-    var honor = document.createElement('span');
-    honor.textContent = ' 님';
-    nickRow.appendChild(honor);
+    var emoji = document.createElement('span');
+    emoji.className = 'alert__emoji';
+    emoji.textContent = tier.emoji;
+    emoji.style.background = tier.color;
 
-    var amt = document.createElement('div');
-    amt.className = 'don-amt';
-    amt.textContent = formatWon(sig.amount);
+    var titleWrap = document.createElement('div');
 
-    var msgEl = document.createElement('div');
-    msgEl.className = 'don-msg';
+    var line1 = document.createElement('p');
+    line1.className = 'alert__nick';
+    var strong = document.createElement('strong');
+    strong.textContent = nick;
+    line1.appendChild(strong);
+    line1.appendChild(document.createTextNode(' 님'));
+
+    var line2 = document.createElement('p');
+    line2.className = 'alert__amount';
+    line2.textContent = fmt(tier.amount) + '원 · ' + tier.name;
+
+    titleWrap.appendChild(line1);
+    titleWrap.appendChild(line2);
+    head.appendChild(emoji);
+    head.appendChild(titleWrap);
+
+    var msgEl = document.createElement('p');
+    msgEl.className = 'alert__msg';
     msgEl.textContent = '“' + msg + '”';
 
-    card.appendChild(badge);
-    card.appendChild(nickRow);
-    card.appendChild(amt);
-    card.appendChild(msgEl);
-    overlayHost.appendChild(card);
-    countUp(amt, sig.amount);
+    var bar = document.createElement('span');
+    bar.className = 'alert__bar';
 
-    if (!reduced()) {
-      for (var i = 0; i < 16; i++) {
-        var cf = document.createElement('span');
-        cf.className = i % 3 === 0 ? 'cf cf-alt' : 'cf';
-        var angle = Math.random() * Math.PI * 2;
-        var dist = 90 + Math.random() * 150;
-        cf.style.setProperty('--tx', Math.round(Math.cos(angle) * dist * 1.4) + 'px');
-        cf.style.setProperty('--ty', Math.round(Math.sin(angle) * dist) + 'px');
-        cf.style.setProperty('--rz', Math.round(Math.random() * 720 - 360) + 'deg');
-        cf.style.animationDelay = (Math.random() * 0.12).toFixed(2) + 's';
-        overlayHost.appendChild(cf);
-      }
+    card.appendChild(head);
+    card.appendChild(msgEl);
+    card.appendChild(bar);
+    alertHost.appendChild(card);
+
+    burstConfetti();
+
+    if (buddy && bubble) {
+      bubble.textContent = tier.thanks;
+      buddy.classList.remove('buddy--jump');
+      void buddy.offsetWidth; /* 애니메이션 리셋 */
+      buddy.classList.add('buddy--jump');
+      buddy.classList.add('buddy--talk');
+      if (talkTimer) { window.clearTimeout(talkTimer); }
+      talkTimer = window.setTimeout(function () {
+        buddy.classList.remove('buddy--talk');
+        buddy.classList.remove('buddy--jump');
+      }, 2000);
     }
 
-    frame.classList.remove('hit');
-    void frame.offsetWidth;
-    frame.classList.add('hit');
+    if (announce) {
+      announce.textContent = nick + ' 님이 ' + fmt(tier.amount) + '원 ' + tier.name + ' 시그니처를 후원했어요. 메시지: ' + msg;
+    }
 
-    playChime(sig.amount);
+    if (reactTimer) { window.clearTimeout(reactTimer); }
+    reactTimer = window.setTimeout(function () { pushChat(pick(REACTS)); }, 700);
 
-    window.setTimeout(function () {
-      if (card.isConnected) card.classList.add('out');
-    }, 3300);
-    window.setTimeout(function () {
-      if (card.parentNode === overlayHost) clearOverlay();
-    }, 3850);
-
-    window.setTimeout(function () { pushChat(pick(NICKS), pick(sig.chat)); }, 700);
-    window.setTimeout(function () { pushChat(pick(NICKS), pick(sig.chat)); }, 1500);
+    alertTimer = window.setTimeout(function () {
+      if (card.parentNode) { card.parentNode.removeChild(card); }
+    }, 3800);
   }
 
-  /* ---------- menu buttons ---------- */
-  var lastUserFire = 0;
-  var menuButtons = Array.prototype.slice.call(document.querySelectorAll('.menu-item'));
-  menuButtons.forEach(function (btn) {
+  /* ── 메뉴판 버튼 ─────────────────────── */
+  function readInput(input, max) {
+    if (!input) { return null; }
+    var v = input.value.replace(/\s+/g, ' ').trim();
+    if (!v) { return null; }
+    return v.slice(0, max);
+  }
+
+  var coupons = document.querySelectorAll('.sig-card');
+  Array.prototype.forEach.call(coupons, function (btn) {
     btn.addEventListener('click', function () {
-      var idx = parseInt(btn.getAttribute('data-sig'), 10);
-      var sig = SIGNATURES[idx];
-      if (!sig) return;
-      lastUserFire = Date.now();
-      var nick = '';
-      if (nickInput) nick = nickInput.value.replace(/\s+/g, ' ').trim().slice(0, 12);
-      fireDonation(sig, nick || null);
+      fireDonation(btn.getAttribute('data-tier'), {
+        nick: readInput(nickInput, 12),
+        msg: readInput(msgInput, 40)
+      });
+      restartIdle();
     });
   });
 
-  /* ---------- idle auto demo + ambience ---------- */
-  if (frame) {
-    var demoVisible = false;
-    var firstShown = false;
+  /* ── 유휴 자동 데모 ──────────────────── */
+  var idleTimer = null;
+  var demoVisible = false;
 
-    pushChat('옆집시청자', '오늘 사람 많네');
-    pushChat('구독3일차', 'ㅋㅋㅋㅋㅋㅋ');
-
-    if ('IntersectionObserver' in window) {
-      var stageIO = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          demoVisible = entry.isIntersecting;
-          if (entry.isIntersecting && !firstShown) {
-            firstShown = true;
-            window.setTimeout(function () {
-              if (Date.now() - lastUserFire > 4000) fireDonation(SIGNATURES[1], null);
-            }, 900);
-          }
-        });
-      }, { threshold: 0.3 });
-      stageIO.observe(frame);
-    } else {
-      demoVisible = true;
-    }
-
-    window.setInterval(function () {
-      if (!demoVisible || document.hidden) return;
-      if (Date.now() - lastUserFire < 9000) return;
-      fireDonation(pick(SIGNATURES), null);
-    }, 5600);
-
-    window.setInterval(function () {
-      if (!demoVisible || document.hidden) return;
-      if (Math.random() < 0.65) pushChat(pick(NICKS), pick(AMBIENT));
-    }, 2800);
-
-    var viewers = 1284;
-    window.setInterval(function () {
-      if (!demoVisible || document.hidden || !viewerEl) return;
-      viewers += Math.floor(Math.random() * 23) - 10;
-      if (viewers < 980) viewers = 980 + Math.floor(Math.random() * 40);
-      viewerEl.textContent = viewers.toLocaleString('ko-KR');
-    }, 2400);
+  function autoFire() {
+    if (!demoVisible || reduced()) { return; }
+    fireDonation(pick(TIER_KEYS), null);
+    idleTimer = window.setTimeout(autoFire, 6500 + Math.random() * 3500);
+  }
+  function restartIdle() {
+    if (idleTimer) { window.clearTimeout(idleTimer); idleTimer = null; }
+    if (!demoVisible || reduced()) { return; }
+    idleTimer = window.setTimeout(autoFire, 8000);
   }
 
-  /* ---------- footer year ---------- */
-  var yearEl = document.getElementById('year');
-  if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+  demo.addEventListener('pointerdown', restartIdle);
+  demo.addEventListener('focusin', restartIdle);
+
+  /* ── 화면에 보이는 동안만 살아 움직이기 ─ */
+  var chatTimer = null;
+  var viewerTimer = null;
+  function startLoops() {
+    if (!chatTimer) {
+      chatTimer = window.setInterval(function () { pushChat(pick(CHATS)); }, 3400);
+    }
+    if (!viewerTimer) {
+      viewerTimer = window.setInterval(tickViewers, 2600);
+    }
+    restartIdle();
+  }
+  function stopLoops() {
+    if (chatTimer) { window.clearInterval(chatTimer); chatTimer = null; }
+    if (viewerTimer) { window.clearInterval(viewerTimer); viewerTimer = null; }
+    if (idleTimer) { window.clearTimeout(idleTimer); idleTimer = null; }
+  }
+
+  if ('IntersectionObserver' in window) {
+    var demoIO = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        demoVisible = entry.isIntersecting;
+        if (demoVisible) { startLoops(); } else { stopLoops(); }
+      });
+    }, { threshold: 0.25 });
+    demoIO.observe(demo);
+  } else {
+    demoVisible = true;
+    startLoops();
+  }
 })();
 </script>
 </body>

@@ -1,6 +1,8 @@
 /* ==========================================================================
-   /channels 채널 탐색 (WSD) — DESIGN v2 클린 라이트, v2.css 토큰만 사용(하드코딩 색 0건)
+   /channels 채널 탐색 (WSD) — DESIGN v5 "D안" 스티커/쿠폰, v2.css 토큰만(하드코딩 색 0건)
+   문법: 2px 잉크 보더 + 블러0 하드섀도 + 큰 라운드 + Jua 제목 + 스티커 뱃지(9px)
    모바일 우선(최소 360px), 가로 오버플로 금지, 한국어 클리핑 금지
+   기울임은 페이지당 1곳: .eyebrow 키커(카드 기울임은 호버 시에만)
    ========================================================================== */
 
 .ch-main {
@@ -14,13 +16,22 @@
   padding: 12px 0 4px;
 }
 
+/* 아이브로 — 스티커 키커(기울임 1/1) */
 .eyebrow {
-  margin: 0 0 6px;
-  color: var(--blue);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 3px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--yellow-2);
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--ink);
+  transform: rotate(-2deg);
 }
 
 .ch-hero h1 {
@@ -62,38 +73,41 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 44px;
-  padding: 0 18px;
-  border: none;
-  border-radius: 10px;
-  background: var(--surface-2);
+  height: 46px;
+  padding: 0 20px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
   color: var(--primary);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.01em;
   cursor: pointer;
+  box-shadow: var(--hard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.15s ease, transform 0.06s ease, opacity 0.15s ease;
 }
 
-.button:hover,
-.button.secondary:hover {
-  background: var(--surface-3);
+.button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
 .button:active {
-  transform: scale(0.98);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
 .button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+  box-shadow: var(--hard);
 }
 
 .button.secondary {
-  background: var(--surface-2);
+  background: var(--surface);
   color: var(--primary);
 }
 
@@ -103,7 +117,7 @@
 }
 
 .button.primary:hover {
-  background: color-mix(in srgb, var(--blue) 88%, var(--primary));
+  background: var(--blue-hover);
 }
 
 /* 검색 --------------------------------------------------------------- */
@@ -140,12 +154,12 @@
   padding-left: 38px;
 }
 
-/* 카드 그리드 — 흰 카드 + 1px line ---------------------------------------- */
+/* 카드 그리드 — 스티커 카드(잉크 보더 + 하드섀도 + 호버 리프트) -------------- */
 
 .ch-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 16px;
+  gap: 18px;
   min-width: 0;
 }
 
@@ -155,18 +169,23 @@
   flex-direction: column;
   min-width: 0;
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard);
   color: inherit;
   text-decoration: none;
-  transition: transform 0.12s ease, border-color 0.12s ease;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .ch-card:hover {
-  border-color: var(--blue);
-  transform: translateY(-2px);
+  transform: translate(-2px, -2px) rotate(-0.4deg);
+  box-shadow: 5px 5px 0 var(--ink);
+}
+
+.ch-card:active {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 var(--ink);
 }
 
 .ch-banner {
@@ -174,6 +193,7 @@
   aspect-ratio: 16 / 9;
   display: block;
   background: var(--surface-2);
+  border-bottom: 2px solid var(--ink);
   object-fit: cover;
 }
 
@@ -181,9 +201,10 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   background: var(--surface-2);
+  border-bottom: 2px solid var(--ink);
 }
 
-/* LIVE = badge-danger(틴트 배경 필) */
+/* LIVE = badge-danger 규격 스티커 */
 .ch-live {
   position: absolute;
   top: 10px;
@@ -191,14 +212,15 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--surface-2);
-  background: color-mix(in srgb, var(--danger) 8%, var(--page));
+  padding: 2px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--danger-2);
   color: var(--danger);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.04em;
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
 .ch-live::before {
@@ -224,7 +246,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  border: 3px solid var(--page);
+  border: 2px solid var(--ink);
   border-radius: 50%;
   background: var(--surface-2);
   color: var(--secondary);
@@ -238,12 +260,14 @@
   object-fit: cover;
 }
 
+/* 채널명은 Jua — 스티커 카드의 목소리 */
 .ch-name {
   margin-top: 6px;
   overflow: hidden;
   color: var(--primary);
-  font-size: 16px;
-  font-weight: 700;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -273,16 +297,17 @@
   margin-top: auto;
 }
 
-/* 시그니처 개수 = 기본 뱃지(v2 badge 규격) */
+/* 시그니처 개수 = v2 기본 뱃지 규격 스티커 */
 .ch-count {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--surface-2);
+  padding: 2px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--surface);
   color: var(--secondary);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 /* 더 보기 -------------------------------------------------------------- */
@@ -297,14 +322,16 @@
 
 .ch-skeleton {
   overflow: hidden;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
+  background: var(--surface);
+  box-shadow: var(--hard);
 }
 
 .ch-skeleton .sk-banner {
   width: 100%;
   aspect-ratio: 16 / 9;
+  border-bottom: 2px solid var(--ink);
 }
 
 .ch-skeleton .sk-line {
@@ -331,10 +358,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .sk-shimmer { animation: none; }
-  .ch-card:hover { transform: none; }
+  .button { transition: none; }
+  .button:hover { transform: none; box-shadow: var(--hard); }
+  .ch-card { transition: none; }
+  .ch-card:hover { transform: none; box-shadow: var(--hard); }
 }
 
-/* 빈 상태·에러: 아이콘 없이 제목(primary) + 설명(muted) + CTA 하나 */
+/* 빈 상태(스티커 붙일 빈칸 — 절취선 테두리) · 에러(잉크 보더 카드) */
 .ch-empty,
 .ch-error {
   grid-column: 1 / -1;
@@ -343,18 +373,22 @@
   align-items: center;
   gap: 8px;
   padding: 56px 20px;
-  border: 1px solid var(--line);
+  border: 2px dashed var(--ink);
   border-radius: var(--radius-lg);
   background: var(--surface);
   text-align: center;
+}
+
+.ch-error {
+  border-style: solid;
+  box-shadow: var(--hard-lg);
 }
 
 .ch-empty h2,
 .ch-error h2 {
   margin: 0;
   color: var(--primary);
-  font-size: 19px;
-  font-weight: 700;
+  font-size: 20px;
   line-height: 1.3;
 }
 
@@ -374,13 +408,13 @@
   gap: 14px;
   margin: 0 auto;
   padding: 22px 20px 40px;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
 }
 
 .ch-footer a {
   color: var(--muted);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -405,13 +439,13 @@
 .ch-toast {
   max-width: 100%;
   padding: 11px 16px;
-  border: 1px solid var(--border);
+  border: 2px solid var(--ink);
   border-radius: var(--radius);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard);
   color: var(--primary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .ch-toast.error {

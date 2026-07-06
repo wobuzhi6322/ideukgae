@@ -1,79 +1,86 @@
 /* =============================================================================
-   ideukgae DESIGN v2 — 클린 라이트 베이스
-   원칙: 흰 배경, 그레이스케일 위계, 액센트는 브랜드 블루 하나. 그라데이션·블롭 금지.
-   토큰 변수명은 구 site.css와 호환(페이지 CSS 무수정 재테마를 위해 이름 유지).
+   ideukgae DESIGN v5 — "D안" 스티커/쿠폰 룩 (gaeideuk.com과 동일 계열)
+   크림 라이트 기본 + 딥네이비 나이트 다크(토글: assets/theme.js, 키 bbbb-site-theme).
+   토큰 변수명은 구버전 호환(페이지 CSS 무수정 재테마) — 값과 컴포넌트 문법만 D.
+   문법: 두꺼운 잉크 보더(2px) + 블러0 하드섀도(3~5px 오프셋) + 큰 라운드 + Jua 제목.
    ========================================================================== */
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
 
-/* DESIGN.md v3 "계이득 ON AIR" — 기본 = 다크(스튜디오 블랙), 라이트 = 도면 종이 오버라이드 */
 :root {
-  --primary: #edf1f7;
-  --secondary: #9aa7b8;
-  --muted: #5e6b7e;
-  --page: #0a0c10;
-  --surface: #10131a;
-  --surface-2: #161b24;
-  --surface-3: #232b38;
-  --border: #232b38;
-  --line: #1a202b;
-  --blue: #38a4ff;
-  --blue-hover: #1f92f5;
-  --blue-2: #0e2338;
-  --magenta: #8f79ff;
-  --green: #24d57f;
-  --green-2: #0e271b;
-  --yellow: #ffc24d;
-  --yellow-2: #2b2210;
-  --danger: #ff3b4e;
-  --danger-2: #2e1216;
+  --primary: #1d2b57;
+  --secondary: #4a5680;
+  --muted: #8b91a8;
+  --ink: #17265c;
+  --page: #fff7ea;
+  --surface: #fffdf6;
+  --surface-2: #f6efdd;
+  --surface-3: #eadfc4;
+  --border: #e3d9c2;
+  --line: #efe7d2;
+  --blue: #2e53ff;
+  --blue-hover: #1f41e0;
+  --blue-2: #e5ebff;
+  --magenta: #a86bff;
+  --green: #14b871;
+  --green-2: #e0f6ec;
+  --yellow: #ffce31;
+  --yellow-2: #fff3cc;
+  --danger: #f0435c;
+  --danger-2: #fde5e9;
   --on-blue: #ffffff;
   --on-primary: #ffffff;
-  --header: rgba(10, 12, 16, 0.86);
-  --focus: rgba(56, 164, 255, 0.4);
-  --glow: 0 0 18px rgba(56, 164, 255, 0.28);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 8px 24px rgba(0, 0, 0, 0.5);
+  --header: rgba(255, 247, 234, 0.9);
+  --focus: rgba(46, 83, 255, 0.35);
+  --hard: 3px 3px 0 var(--ink);
+  --hard-lg: 5px 5px 0 rgba(23, 38, 92, 0.22);
+  --glow: var(--hard);
+  --shadow: var(--hard-lg);
   --content: 1080px;
-  --radius: 6px;
-  --radius-lg: 10px;
+  --radius: 14px;
+  --radius-lg: 20px;
   --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont,
     "Segoe UI", "Malgun Gothic", "Apple SD Gothic Neo", sans-serif;
-  --font-mono: "IBM Plex Mono", "Pretendard Variable", Consolas, monospace;
-  color-scheme: dark;
-}
-
-:root[data-theme="light"] {
-  --primary: #12181f;
-  --secondary: #46535f;
-  --muted: #7c8894;
-  --page: #f4f6f8;
-  --surface: #ffffff;
-  --surface-2: #e9edf2;
-  --surface-3: #d9dfe7;
-  --border: #d9dfe7;
-  --line: #e5eaf0;
-  --blue: #0a6be8;
-  --blue-hover: #085ac4;
-  --blue-2: #e3f0ff;
-  --magenta: #7c5cff;
-  --green: #0fa968;
-  --green-2: #dff5ea;
-  --yellow: #e08a00;
-  --yellow-2: #fff1d6;
-  --danger: #e5303f;
-  --danger-2: #fde7e9;
-  --on-blue: #ffffff;
-  --on-primary: #ffffff;
-  --header: rgba(244, 246, 248, 0.88);
-  --focus: rgba(10, 107, 232, 0.35);
-  --glow: 0 0 18px rgba(10, 107, 232, 0.18);
-  --shadow: 0 1px 2px rgba(18, 24, 31, 0.05), 0 8px 24px rgba(18, 24, 31, 0.07);
+  --font-display: "Jua", "Pretendard Variable", Pretendard, sans-serif;
+  --font-mono: "Pretendard Variable", Pretendard, sans-serif;
   color-scheme: light;
 }
 
-/* 로고(네이비 원본)는 다크 배경에서 반전 — 라이트에선 원본 그대로 */
-:root:not([data-theme="light"]) img[src*="gyeideuk-logo"] {
+:root[data-theme="dark"] {
+  --primary: #f2ecdb;
+  --secondary: #c0c6e2;
+  --muted: #7f88b8;
+  --ink: #f6efdd;
+  --page: #0b1130;
+  --surface: #111a3e;
+  --surface-2: #182254;
+  --surface-3: #243069;
+  --border: #2c3a78;
+  --line: #1c2750;
+  --blue: #5d7dff;
+  --blue-hover: #7c96ff;
+  --blue-2: #1a2a6e;
+  --magenta: #a98fff;
+  --green: #2fd08b;
+  --green-2: #123a2b;
+  --yellow: #ffce31;
+  --yellow-2: #3a3212;
+  --danger: #ff5c72;
+  --danger-2: #3c1622;
+  --on-blue: #ffffff;
+  --on-primary: #0b1130;
+  --header: rgba(11, 17, 48, 0.9);
+  --focus: rgba(93, 125, 255, 0.45);
+  --hard: 3px 3px 0 rgba(0, 0, 0, 0.55);
+  --hard-lg: 5px 5px 0 rgba(0, 0, 0, 0.45);
+  --glow: var(--hard);
+  --shadow: var(--hard-lg);
+  color-scheme: dark;
+}
+
+/* 로고(네이비 원본): 크림에선 원본, 다크에선 반전 */
+:root[data-theme="dark"] img[src*="gyeideuk-logo"] {
   filter: invert(1) hue-rotate(180deg) saturate(1.2);
 }
 
@@ -100,19 +107,28 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-h1, h2, h3, h4 {
+h1, h2 {
   margin: 0;
-  font-weight: 800;
-  line-height: 1.2;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0;
   color: var(--primary);
 }
 
-/* 기계가 말하는 자리 — 금액·코드·타임코드·카운트 */
+h3, h4 {
+  margin: 0;
+  font-weight: 800;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--primary);
+}
+
+/* v3 잔재 호환: 모노 클래스는 굵은 본문으로 폴백 */
 .mono {
-  font-family: var(--font-mono);
+  font-family: var(--font);
+  font-weight: 800;
   font-feature-settings: "tnum";
-  letter-spacing: 0;
 }
 
 p {
@@ -134,13 +150,14 @@ button {
 }
 
 ::selection {
-  background: var(--blue-2);
+  background: var(--yellow);
+  color: #17265c;
 }
 
 :focus-visible {
   outline: none;
   box-shadow: 0 0 0 3px var(--focus);
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .container {
@@ -162,7 +179,7 @@ button {
   background: var(--header);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px solid var(--ink);
 }
 
 .site-header .header-inner,
@@ -192,48 +209,49 @@ button {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
   margin-left: auto;
 }
 
 .site-nav a:not(.btn) {
   padding: 8px 12px;
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 700;
   color: var(--secondary);
   transition: background 0.15s ease, color 0.15s ease;
 }
 
 .site-nav a:not(.btn):hover {
-  background: var(--surface-2);
+  background: var(--yellow-2);
   color: var(--primary);
 }
 
 .site-nav a.active,
 .site-nav a[aria-current="page"] {
   color: var(--blue);
-  font-weight: 600;
 }
 
-/* 테마 토글 (다크 ⇄ 라이트) — 마크업: button.theme-toggle > svg.icon-sun + svg.icon-moon */
+/* 테마 토글 (크림 ⇄ 나이트) */
 .theme-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   flex-shrink: 0;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: transparent;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
   color: var(--secondary);
   cursor: pointer;
-  transition: background 0.15s ease, color 0.15s ease;
+  box-shadow: 2px 2px 0 var(--ink);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, color 0.15s ease;
 }
 
 .theme-toggle:hover {
-  background: var(--surface-2);
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--ink);
   color: var(--primary);
 }
 
@@ -241,11 +259,11 @@ button {
   display: none;
 }
 
-:root[data-theme="light"] .theme-toggle .icon-sun {
+:root[data-theme="dark"] .theme-toggle .icon-sun {
   display: none;
 }
 
-:root[data-theme="light"] .theme-toggle .icon-moon {
+:root[data-theme="dark"] .theme-toggle .icon-moon {
   display: block;
 }
 
@@ -256,27 +274,30 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 44px;
-  padding: 0 18px;
-  border: none;
-  border-radius: var(--radius);
-  background: var(--surface-2);
+  height: 46px;
+  padding: 0 20px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
   color: var(--primary);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.01em;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.06s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: var(--hard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .btn:hover {
-  background: var(--surface-3);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
 .btn:active {
-  transform: scale(0.98);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
 .btn:disabled,
@@ -284,13 +305,13 @@ button {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+  box-shadow: var(--hard);
 }
 
 .btn-primary,
 .btn.primary {
   background: var(--blue);
   color: var(--on-blue);
-  box-shadow: var(--glow);
 }
 
 .btn-primary:hover,
@@ -301,13 +322,6 @@ button {
 .btn-outline,
 .btn.outline {
   background: transparent;
-  border: 1px solid var(--border);
-}
-
-.btn-outline:hover,
-.btn.outline:hover {
-  background: var(--surface);
-  border-color: var(--surface-3);
 }
 
 .btn-danger,
@@ -316,17 +330,18 @@ button {
   color: var(--danger);
 }
 
-.btn-danger:hover,
-.btn.danger:hover {
-  background: color-mix(in srgb, var(--danger) 18%, var(--page));
-}
-
 .btn-sm,
 .btn.sm {
-  height: 36px;
-  padding: 0 12px;
+  height: 38px;
+  padding: 0 14px;
   font-size: 14px;
-  border-radius: var(--radius);
+  border-radius: 10px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.btn-sm:hover,
+.btn.sm:hover {
+  box-shadow: 3px 3px 0 var(--ink);
 }
 
 /* ---------------------------------------------------------------- 폼 */
@@ -340,14 +355,14 @@ input[type="search"],
 textarea,
 select {
   width: 100%;
-  border: 1.5px solid transparent;
-  border-radius: var(--radius);
-  background: var(--surface-2);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
   color: var(--primary);
   font-family: inherit;
   font-size: 15px;
-  padding: 12px 14px;
-  transition: background 0.15s ease, border-color 0.15s ease;
+  padding: 11px 14px;
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
 input::placeholder,
@@ -359,38 +374,35 @@ input:focus,
 textarea:focus,
 select:focus {
   outline: none;
-  background: var(--page);
   border-color: var(--blue);
   box-shadow: 0 0 0 3px var(--focus);
 }
 
 label {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--secondary);
 }
 
 /* ---------------------------------------------------------------- 카드·뱃지 */
 
 .card {
-  background: var(--page);
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  box-shadow: var(--hard-lg);
 }
 
 .badge {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  font-family: var(--font-mono);
-  font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: var(--surface-2);
+  padding: 3px 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  font-size: 12.5px;
+  font-weight: 800;
+  background: var(--surface);
   color: var(--secondary);
 }
 
@@ -415,7 +427,7 @@ label {
   background: linear-gradient(90deg, var(--surface-2) 25%, var(--surface) 50%, var(--surface-2) 75%);
   background-size: 200% 100%;
   animation: v2-shimmer 1.4s ease infinite;
-  border-radius: 8px;
+  border-radius: 10px;
   color: transparent;
 }
 
@@ -427,65 +439,18 @@ label {
 hr,
 .divider {
   border: none;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
   margin: 0;
 }
 
-/* 뷰파인더 브래킷 — 강조 패널 전용(페이지당 최대 2곳, DESIGN.md Shapes) */
-.frame {
-  position: relative;
-}
-
+/* v3 잔재 호환(무해화): 브래킷·레벨미터는 D에서 미사용 */
 .frame::before,
 .frame::after {
-  content: "";
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border: 2px solid var(--blue);
-  pointer-events: none;
+  content: none;
 }
 
-.frame::before {
-  top: -1px;
-  left: -1px;
-  border-right: none;
-  border-bottom: none;
-}
-
-.frame::after {
-  bottom: -1px;
-  right: -1px;
-  border-left: none;
-  border-top: none;
-}
-
-/* 시그널 레벨미터 — 연결 상태·데모 프레임 전용 장식 모티프 */
 .level-meter {
-  display: inline-flex;
-  align-items: flex-end;
-  gap: 2px;
-  height: 14px;
-}
-
-.level-meter i {
-  width: 3px;
-  border-radius: 1px;
-  background: var(--green);
-  animation: level 1.1s ease-in-out infinite;
-}
-
-.level-meter i:nth-child(1) { height: 40%; animation-delay: 0s; }
-.level-meter i:nth-child(2) { height: 75%; animation-delay: 0.15s; }
-.level-meter i:nth-child(3) { height: 100%; animation-delay: 0.3s; background: var(--yellow); }
-.level-meter i:nth-child(4) { height: 60%; animation-delay: 0.45s; }
-
-@keyframes level {
-  50% { transform: scaleY(0.45); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .level-meter i { animation: none; }
+  display: none;
 }
 
 ::-webkit-scrollbar {
@@ -501,4 +466,11 @@ hr,
 
 ::-webkit-scrollbar-track {
   background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .theme-toggle {
+    transition: none;
+  }
 }

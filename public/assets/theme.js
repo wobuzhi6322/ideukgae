@@ -9,7 +9,8 @@
   try {
     saved = localStorage.getItem(KEY);
   } catch (err) {}
-  document.documentElement.setAttribute("data-theme", saved === "light" ? "light" : "dark");
+  // D 디자인: 크림 라이트가 기본, 다크는 딥네이비 나이트
+  document.documentElement.setAttribute("data-theme", saved === "dark" ? "dark" : "light");
 
   function wire() {
     // id="theme-toggle"(terms/privacy 구형 버튼)은 site.js가 관리 — 이중 바인딩 방지로 건너뜀

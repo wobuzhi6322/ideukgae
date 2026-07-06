@@ -1,6 +1,8 @@
 /* ==========================================================================
-   /me 시청자 영역 (WSD) — DESIGN v2 클린 라이트, v2.css 토큰만 사용(하드코딩 색 0건)
+   /me 시청자 영역 (WSD) — DESIGN v5 "D안" 스티커/쿠폰, v2.css 토큰만 사용(하드코딩 색 0건)
+   문법: 2px 잉크 보더 + 블러0 하드섀도 + 큰 라운드 + Jua 제목 + 스티커 뱃지(9px)
    모바일 우선(최소 360px), 가로 오버플로 금지, 한국어 클리핑 금지
+   기울임은 페이지당 2곳: .eyebrow 키커, 지갑 쿠폰의 "오픈 예정" 스티커
    ========================================================================== */
 
 .me-main {
@@ -10,13 +12,22 @@
   padding: 28px 20px 72px;
 }
 
+/* 아이브로 — 스티커 키커(기울임 1/2) */
 .eyebrow {
-  margin: 0 0 6px;
-  color: var(--blue);
-  font-size: 12.5px;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  display: inline-block;
+  margin: 0 0 10px;
+  padding: 3px 12px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--yellow-2);
+  color: var(--primary);
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 400;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  box-shadow: 2px 2px 0 var(--ink);
+  transform: rotate(-2deg);
 }
 
 .me-head h1 {
@@ -26,16 +37,16 @@
   line-height: 1.2;
 }
 
-/* 헤더 보조(로그아웃 버튼을 내비 링크 모양으로) ---------------------------- */
+/* 헤더 보조(로그아웃 버튼을 v2 내비 링크 규격으로) ------------------------ */
 
 .site-nav .header-account {
   padding: 8px 12px;
   border: 0;
-  border-radius: 8px;
+  border-radius: 10px;
   background: none;
   color: var(--secondary);
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.01em;
   cursor: pointer;
   white-space: nowrap;
@@ -43,7 +54,7 @@
 }
 
 .site-nav .header-account:hover {
-  background: var(--surface-2);
+  background: var(--yellow-2);
   color: var(--primary);
 }
 
@@ -64,14 +75,14 @@
   }
 }
 
-/* 섹션 탭 -------------------------------------------------------------- */
+/* 섹션 탭 — 활성 탭은 스티커(잉크 보더 + 블루 틴트) ----------------------- */
 
 .me-tabs {
   display: flex;
   gap: 6px;
   margin-bottom: 22px;
   padding-bottom: 8px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 2px dashed var(--surface-3);
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
@@ -82,20 +93,22 @@
   gap: 6px;
   min-height: 38px;
   padding: 8px 14px;
+  border: 1.5px solid transparent;
   border-radius: 10px;
   color: var(--secondary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
 }
 
 .me-tabs a:hover {
-  background: var(--surface-2);
+  background: var(--yellow-2);
   color: var(--primary);
 }
 
 .me-tabs a[aria-current="page"] {
+  border-color: var(--ink);
   background: var(--blue-2);
   color: var(--blue);
 }
@@ -104,11 +117,12 @@
   display: inline-flex;
   align-items: center;
   padding: 1px 7px;
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  color: var(--muted);
+  border: 1.5px solid var(--ink);
+  border-radius: 7px;
+  background: var(--yellow-2);
+  color: var(--primary);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
 }
 
 /* 공용 버튼(JS 계약 클래스 .button — v2 .btn 규격 복제) --------------------- */
@@ -118,38 +132,41 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 44px;
-  padding: 0 18px;
-  border: none;
-  border-radius: 10px;
-  background: var(--surface-2);
+  height: 46px;
+  padding: 0 20px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
   color: var(--primary);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.01em;
   cursor: pointer;
+  box-shadow: var(--hard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
   text-decoration: none;
   white-space: nowrap;
-  transition: background 0.15s ease, transform 0.06s ease, opacity 0.15s ease;
 }
 
-.button:hover,
-.button.secondary:hover {
-  background: var(--surface-3);
+.button:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
 .button:active {
-  transform: scale(0.98);
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
 }
 
 .button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+  box-shadow: var(--hard);
 }
 
 .button.secondary {
-  background: var(--surface-2);
+  background: var(--surface);
   color: var(--primary);
 }
 
@@ -159,25 +176,25 @@
 }
 
 .button.primary:hover {
-  background: color-mix(in srgb, var(--blue) 88%, var(--primary));
+  background: var(--blue-hover);
 }
 
-/* 카드 ------------------------------------------------------------------ */
+/* 카드 — 잉크 보더 + 하드섀도 ------------------------------------------- */
 
 .me-cards {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 16px;
+  gap: 18px;
   min-width: 0;
 }
 
 .me-card {
   min-width: 0;
   padding: 20px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard-lg);
 }
 
 .me-card-head {
@@ -188,18 +205,18 @@
   margin-bottom: 14px;
 }
 
+/* 카드 제목은 Jua(베이스 h2 그대로) — 굵기 강제만 제거 */
 .me-card h2,
 .me-panel h2 {
   margin: 0;
-  font-size: 17px;
-  font-weight: 700;
+  font-size: 18px;
   line-height: 1.3;
 }
 
 .me-card-head a {
   color: var(--blue);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
   white-space: nowrap;
 }
@@ -224,6 +241,7 @@
   display: grid;
   place-items: center;
   overflow: hidden;
+  border: 2px solid var(--ink);
   border-radius: 50%;
   background: var(--surface-2);
   color: var(--secondary);
@@ -246,7 +264,7 @@
   display: block;
   overflow: hidden;
   font-size: 17px;
-  font-weight: 700;
+  font-weight: 800;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
@@ -266,7 +284,7 @@
   font-size: 12.5px;
 }
 
-/* 채널 행(홈 미니 목록·팔로잉) ------------------------------------------- */
+/* 채널 행(홈 미니 목록·팔로잉) — 절취선 dashed 구분 ------------------------ */
 
 .me-channel-list {
   display: flex;
@@ -282,7 +300,7 @@
   gap: 12px;
   min-width: 0;
   padding: 11px 0;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
 }
 
 .me-channel-list li:first-child {
@@ -333,19 +351,19 @@
   gap: 6px;
 }
 
-/* 뱃지 (v2 badge 규격 — 틴트 배경 필, 보더 없음) --------------------------- */
+/* 뱃지 — v2 .badge 규격의 스티커(9px 라운드 + 1.5px 잉크 보더 + 틴트) ------- */
 
 .me-live {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--surface-2);
-  background: color-mix(in srgb, var(--danger) 8%, var(--page));
+  padding: 2px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--danger-2);
   color: var(--danger);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.04em;
 }
 
@@ -360,33 +378,33 @@
 .me-badge {
   display: inline-flex;
   align-items: center;
-  padding: 3px 10px;
-  border-radius: 999px;
-  background: var(--surface-2);
+  padding: 2px 9px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--surface);
   color: var(--secondary);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 800;
   white-space: nowrap;
 }
 
-/* 전달됨 = badge-green */
+/* 전달됨 = badge-green 틴트 */
 .me-badge.ok {
-  background: color-mix(in srgb, var(--green) 10%, var(--page));
+  background: var(--green-2);
   color: var(--green);
 }
 
-/* 확인 중 = badge-blue */
+/* 확인 중 = badge-blue 틴트 */
 .me-badge.wait {
   background: var(--blue-2);
   color: var(--blue);
 }
 
-/* 만료(.end) = 기본 뱃지(베이스 그대로) */
+/* 만료(.end) = 기본 스티커 그대로 */
 
-/* 차단 = badge-danger */
+/* 차단 = badge-danger 틴트 */
 .me-badge.danger {
-  background: var(--surface-2);
-  background: color-mix(in srgb, var(--danger) 8%, var(--page));
+  background: var(--danger-2);
   color: var(--danger);
 }
 
@@ -405,7 +423,7 @@
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 4px 12px;
   padding: 12px 0;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
 }
 
 .me-donation-list li:first-child {
@@ -424,7 +442,7 @@
 
 .me-donation-list .meta a {
   color: var(--secondary);
-  font-weight: 600;
+  font-weight: 700;
   text-decoration: none;
 }
 
@@ -433,11 +451,13 @@
   text-decoration: underline;
 }
 
+/* 금액은 모노 대신 Pretendard 800 + tnum */
 .me-donation-list .amount {
   justify-self: end;
   color: var(--primary);
   font-size: 15px;
-  font-weight: 700;
+  font-weight: 800;
+  font-feature-settings: "tnum";
   white-space: nowrap;
 }
 
@@ -461,7 +481,7 @@
   background: none;
   color: var(--muted);
   font-size: 12px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
 }
 
@@ -492,10 +512,10 @@
   min-width: 0;
   max-width: 640px;
   padding: 22px;
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard-lg);
 }
 
 .me-panel.wide {
@@ -550,7 +570,7 @@
   display: block;
   color: var(--primary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .me-check div span {
@@ -564,19 +584,45 @@
   gap: 10px;
 }
 
-/* [예약] 지갑 잠금 — surface 배경 + muted 텍스트 + "오픈 예정" 뱃지 ---------- */
+/* [예약] 지갑 잠금 — 옐로 쿠폰(펀치홀) + "오픈 예정" 스티커(기울임 2/2) ------ */
 
 .me-locked {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
-  background: var(--surface);
-  box-shadow: none;
+  background: var(--yellow-2);
+}
+
+.me-locked::before,
+.me-locked::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--ink);
+  border-radius: 50%;
+  background: var(--page);
+  transform: translateY(-50%);
+}
+
+.me-locked::before {
+  left: -9px;
+}
+
+.me-locked::after {
+  right: -9px;
+}
+
+.me-locked .badge {
+  box-shadow: 2px 2px 0 var(--ink);
+  transform: rotate(2deg);
 }
 
 .me-locked h2 {
-  color: var(--secondary);
+  color: var(--primary);
 }
 
 .me-locked.center {
@@ -587,21 +633,22 @@
 
 .me-locked p {
   margin: 0;
-  color: var(--muted);
+  color: var(--secondary);
   font-size: 14px;
 }
 
 .me-locked .sub {
-  color: var(--muted);
+  color: var(--secondary);
   font-size: 12.5px;
 }
 
 /* 상태 3종: 스켈레톤 · 빈 상태 · 에러 --------------------------------------- */
 
 .me-skeleton-block {
-  border: 1px solid var(--line);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  background: var(--page);
+  background: var(--surface);
+  box-shadow: var(--hard-lg);
   padding: 20px;
 }
 
@@ -635,10 +682,6 @@
 @keyframes me-shimmer {
   from { background-position: 120% 0; }
   to { background-position: -80% 0; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sk-shimmer { animation: none; }
 }
 
 .me-empty,
@@ -677,13 +720,13 @@
   gap: 14px;
   margin: 0 auto;
   padding: 22px 20px 40px;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
 }
 
 .me-footer a {
   color: var(--muted);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
 }
 
@@ -708,13 +751,13 @@
 .me-toast {
   max-width: 100%;
   padding: 11px 16px;
-  border: 1px solid var(--border);
+  border: 2px solid var(--ink);
   border-radius: var(--radius);
-  background: var(--page);
-  box-shadow: var(--shadow);
+  background: var(--surface);
+  box-shadow: var(--hard);
   color: var(--primary);
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .me-toast.error {
@@ -722,7 +765,13 @@
   color: var(--danger);
 }
 
-/* 데스크톱 ------------------------------------------------------------------- */
+/* 모션 최소화·데스크톱 -------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .sk-shimmer { animation: none; }
+  .button { transition: none; }
+  .button:hover { transform: none; box-shadow: var(--hard); }
+}
 
 @media (min-width: 860px) {
   .me-cards {

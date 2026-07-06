@@ -1,7 +1,8 @@
 /* =============================================================================
-   계이득 웹 — 가입·로그인 페이지 (DESIGN v2 클린 라이트)
+   계이득 웹 — 가입·로그인 페이지 (DESIGN v5 — D 스티커)
    v2.css 토큰·컴포넌트 위에 페이지 레이아웃만 얹는다. 하드코딩 색 금지.
-   인풋은 v2 filled 스타일을 그대로 사용 — 페이지 중복 정의 없음.
+   문법: 2px 잉크 보더 + 블러 0 하드섀도 + 12/20px 라운드. Jua는 제목(h1)만.
+   인풋은 v2 기본(2px 잉크 보더) 스타일을 그대로 사용 — 페이지 중복 정의 없음.
    ============================================================================= */
 
 .auth-page {
@@ -29,28 +30,36 @@
   display: grid;
   gap: 22px;
   padding: 32px 28px;
-  background: var(--page);
-  border: 1px solid var(--line);
+  background: var(--surface);
+  border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow);
+  box-shadow: var(--hard-lg);
 }
 
 .auth-heading {
   display: grid;
-  gap: 6px;
+  gap: 8px;
 }
 
 .auth-heading h1 {
-  font-size: 26px;
+  font-size: 27px;
 }
 
+/* 스티커 뱃지형 아이브로 — 살짝 기울여 붙인다(페이지 내 유일한 기울임) */
 .eyebrow {
   margin: 0;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--blue-2);
   color: var(--blue);
   font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  transform: rotate(-2deg);
 }
 
 .auth-lead {
@@ -73,12 +82,13 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 12px 4px 5px;
-  border-radius: 999px;
+  padding: 3px 11px 3px 5px;
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
   background: var(--surface-2);
   color: var(--muted);
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 700;
   white-space: nowrap;
 }
 
@@ -88,11 +98,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 7px;
   background: var(--surface-3);
   color: var(--secondary);
   font-size: 11px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .auth-steps li.is-active {
@@ -106,7 +116,8 @@
 }
 
 .auth-steps li.is-done {
-  color: var(--secondary);
+  background: var(--green-2);
+  color: var(--green);
 }
 
 .auth-steps li.is-done span {
@@ -132,42 +143,47 @@
   gap: 12px;
 }
 
+/* 스티커 카드: 잉크 보더 + 하드섀도 + 호버 리프트, 선택 시 blue-2 틴트 */
 .role-card {
   min-width: 0;
   display: grid;
   gap: 6px;
   padding: 20px 18px;
-  background: var(--page);
-  border: 1px solid var(--border);
+  background: var(--surface);
+  border: 2px solid var(--ink);
   border-radius: var(--radius);
+  box-shadow: var(--hard);
   color: var(--primary);
   font-family: inherit;
   text-align: left;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
 }
 
 .role-card:hover {
-  border-color: var(--blue);
-  box-shadow: var(--shadow);
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
-.role-card:active,
+.role-card:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
 .role-card.is-selected,
 .role-card[aria-pressed="true"] {
-  border-color: var(--blue);
   background: var(--blue-2);
 }
 
 .role-card:focus-visible {
   outline: none;
-  border-color: var(--blue);
-  box-shadow: 0 0 0 3px var(--focus);
+  border-radius: var(--radius);
+  box-shadow: var(--hard), 0 0 0 3px var(--focus);
 }
 
 .role-card strong {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: -0.01em;
 }
 
@@ -192,8 +208,8 @@
 .auth-form label {
   display: grid;
   gap: 7px;
-  font-size: 13.5px;
-  font-weight: 600;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--secondary);
 }
 
@@ -209,38 +225,48 @@
   min-width: 120px;
 }
 
-/* .button은 JS·마크업 계약 유지용 — v2 .btn과 동일한 골격을 토큰으로 재정의 */
+/* .button은 JS·마크업 계약 유지용 — v2 .btn과 동일한 D 골격을 토큰으로 재정의 */
 .auth-page .button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  height: 44px;
+  height: 46px;
   padding: 0 18px;
-  border: none;
-  border-radius: 10px;
-  background: var(--surface-2);
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
   color: var(--primary);
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 800;
   letter-spacing: -0.01em;
   cursor: pointer;
-  transition: background 0.15s ease, transform 0.06s ease, opacity 0.15s ease, filter 0.15s ease;
+  box-shadow: var(--hard);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.15s ease;
   white-space: nowrap;
 }
 
-.auth-page .button:hover {
-  background: var(--surface-3);
+.auth-page .button:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ink);
 }
 
-.auth-page .button:active {
-  transform: scale(0.98);
+.auth-page .button:active:not(:disabled) {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+.auth-page .button:focus-visible {
+  outline: none;
+  border-radius: 12px;
+  box-shadow: var(--hard), 0 0 0 3px var(--focus);
 }
 
 .auth-page .button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
   transform: none;
+  box-shadow: var(--hard);
 }
 
 .auth-page .button.primary {
@@ -249,8 +275,7 @@
 }
 
 .auth-page .button.primary:hover:not(:disabled) {
-  background: var(--blue);
-  filter: brightness(0.94);
+  background: var(--blue-hover);
 }
 
 .form-message {
@@ -258,6 +283,7 @@
   margin: 0;
   color: var(--secondary);
   font-size: 13.5px;
+  font-weight: 600;
 }
 
 /* ------------------------------------------------------------- 핸들 입력 */
@@ -265,14 +291,13 @@
 .handle-field {
   display: flex;
   align-items: center;
-  border: 1.5px solid transparent;
-  border-radius: 10px;
-  background: var(--surface-2);
-  transition: background 0.15s ease, border-color 0.15s ease;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
+  background: var(--surface);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .handle-field:focus-within {
-  background: var(--page);
   border-color: var(--blue);
   box-shadow: 0 0 0 3px var(--focus);
 }
@@ -280,7 +305,7 @@
 .handle-prefix {
   padding: 0 2px 0 14px;
   color: var(--muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .handle-field input,
@@ -291,8 +316,8 @@
   background: transparent;
   box-shadow: none;
   outline: none;
-  padding: 12px 14px 12px 6px;
-  border-radius: 0 10px 10px 0;
+  padding: 11px 14px 11px 6px;
+  border-radius: 0 12px 12px 0;
 }
 
 .handle-hint {
@@ -304,7 +329,7 @@
   min-height: 20px;
   color: var(--muted);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   overflow-wrap: anywhere;
 }
 
@@ -322,13 +347,13 @@
   display: grid;
   gap: 10px;
   padding-top: 18px;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
 }
 
 .social-title {
   color: var(--muted);
   font-size: 12.5px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .social-row {
@@ -336,30 +361,34 @@
   gap: 8px;
 }
 
+/* 준비 중 자리 — D 버튼 골격에 비활성 처리(호버 리프트 없음) */
 .social-button {
-  min-height: 44px;
+  min-height: 46px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 10px 14px;
-  border: none;
-  border-radius: 10px;
+  border: 2px solid var(--ink);
+  border-radius: 12px;
   background: var(--surface-2);
-  color: var(--muted);
+  box-shadow: var(--hard);
+  color: var(--secondary);
   font-family: inherit;
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: not-allowed;
+  opacity: 0.55;
 }
 
 .soon-badge {
   padding: 2px 8px;
-  border-radius: 999px;
-  background: var(--surface-3);
-  color: var(--secondary);
+  border: 1.5px solid var(--ink);
+  border-radius: 9px;
+  background: var(--yellow-2);
+  color: var(--primary);
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 800;
   white-space: nowrap;
 }
 
@@ -375,7 +404,7 @@
 
 .auth-alt a {
   color: var(--blue);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .auth-alt a:hover {
@@ -388,16 +417,27 @@
   justify-content: center;
   gap: 16px;
   padding: 24px 20px 40px;
-  border-top: 1px solid var(--line);
+  border-top: 2px dashed var(--surface-3);
 }
 
 .auth-footer a {
   color: var(--muted);
   font-size: 13.5px;
+  font-weight: 600;
 }
 
 .auth-footer a:hover {
   color: var(--primary);
+}
+
+/* ------------------------------------------------------------- 모션 감소 */
+
+@media (prefers-reduced-motion: reduce) {
+  .role-card,
+  .auth-page .button,
+  .handle-field {
+    transition: none;
+  }
 }
 
 /* ------------------------------------------------------------- 모바일 360px */
