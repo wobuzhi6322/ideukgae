@@ -6,6 +6,7 @@
     <meta name="description" content="계이득 계정으로 로그인하고 후원 페이지와 스튜디오를 이용하세요." />
     <title>로그인 - 계이득</title>
     <link rel="stylesheet" href="/assets/v2.css" />
+    <link rel="icon" type="image/png" href="/assets/gyeideuk-logo.png" />
     <script src="/assets/theme.js"></script>
     <link rel="stylesheet" href="/assets/web-auth.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -47,11 +48,40 @@
           <p id="login-message" class="form-message" aria-live="polite"></p>
         </form>
 
+        <!-- 재설정 메일에서 돌아온 복구 세션(type=recovery)일 때만 노출 — web-auth.js가 전환 -->
+        <form id="recovery-form" class="auth-form is-hidden" novalidate>
+          <p class="auth-substep-note">메일 인증이 확인되었어요. 새 비밀번호를 설정해 주세요.</p>
+          <label>
+            새 비밀번호
+            <input id="recovery-password" type="password" autocomplete="new-password" required minlength="6" />
+          </label>
+          <label>
+            새 비밀번호 확인
+            <input id="recovery-password-confirm" type="password" autocomplete="new-password" required minlength="6" />
+          </label>
+          <div class="auth-actions">
+            <button id="recovery-submit" class="button primary" type="submit">비밀번호 변경</button>
+          </div>
+          <p id="recovery-message" class="form-message" aria-live="polite"></p>
+        </form>
+
         <p class="auth-alt">
-          <a href="/#login">비밀번호 재설정</a>
+          <button id="reset-toggle" class="link-button" type="button" aria-expanded="false" aria-controls="reset-form">비밀번호 재설정</button>
           <span aria-hidden="true">·</span>
           <a href="/signup">회원가입</a>
         </p>
+
+        <form id="reset-form" class="auth-form reset-form is-hidden" novalidate>
+          <p class="auth-substep-note">가입한 이메일로 비밀번호 재설정 링크를 보내 드려요.</p>
+          <label>
+            이메일
+            <input id="reset-email" type="email" autocomplete="email" required />
+          </label>
+          <div class="auth-actions">
+            <button id="reset-submit" class="button primary" type="submit">재설정 메일 보내기</button>
+          </div>
+          <p id="reset-message" class="form-message" aria-live="polite"></p>
+        </form>
 
         <div class="social-block" aria-label="간편 로그인">
           <p class="social-title">간편 로그인</p>

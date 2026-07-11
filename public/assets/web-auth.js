@@ -106,14 +106,23 @@
       return;
     }
 
-    // 이미 로그인된 상태면 바로 역할 랜딩으로
-    GW.getSession().then(function (session) {
-      if (session) {
-        setText(message, "이미 로그인되어 있어요. 이동 중입니다.");
-        return landAfterLogin(session);
-      }
-      return null;
-    });
+    initPasswordReset(email);
+    var recovery = initPasswordRecovery(form, message);
+
+    // 이미 로그인된 상태면 바로 역할 랜딩으로 — 단, 재설정 메일로 돌아온
+    // 복구 세션(type=recovery)이면 랜딩 대신 새 비밀번호 폼을 유지한다.
+    if (!recovery.active()) {
+      GW.getSession().then(function (session) {
+        if (recovery.active()) {
+          return null;
+        }
+        if (session) {
+          setText(message, "이미 로그인되어 있어요. 이동 중입니다.");
+          return landAfterLogin(session);
+        }
+        return null;
+      });
+    }
 
     form.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -145,6 +154,153 @@
         if (submit) submit.disabled = false;
       }
     });
+  }
+
+  // ---------------------------------------------------------------------------
+  // /login — 비밀번호 재설정 메일 요청 (api/auth-password-reset: POST {email})
+  // ---------------------------------------------------------------------------
+
+  function initPasswordReset(loginEmail) {
+    var toggle = document.getElementById("reset-toggle");
+    var form = document.getElementById("reset-form");
+    var email = document.getElementById("reset-email");
+    var submit = document.getElementById("reset-submit");
+    var message = document.getElementById("reset-message");
+    if (!toggle || !form || !email) {
+      return;
+    }
+
+    toggle.addEventListener("click", function () {
+      var show = form.classList.contains("is-hidden");
+      form.classList.toggle("is-hidden", !show);
+      toggle.setAttribute("aria-expanded", show ? "true" : "false");
+      if (show) {
+        if (!email.value && loginEmail) {
+          email.value = loginEmail.value.trim();
+        }
+        email.focus();
+      }
+    });
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      var emailValue = email.value.trim();
+      if (!emailValue) {
+        setText(message, "이메일을 입력해 주세요.");
+        email.focus();
+        return;
+      }
+
+      if (submit) submit.disabled = true;
+      setText(message, "재설정 메일을 보내는 중입니다.");
+      try {
+        await GW.api("/api/auth-password-reset", { body: { email: emailValue } });
+        setText(message, "비밀번호 재설정 메일을 보냈습니다. 메일함을 확인해 주세요.");
+      } catch (err) {
+        setText(message, err && err.message ? err.message : "재설정 메일 전송에 실패했습니다. 잠시 후 다시 시도해 주세요.");
+      } finally {
+        if (submit) submit.disabled = false;
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // /login — 복구 세션 랜딩(재설정 메일 링크 → URL 해시 type=recovery /
+  // onAuthStateChange PASSWORD_RECOVERY). 로그인 폼을 숨기고 새 비밀번호 폼으로 전환.
+  // ---------------------------------------------------------------------------
+
+  function initPasswordRecovery(loginForm, loginMessage) {
+    var form = document.getElementById("recovery-form");
+    var passwordInput = document.getElementById("recovery-password");
+    var confirmInput = document.getElementById("recovery-password-confirm");
+    var submit = document.getElementById("recovery-submit");
+    var message = document.getElementById("recovery-message");
+    var active = false;
+
+    if (!form || !passwordInput || !confirmInput) {
+      return { active: function () { return false; } };
+    }
+
+    function enterRecoveryMode() {
+      if (active) return;
+      active = true;
+      loginForm.classList.add("is-hidden");
+      form.classList.remove("is-hidden");
+      document.querySelectorAll(".auth-alt, .social-block, #reset-form").forEach(function (el) {
+        el.classList.add("is-hidden");
+      });
+      var title = document.getElementById("login-title");
+      if (title) title.textContent = "비밀번호 재설정";
+      var lead = document.querySelector(".auth-lead");
+      if (lead) lead.textContent = "새 비밀번호를 설정하면 바로 이용할 수 있어요.";
+      window.setTimeout(function () {
+        passwordInput.focus();
+      }, 0);
+    }
+
+    var hash = location.hash || "";
+    if (hash.indexOf("type=recovery") >= 0) {
+      enterRecoveryMode();
+    } else if (hash.indexOf("error_code=otp_expired") >= 0) {
+      setText(loginMessage, "재설정 링크가 만료되었거나 이미 사용되었어요. 재설정 메일을 다시 요청해 주세요.");
+    }
+
+    // 클라이언트 생성 → supabase-js가 해시의 복구 토큰을 세션으로 교환한다.
+    GW.getClient().then(function (supa) {
+      if (!supa) return;
+      supa.auth.onAuthStateChange(function (event) {
+        if (event === "PASSWORD_RECOVERY") {
+          enterRecoveryMode();
+        }
+      });
+    });
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+      var passwordValue = passwordInput.value;
+      if (passwordValue.length < 6) {
+        setText(message, "비밀번호는 6자 이상이어야 해요.");
+        passwordInput.focus();
+        return;
+      }
+      if (passwordValue !== confirmInput.value) {
+        setText(message, "비밀번호가 서로 달라요. 같은 비밀번호를 다시 입력해 주세요.");
+        confirmInput.focus();
+        return;
+      }
+
+      if (submit) submit.disabled = true;
+      setText(message, "비밀번호를 변경하는 중입니다.");
+      try {
+        var supa = await GW.getClient();
+        if (!supa) {
+          setText(message, "지금은 변경할 수 없어요. 잠시 후 다시 시도해 주세요.");
+          return;
+        }
+        var result = await supa.auth.updateUser({ password: passwordValue });
+        if (result.error) {
+          setText(message, result.error.message);
+          return;
+        }
+        setText(message, "비밀번호가 변경되었습니다. 이동 중입니다.");
+        var session = await GW.getSession();
+        if (session) {
+          await landAfterLogin(session);
+        } else {
+          location.href = "/login";
+        }
+      } catch (err) {
+        setText(message, err && err.message ? err.message : "비밀번호 변경에 실패했습니다.");
+      } finally {
+        if (submit) submit.disabled = false;
+      }
+    });
+
+    return {
+      active: function () {
+        return active;
+      }
+    };
   }
 
   // ---------------------------------------------------------------------------
