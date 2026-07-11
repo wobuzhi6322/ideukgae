@@ -64,10 +64,11 @@ export const LIMITS = {
 
 export const RESERVED_HANDLES: readonly string[] = [
   "admin", "api", "app", "assets", "auth", "about", "account", "ads",
-  "bbbb", "blog", "channels", "dev", "docs", "download", "downloads",
-  "gyeideuk", "help", "home", "login", "logout", "me", "news", "ops",
-  "overlay", "privacy", "releases", "root", "settings", "signup", "site",
-  "static", "studio", "support", "terms", "test", "wallet", "ws", "www"
+  "bbbb", "blog", "channel", "channels", "dev", "docs", "download",
+  "downloads", "gaeideuk", "gyeideuk", "help", "home", "login", "logout",
+  "m", "me", "news", "ops", "overlay", "privacy", "relay", "releases",
+  "root", "settings", "signup", "site", "static", "studio", "support",
+  "terms", "test", "wallet", "ws", "www"
 ];
 
 const HANDLE_PATTERN = /^[a-z0-9][a-z0-9-]{1,18}[a-z0-9]$/;
