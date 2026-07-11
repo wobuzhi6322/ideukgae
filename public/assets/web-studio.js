@@ -1,6 +1,6 @@
 // =============================================================================
 // 계이득 스튜디오 /studio (WSC)
-// 로드 순서: supabase CDN → qrcode CDN → web-common.js(GW.*) → 이 파일(defer)
+// 로드 순서: supabase CDN → /assets/qr.js(GyeideukQR) → web-common.js(GW.*) → 이 파일(defer)
 // 라우팅: /studio/:section (vercel.json rewrite → studio.html)
 // ?mock=1 — 백엔드 없이 화면 검증용 목 모드
 // =============================================================================
@@ -267,14 +267,25 @@
   }
 
   function renderQr(url) {
-    var canvas = $("#qr-canvas");
-    if (!window.QRCode || !window.QRCode.toCanvas) {
-      $("#qr-download").disabled = true;
-      return;
+    $("#qr-download").disabled = !drawQr($("#qr-canvas"), url);
+  }
+
+  // qr.js(GyeideukQR)로 캔버스에 QR을 그린다. 성공 여부 반환.
+  function drawQr(canvas, url) {
+    if (!canvas || !window.GyeideukQR || !window.GyeideukQR.toCanvas) return false;
+    try {
+      window.GyeideukQR.toCanvas(canvas, url);
+      return true;
+    } catch (err) {
+      return false;
     }
-    window.QRCode.toCanvas(canvas, url, { width: 220, margin: 1 }, function (err) {
-      $("#qr-download").disabled = Boolean(err);
-    });
+  }
+
+  function downloadQrPng(canvas) {
+    var anchor = document.createElement("a");
+    anchor.href = canvas.toDataURL("image/png");
+    anchor.download = "gyeideuk-" + S.page.handle + "-qr.png";
+    anchor.click();
   }
 
   function bindDashboard() {
@@ -287,19 +298,15 @@
       copyText(pageUrl());
     });
     $("#qr-download").addEventListener("click", function () {
-      var canvas = $("#qr-canvas");
-      var anchor = document.createElement("a");
-      anchor.href = canvas.toDataURL("image/png");
-      anchor.download = "gyeideuk-" + S.page.handle + "-qr.png";
-      anchor.click();
+      downloadQrPng($("#qr-canvas"));
     });
   }
 
-  function copyText(text) {
+  function copyText(text, okMessage) {
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(
         function () {
-          toast("링크를 복사했어요.", "ok");
+          toast(okMessage || "링크를 복사했어요.", "ok");
         },
         function () {
           toast("복사에 실패했어요. 주소를 직접 선택해 주세요.", "err");
@@ -336,8 +343,30 @@
     return "";
   }
 
+  // 바로가기 정본 URL (기획서 §6.1) — 방송 설명란·홍보물에 박제되는 주소.
+  // 도메인 확정 전까지는 배포 오리진이 곧 정본 주소다(QR·복사도 이 값을 따른다).
+  function shortcutUrl() {
+    return location.origin + "/@" + S.page.handle;
+  }
+
+  function renderShortcutCard() {
+    var url = shortcutUrl();
+    $("#sc-url").textContent = url;
+    $("#sc-qr-download").disabled = !drawQr($("#sc-qr-canvas"), url);
+  }
+
+  function bindShortcutCard() {
+    $("#sc-copy").addEventListener("click", function () {
+      copyText(shortcutUrl(), "주소를 복사했어요. 방송 설명란에 붙여넣어 주세요.");
+    });
+    $("#sc-qr-download").addEventListener("click", function () {
+      downloadQrPng($("#sc-qr-canvas"));
+    });
+  }
+
   function renderPageForm() {
     var page = S.page;
+    renderShortcutCard();
     $("#ps-handle").value = page.handle;
     var blocked = handleBlockedUntil();
     $("#ps-handle").disabled = Boolean(blocked);
@@ -1155,6 +1184,7 @@
     bindNav();
     bindDashboard();
     bindPageForm();
+    bindShortcutCard();
     bindSignatures();
     bindDonations();
     bindRelay();

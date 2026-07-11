@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import type { IncomingMessage, ServerResponse } from "node:http";
 
+import { HANDLE_HISTORY_TABLE, validateHandleChange, type HandleHistoryRow } from "./_handlePolicy.js";
 import { handleRejectCode, type WebErrorCode } from "./_webShared.js";
 import { nicknameFromEmail } from "./me/profile.js";
 
@@ -85,15 +86,24 @@ async function checkHandle(req: IncomingMessage, res: ServerResponse, supabase: 
   const url = new URL(req.url || "/", "http://localhost");
   const handle = normalizeHandleInput(url.searchParams.get("handle"));
   let code: WebErrorCode | null = handleRejectCode(handle);
+  let message: string | null = null;
   if (!code) {
     const owner = await findPageByHandle(supabase, handle);
     if (owner && owner.owner_user_id !== userId) {
       code = "handle-taken";
     }
   }
+  if (!code) {
+    // 최근 90일 내 다른 채널이 버린 핸들은 301 보호를 위해 선점 불가 (§6.2 재사용 잠금)
+    const verdict = await checkHandleHistoryLock(supabase, handle);
+    if (!verdict.ok) {
+      code = verdict.code;
+      message = verdict.message;
+    }
+  }
   sendJson(res, 200, {
     ok: true,
-    data: { handle, available: code === null, code, message: code ? handleErrorMessage(code) : null }
+    data: { handle, available: code === null, code, message: message ?? (code ? handleErrorMessage(code) : null) }
   });
 }
 
@@ -121,6 +131,13 @@ async function onboard(req: IncomingMessage, res: ServerResponse, supabase: Supa
     return;
   }
 
+  // 최근 90일 내 다른 채널이 버린 핸들은 선점 불가 — 구 핸들 301 보호 (§6.2)
+  const historyVerdict = await checkHandleHistoryLock(supabase, handle);
+  if (!historyVerdict.ok) {
+    sendJson(res, historyVerdict.status, { ok: false, error: historyVerdict.message, code: historyVerdict.code });
+    return;
+  }
+
   const insert = await supabase
     .from(pagesTable)
     .insert({ owner_user_id: userId, handle })
@@ -137,6 +154,32 @@ async function onboard(req: IncomingMessage, res: ServerResponse, supabase: Supa
 
   const roles = await ensureStreamerRole(supabase, userId, email);
   sendJson(res, 200, { ok: true, data: { handle: (insert.data as PageRow).handle, roles, created: true } });
+}
+
+/**
+ * 온보딩 핸들의 90일 재사용 잠금 판정 (bbbb_handle_history — _handlePolicy 규칙).
+ * 신규 페이지는 "자기 구 핸들 되찾기" 예외가 성립하지 않는다(pageId=null).
+ */
+async function checkHandleHistoryLock(
+  supabase: Supa,
+  handle: string
+): Promise<ReturnType<typeof validateHandleChange>> {
+  const result = await supabase
+    .from(HANDLE_HISTORY_TABLE)
+    .select("page_id,changed_at")
+    .eq("old_handle", handle)
+    .maybeSingle();
+  if (result.error) throw new Error(result.error.message);
+  const row = result.data as { page_id: string; changed_at: string } | null;
+  const historyRow: HandleHistoryRow | null = row ? { pageId: row.page_id, changedAt: row.changed_at } : null;
+  return validateHandleChange({
+    newHandle: handle,
+    currentHandle: "",
+    handleChangedAt: null,
+    pageId: null,
+    historyRow,
+    nowMs: Date.now()
+  });
 }
 
 async function findPageByOwner(supabase: Supa, userId: string): Promise<PageRow | null> {

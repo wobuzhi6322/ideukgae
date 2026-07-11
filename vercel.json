@@ -1,7 +1,7 @@
 {
   "rewrites": [
-    { "source": "/@:handle/d/:messageId", "destination": "/channel.html" },
-    { "source": "/@:handle", "destination": "/channel.html" },
+    { "source": "/@:handle/d/:messageId", "destination": "/api/channel-page?handle=:handle&messageId=:messageId" },
+    { "source": "/@:handle", "destination": "/api/channel-page?handle=:handle" },
     { "source": "/me/:section", "destination": "/me.html" },
     { "source": "/me", "destination": "/me.html" },
     { "source": "/studio/:section", "destination": "/studio.html" },
@@ -9,5 +9,10 @@
     { "source": "/channels", "destination": "/channels.html" },
     { "source": "/login", "destination": "/login.html" },
     { "source": "/signup", "destination": "/signup.html" }
-  ]
+  ],
+  "functions": {
+    "api/channel-page.ts": {
+      "includeFiles": "public/channel.html"
+    }
+  }
 }

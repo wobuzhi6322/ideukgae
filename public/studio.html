@@ -5,11 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex" />
     <title>스튜디오 - 계이득</title>
+    <link rel="icon" type="image/png" href="/assets/gyeideuk-logo.png" />
     <link rel="stylesheet" href="/assets/v2.css" />
     <script src="/assets/theme.js"></script>
     <link rel="stylesheet" href="/assets/web-studio.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdn.jsdelivr.net/npm/qrcode@1/build/qrcode.min.js"></script>
+    <script src="/assets/qr.js"></script>
     <script src="/assets/web-common.js"></script>
     <script src="/assets/web-studio.js" defer></script>
   </head>
@@ -134,12 +135,31 @@
             <button type="button" data-nav="earnings">수익·정산</button>
             <button type="button" data-nav="account">계정</button>
           </div>
+
+          <article class="panel shortcut-card">
+            <div class="panel-head">
+              <h2>바로가기</h2>
+              <span class="panel-sub">방송 설명란·프로필에 붙여넣는 내 주소</span>
+            </div>
+            <div class="shortcut-body">
+              <div class="shortcut-qr"><canvas id="sc-qr-canvas" width="180" height="180" aria-label="바로가기 QR 코드"></canvas></div>
+              <div class="shortcut-info">
+                <p class="shortcut-url" id="sc-url"></p>
+                <div class="shortcut-actions">
+                  <button type="button" class="btn btn-primary" id="sc-copy">주소 복사</button>
+                  <button type="button" class="btn btn-ghost" id="sc-qr-download">QR 다운로드</button>
+                </div>
+                <p class="field-hint">QR을 방송 화면이나 오프라인 홍보물에 붙이면 시청자가 폰 카메라로 바로 들어옵니다.</p>
+              </div>
+            </div>
+          </article>
+
           <form id="page-form" class="settings-form" novalidate>
             <fieldset class="panel">
               <legend>기본 정보</legend>
               <label class="field">
                 <span class="field-label">핸들</span>
-                <span class="handle-row"><span class="handle-prefix">gyeideuk.com/@</span><input id="ps-handle" name="handle" type="text" autocomplete="off" spellcheck="false" /></span>
+                <span class="handle-row"><span class="handle-prefix">@</span><input id="ps-handle" name="handle" type="text" autocomplete="off" spellcheck="false" /></span>
                 <span class="field-hint" id="ps-handle-note">핸들은 30일에 1번만 변경할 수 있어요. 변경하면 이전 주소로 들어온 시청자에게 새 주소를 안내해야 합니다.</span>
               </label>
               <label class="field">

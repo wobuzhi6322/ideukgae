@@ -433,6 +433,68 @@
   margin: 0 0 14px;
 }
 
+/* --- 바로가기 카드 (페이지 설정) — 모바일 퍼스트: 세로 스택, ≥900px에서 가로 배치.
+   QR 프레임은 .qr-box와 동일한 쿠폰 절취선 문법(카드 안 카드 금지) —
+   캔버스가 흰 배경을 직접 그리므로 다크에서도 스캔 대비는 유지된다. --- */
+
+.shortcut-card .shortcut-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  text-align: center;
+}
+
+.shortcut-qr {
+  padding: 12px;
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  flex-shrink: 0;
+}
+
+.shortcut-qr canvas {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.shortcut-info {
+  min-width: 0;
+  width: 100%;
+}
+
+.shortcut-url {
+  margin: 0 0 12px;
+  font-weight: 800;
+  color: var(--blue);
+  overflow-wrap: anywhere;
+  word-break: break-all;
+}
+
+.shortcut-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shortcut-actions .btn {
+  min-height: 44px;
+}
+
+@media (min-width: 900px) {
+  .shortcut-card .shortcut-body {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+  }
+
+  .shortcut-actions {
+    justify-content: flex-start;
+  }
+}
+
 /* --- 버튼·입력 ----------------------------------------------------------------
    버튼·인풋 기본 스타일은 v2.css(.btn/.btn-primary/2px 잉크 인풋)를 그대로 사용.
    .btn-ghost는 v2 기본 버튼(크림 스티커)으로 렌더된다. */

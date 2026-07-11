@@ -586,13 +586,14 @@
 .ch-field input,
 .ch-field textarea {
   width: 100%;
+  min-height: 48px; /* 모바일 터치 타깃 44px+ */
   padding: 11px 14px;
   border: 2px solid var(--ink);
   border-radius: 12px;
   background: var(--surface);
   color: var(--primary);
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px; /* iOS 포커스 확대 방지 */
   transition: box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
@@ -628,8 +629,8 @@
 
 /* 프리셋 칩 — 스티커 칩(잉크 보더+미니 하드섀도), 선택 시 블루 솔리드 */
 .preset-chip {
-  min-height: 38px;
-  padding: 6px 14px;
+  min-height: 44px; /* 터치 타깃 44px+ */
+  padding: 8px 16px;
   border: 2px solid var(--ink);
   border-radius: 10px;
   background: var(--surface);
@@ -715,6 +716,7 @@
 
 .donate-actions .button {
   width: 100%;
+  min-height: 48px; /* 터치 타깃 44px+ (.button 46px 기본을 상회) */
 }
 
 /* 카드 후원 — 아직 안 뜯은 쿠폰(점선 보더), 오픈 예정 뱃지는 또렷하게 유지 */
@@ -851,6 +853,11 @@ body.gw-modal-open {
   letter-spacing: 0;
 }
 
+/* 모달 내 버튼(입금코드 복사·신고 접수)도 터치 타깃 44px+ */
+.gw-modal-window .button {
+  min-height: 44px;
+}
+
 .gw-modal-close {
   position: absolute;
   top: 12px;
@@ -921,7 +928,7 @@ body.gw-modal-open {
 
 .copy-code {
   flex: 0 0 auto;
-  min-height: 42px;
+  min-height: 44px; /* 터치 타깃 */
   padding: 8px 14px;
   background: var(--surface);
   color: var(--blue);
@@ -974,13 +981,16 @@ body.gw-modal-open {
 }
 
 .text-copy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* 계좌 복사 등 모바일 터치 타깃 */
   margin-left: 8px;
-  padding: 2px 10px;
+  padding: 8px 14px;
   border: 1.5px solid var(--ink);
   border-radius: 9px;
   background: var(--surface);
   color: var(--secondary);
-  font-size: 11.5px;
+  font-size: 12.5px;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
@@ -1170,6 +1180,49 @@ body.gw-modal-open {
   border-radius: var(--radius);
   background: var(--danger-2);
   color: var(--danger);
+}
+
+/* 상태 확인 링크 (등록 완료 화면 — 창을 닫아도 재진입 가능한 /@handle/d/:id)
+   절취선(dashed) 구분 + 잉크 보더 칩 = v5 스티커 문법 유지 */
+.status-link-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--surface-3);
+}
+
+.status-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px; /* 터치 타깃 */
+  color: var(--blue);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.status-link:focus-visible {
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px var(--focus);
+}
+
+.status-link-copy {
+  margin-left: 0;
+}
+
+.status-link-hint {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 12.5px;
+  word-break: keep-all;
 }
 
 /* ---------------------------------------------------------------------------

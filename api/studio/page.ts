@@ -9,13 +9,21 @@ import { createClient } from "@supabase/supabase-js";
 import type { IncomingMessage, ServerResponse } from "node:http";
 
 import {
+  HANDLE_HISTORY_TABLE,
+  handleChangeBlockedUntil,
+  validateHandleChange,
+  type HandleHistoryRow
+} from "../_handlePolicy.js";
+import {
   LIMITS,
-  handleRejectCode,
   type BroadcastLink,
   type StudioPageSettings,
   type TransferLink,
   type WebErrorCode
 } from "../_webShared.js";
+
+// 기존 테스트(tests/studioLogic.test.ts) 호환 재노출 — 정의는 _handlePolicy.ts로 이동
+export { handleChangeBlockedUntil };
 
 const pagesTable = "bbbb_streamer_pages";
 const pageSelect =
@@ -78,6 +86,18 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
         .maybeSingle();
       if (taken.error) throw new Error(taken.error.message);
       if (taken.data) throw new ApiError(409, "이미 사용 중인 핸들입니다.", "handle-taken");
+
+      // 90일 재사용 잠금 (구 핸들 301 보호 — 자기 구 핸들 되찾기는 허용)
+      const history = await findHandleHistory(supabase, patch.handle as string);
+      const verdict = validateHandleChange({
+        newHandle: patch.handle as string,
+        currentHandle: page.handle,
+        handleChangedAt: page.handle_changed_at,
+        pageId: page.id,
+        historyRow: history,
+        nowMs: Date.now()
+      });
+      if (!verdict.ok) throw new ApiError(verdict.status, verdict.message, verdict.code);
     }
 
     if (Object.keys(patch).length === 0) {
@@ -93,6 +113,12 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
       .select(pageSelect)
       .single();
     if (update.error) throw new Error(update.error.message);
+
+    // 핸들이 실제로 바뀌었으면 구 핸들 이력 기록(301·재사용 잠금의 진실)
+    if (typeof patch.handle === "string") {
+      await recordHandleChange(supabase, page.id, page.handle.toLowerCase(), patch.handle as string);
+    }
+
     sendJson(res, 200, { ok: true, data: toSettings(update.data as unknown as PageRow) });
   } catch (error) {
     sendError(res, error);
@@ -102,15 +128,6 @@ export default async function handler(req: IncomingMessage, res: ServerResponse)
 // ---------------------------------------------------------------------------
 // 순수 로직 (tests/studioLogic.test.ts)
 // ---------------------------------------------------------------------------
-
-/** 핸들 변경 쿨다운: 변경 불가면 해제 시각 ISO, 가능하면 null */
-export function handleChangeBlockedUntil(handleChangedAt: string | null, nowMs: number): string | null {
-  if (!handleChangedAt) return null;
-  const changed = Date.parse(handleChangedAt);
-  if (Number.isNaN(changed)) return null;
-  const until = changed + LIMITS.handleChangeCooldownDays * 86_400_000;
-  return nowMs < until ? new Date(until).toISOString() : null;
-}
 
 /** http(s) URL 검증. 빈 값/null → null, 위반 시 throw */
 export function sanitizeHttpUrl(value: unknown, label = "URL"): string | null {
@@ -182,16 +199,16 @@ export function buildPagePatch(
 
   if (typeof body.handle === "string" && body.handle.trim().toLowerCase() !== page.handle.toLowerCase()) {
     const handle = body.handle.trim().toLowerCase();
-    const reject = handleRejectCode(handle);
-    if (reject) throw new ApiError(400, "핸들은 소문자·숫자·하이픈 3~20자이며 예약어는 쓸 수 없습니다.", reject);
-    const blockedUntil = handleChangeBlockedUntil(page.handle_changed_at, nowMs);
-    if (blockedUntil) {
-      throw new ApiError(
-        400,
-        `핸들은 30일에 1번만 변경할 수 있습니다. ${blockedUntil.slice(0, 10)} 이후 다시 시도해 주세요.`,
-        "validation-failed"
-      );
-    }
+    // 예약어·형식·쿨다운 판정 (이력 잠금은 DB 조회가 필요해 핸들러에서 재판정)
+    const verdict = validateHandleChange({
+      newHandle: handle,
+      currentHandle: page.handle,
+      handleChangedAt: page.handle_changed_at,
+      pageId: null,
+      historyRow: null,
+      nowMs
+    });
+    if (!verdict.ok) throw new ApiError(verdict.status, verdict.message, verdict.code);
     patch.handle = handle;
     patch.handle_changed_at = new Date(nowMs).toISOString();
   }
@@ -266,6 +283,53 @@ class ApiError extends Error {
   ) {
     super(message);
   }
+}
+
+/** bbbb_handle_history에서 old_handle = 후보 핸들 행 조회 (old_handle이 PK라 최대 1행) */
+async function findHandleHistory(
+  supabase: ReturnType<typeof serviceClient>,
+  handle: string
+): Promise<HandleHistoryRow | null> {
+  const result = await supabase
+    .from(HANDLE_HISTORY_TABLE)
+    .select("page_id,changed_at")
+    .eq("old_handle", handle)
+    .maybeSingle();
+  if (result.error) throw new Error(result.error.message);
+  const row = result.data as { page_id: string; changed_at: string } | null;
+  return row ? { pageId: row.page_id, changedAt: row.changed_at } : null;
+}
+
+/**
+ * 핸들 변경 성공 후 이력 정리:
+ * ① 구 핸들 → 새 핸들 매핑 upsert (301의 진실)
+ * ② 내 과거 이력 전부 새 핸들로 재조준 (a→b→c 체인에서 @a도 곧장 @c로)
+ * ③ 새 핸들이 이력에 남아 있으면 삭제 — 자기 구 핸들 되찾기 시 301 해제
+ */
+async function recordHandleChange(
+  supabase: ReturnType<typeof serviceClient>,
+  pageId: string,
+  oldHandle: string,
+  newHandle: string
+): Promise<void> {
+  const upsert = await supabase
+    .from(HANDLE_HISTORY_TABLE)
+    .upsert(
+      { old_handle: oldHandle, page_id: pageId, new_handle: newHandle, changed_at: new Date().toISOString() },
+      { onConflict: "old_handle" }
+    );
+  if (upsert.error) throw new Error(upsert.error.message);
+
+  // 과거 이력 재조준 — changed_at은 갱신하지 않는다(재사용 잠금은 버린 시점 기준 유지)
+  const retarget = await supabase
+    .from(HANDLE_HISTORY_TABLE)
+    .update({ new_handle: newHandle })
+    .eq("page_id", pageId)
+    .neq("new_handle", newHandle);
+  if (retarget.error) throw new Error(retarget.error.message);
+
+  const reclaim = await supabase.from(HANDLE_HISTORY_TABLE).delete().eq("old_handle", newHandle);
+  if (reclaim.error) throw new Error(reclaim.error.message);
 }
 
 async function requireOwnedPage(userId: string, supabase: ReturnType<typeof serviceClient>): Promise<PageRow> {

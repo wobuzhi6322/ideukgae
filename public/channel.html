@@ -5,6 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="계이득 채널 후원 페이지 — 시그니처 메뉴를 고르고 계좌이체로 후원 메시지를 방송에 전달하세요." />
     <title>채널 후원 - 계이득</title>
+    <link rel="icon" type="image/png" href="/assets/gyeideuk-logo.png" />
+    <!-- 일반 폴백 OG — /@handle 접근 시 api/channel-page가 페이지별 태그로 대체 (og:image/og:url은 SSR이 origin 확정 후 주입) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="계이득" />
+    <meta property="og:title" content="채널 후원 - 계이득" />
+    <meta property="og:description" content="계이득 채널 후원 페이지 — 시그니처 메뉴를 고르고 계좌이체로 후원 메시지를 방송에 전달하세요." />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="/assets/v2.css" />
     <script src="/assets/theme.js"></script>
     <link rel="stylesheet" href="/assets/web-channel.css" />
@@ -145,10 +152,15 @@
         </dl>
         <div id="transfer-links" class="transfer-links"></div>
         <div id="transfer-timer-wrap" class="transfer-timer">
-          <span id="transfer-timer" class="transfer-timer-count">30:00</span>
+          <span id="transfer-timer" class="transfer-timer-count">24:00:00</span>
           <p>이 시간 안에 입금하면 방송에 메시지가 전달됩니다.</p>
         </div>
         <div id="transfer-status" class="transfer-status" aria-live="polite"></div>
+        <div id="status-link-row" class="status-link-row is-hidden">
+          <a id="status-link" class="status-link" href="#">진행 상태 확인 페이지</a>
+          <button id="copy-status-link" class="text-copy status-link-copy" type="button">링크 복사</button>
+          <p class="status-link-hint">이 링크를 저장해 두면 창을 닫아도 진행 상태를 다시 확인할 수 있어요.</p>
+        </div>
       </section>
     </div>
 

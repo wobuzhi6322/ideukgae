@@ -213,6 +213,12 @@
   color: var(--secondary);
 }
 
+/* v2 기본 인풋 위에 크기만 보강 — 터치 타깃 44px+ · iOS 포커스 확대 방지 */
+.auth-form input {
+  min-height: 48px;
+  font-size: 16px;
+}
+
 .auth-actions {
   display: flex;
   flex-wrap: wrap;
@@ -397,6 +403,7 @@
 .auth-alt {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   color: var(--secondary);
   font-size: 14px;
@@ -409,6 +416,31 @@
 
 .auth-alt a:hover {
   text-decoration: underline;
+}
+
+/* 링크처럼 보이는 토글 버튼 — 터치 타깃 44px+, 포커스 링은 v2 전역 :focus-visible */
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--blue);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.link-button:hover {
+  text-decoration: underline;
+}
+
+/* 비밀번호 재설정 메일 요청 폼 — 카드 안 구획(v5 구분선 문법: 2px 대시) */
+.reset-form {
+  padding-top: 18px;
+  border-top: 2px dashed var(--surface-3);
 }
 
 .auth-footer {

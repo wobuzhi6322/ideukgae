@@ -64,6 +64,9 @@
     timerWrap: $("transfer-timer-wrap"),
     timer: $("transfer-timer"),
     transferStatus: $("transfer-status"),
+    statusLinkRow: $("status-link-row"),
+    statusLink: $("status-link"),
+    copyStatusLink: $("copy-status-link"),
     reportModal: $("report-modal"),
     reportOpen: $("report-open"),
     reportForm: $("report-form"),
@@ -260,7 +263,7 @@
 
   function mockCreate(body) {
     var outcome = params.get("outcome") || null;
-    var ttlMs = outcome === "expired" ? 20 * 1000 : 30 * 60 * 1000;
+    var ttlMs = outcome === "expired" ? 20 * 1000 : 24 * 60 * 60 * 1000; // 매칭 시간창 24h (§8)
     return {
       messageId: "mock-" + Date.now().toString(36),
       depositCode: mockDepositCode(body.nickname),
@@ -608,6 +611,14 @@
       })
       .join("");
 
+    // 상태 확인 링크: 창을 닫아도 /@handle/d/:id로 재진입 가능
+    if (record.messageId) {
+      els.statusLink.href = "/@" + state.handle + "/d/" + encodeURIComponent(record.messageId);
+      show(els.statusLinkRow);
+    } else {
+      hide(els.statusLinkRow);
+    }
+
     els.transferWindow.scrollTop = 0;
     setTransferStage("checking");
     show(els.timerWrap);
@@ -639,9 +650,12 @@
 
   function formatRemaining(ms) {
     var total = Math.max(0, Math.floor(ms / 1000));
-    var m = Math.floor(total / 60);
+    var h = Math.floor(total / 3600);
+    var m = Math.floor((total % 3600) / 60);
     var s = total % 60;
-    return (m < 10 ? "0" + m : String(m)) + ":" + (s < 10 ? "0" + s : String(s));
+    var mm = (m < 10 ? "0" + m : String(m)) + ":" + (s < 10 ? "0" + s : String(s));
+    // 매칭 시한이 24시간(§8)이므로 1시간 이상 남으면 시 단위까지 표기
+    return h > 0 ? h + ":" + mm : mm;
   }
 
   function startCountdown(record) {
@@ -868,6 +882,16 @@
     els.copyAccount.addEventListener("click", function () {
       var info = state.activeRecord && state.activeRecord.accountInfo;
       if (info && info.number) copyText(info.number, els.copyAccount, "복사됨");
+    });
+    els.copyStatusLink.addEventListener("click", function () {
+      var record = state.activeRecord;
+      if (record && record.messageId) {
+        copyText(
+          location.origin + "/@" + state.handle + "/d/" + encodeURIComponent(record.messageId),
+          els.copyStatusLink,
+          "복사됨"
+        );
+      }
     });
 
     // 신고 모달

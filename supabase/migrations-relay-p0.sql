@@ -1,7 +1,41 @@
 -- =============================================================================
--- 계이득 웹 후원 플랫폼 스키마 (WS0)
+-- 계이득 웹 후원 플랫폼 — ideukgae(feat/relay-p1 → main) 통합 마이그레이션
+-- (단일 idempotent 스크립트)
+--
+-- 적용 대상 : 이 사이트(ideukgae)가 바라보는 프로덕션 Supabase 프로젝트
+--             (라이선스·계정 스키마가 이미 적용된 프로젝트 — 해당 스키마 정본은
+--              relay-site 저장소의 supabase/schema.sql, 이 저장소에는 없다)
+-- 실행 방법 : Supabase 대시보드 → SQL Editor 에 이 파일 전체를 붙여넣고 1회 실행.
+--             서비스 키 불필요(대시보드 세션 권한으로 충분). 재실행해도 안전하다 —
+--             모든 문장이 create ... if not exists / on conflict do nothing 이다.
+-- 실행 순서 : ① 라이선스·계정 스키마(기적용 확인만) → ② 이 파일. 이 파일 내부는 위→아래 순서 그대로.
+-- 포함 내용 : web-platform.sql 전체(WS0 스키마) + 핸들 이력·예약어 테이블(P1 바로가기).
+--
+-- 롤백 노트 : 이 스크립트는 신규 테이블·인덱스·버킷 생성뿐이며 기존 테이블을 변경하지
+--             않는다(bbbb_donation_messages.ip_hash 컬럼 추가 1건 제외 — add column if not
+--             exists, 데이터 무손실). 전체 롤백이 필요하면 아래를 역순으로 실행:
+--               drop table if exists public.bbbb_handle_history;
+--               drop table if exists public.bbbb_reserved_handles;
+--               drop table if exists public.bbbb_payment_intents;
+--               drop table if exists public.bbbb_ledger_entries;
+--               drop table if exists public.bbbb_wallets;
+--               drop table if exists public.bbbb_web_reports;
+--               drop table if exists public.bbbb_relay_devices;
+--               drop table if exists public.bbbb_page_blocks;
+--               drop table if exists public.bbbb_donation_matches;
+--               drop table if exists public.bbbb_donation_messages;
+--               drop table if exists public.bbbb_page_signatures;
+--               drop table if exists public.bbbb_page_follows;
+--               drop table if exists public.bbbb_streamer_pages;
+--               drop table if exists public.bbbb_web_profiles;
+--               delete from storage.buckets where id = 'bbbb-web-thumbs';
+--             (스토리지 버킷은 내부 객체가 있으면 먼저 storage.objects 에서 해당 bucket_id
+--              행을 지워야 삭제된다.)
+-- =============================================================================
+
+-- =============================================================================
+-- PART 1. 웹 후원 플랫폼 스키마 (WS0) — supabase/web-platform.sql 전문 복사
 -- 계약 문서: donation-system/docs/WEB_TECH_SPEC.md §1
--- 적용: Supabase SQL Editor에서 실행 (schema.sql과 독립, 기존 테이블 무변경)
 -- 모든 테이블은 RLS 활성 + 정책 없음 = service role(Vercel Functions) 전용.
 -- 클라이언트(anon) 직접 쿼리 금지 — 공개 API는 Functions를 경유한다.
 -- =============================================================================
@@ -207,10 +241,16 @@ insert into storage.buckets (id, name, public)
 values ('bbbb-web-thumbs', 'bbbb-web-thumbs', true)
 on conflict (id) do nothing;
 
--- 1.5 핸들 변경 정책 (P1 바로가기 — VIEWER_MESSAGE_RELAY_PLAN §6.2) ---------------
--- 구 핸들 → 새 핸들 301 리다이렉트(90일)와 그 기간 재사용 잠금의 진실 테이블.
+-- =============================================================================
+-- PART 2. 핸들 이력·예약어 (P1 바로가기 — VIEWER_MESSAGE_RELAY_PLAN §6.2, 부록 A 2단계)
+-- 핸들 변경 30일 1회 + 구 핸들 90일 301 리다이렉트 + 그 기간 재사용 잠금.
+-- =============================================================================
+
+-- supabase/web-platform.sql §1.5 전문 복사 — 두 파일은 항상 동일해야 한다.
 -- old_handle이 PK: 구 핸들 하나는 정확히 하나의 현재 목적지만 가진다
 -- (a→b→c 체인은 변경 시 API가 내 이력 전체를 새 핸들로 재조준해 1홉을 보장).
+-- API 계약: api/studio/page.ts upsert onConflict:'old_handle',
+--           api/channel-page.ts .maybeSingle() — old_handle 유니크 전제.
 -- RLS 활성 + 정책 없음 = service role 전용. SSR 301 조회(api/channel-page.ts)도
 -- service key 경유라 anon 정책은 두지 않는다.
 
@@ -244,3 +284,7 @@ insert into public.bbbb_reserved_handles (handle) values
   ('site'), ('static'), ('studio'), ('support'), ('terms'), ('test'),
   ('wallet'), ('ws'), ('www')
 on conflict (handle) do nothing;
+
+-- =============================================================================
+-- 끝. 재실행 안전(idempotent). 기존 데이터 변경 문장 없음.
+-- =============================================================================
